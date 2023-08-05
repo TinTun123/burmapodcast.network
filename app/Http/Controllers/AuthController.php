@@ -26,14 +26,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        $user = User::where('email', '=', $request->input('email'))->firstOrFail();
-        $token = $user->createToken('api-token')->plainTextToken;
-
-        return response()->json([
-            'token' => $token,
-            'user_level' => $user->user_level,
-            'success' => 'Login Successful.'
-        ], 200);
+        
 
         if($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
