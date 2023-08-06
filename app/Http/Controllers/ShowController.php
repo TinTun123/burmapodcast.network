@@ -337,6 +337,9 @@ class ShowController extends Controller
 
         $path = $file->storeAs('public/' . $type . '/' . $id, $filename);
 
+        $storagePath = storage_path('app/' . $path);
+        
+        chmod(dirname($storagePath), 0755);
 
 
         $publicURL = asset('storage/' . $type . '/' . $id . '/' . $filename);
