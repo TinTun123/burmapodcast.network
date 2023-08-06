@@ -339,7 +339,7 @@ class ShowController extends Controller
 
 
 
-        $publicURL = asset(str_replace('public', 'storage', $path));
+        $publicURL = asset('storage/' . $type . '/' . $id . '/' . $filename);
 
 
 
