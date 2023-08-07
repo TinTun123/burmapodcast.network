@@ -20,12 +20,13 @@ export const useUserStore = defineStore('UserStore', {
         },
         login (payload) {
             return axiosClient.post('/login', payload).then(res => {
+                console.log('from then');
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('user_level', res.data.user_level);
                 localStorage.removeItem('audience');
                 this.token = res.data.token;
                 this.user_level = res.data.user_level;
-                return res.data;
+                return res;
             })
         },
         register(payload) {
@@ -86,6 +87,21 @@ export const useUserStore = defineStore('UserStore', {
                     });
                     return res;
                 }
+            })
+        },
+        resendVerify (payload) {
+            return axiosClient.post('email/resend', payload).then(res => {
+                return res;
+            })
+        },
+        forgotPwd (payload) {
+            return axiosClient.post('forgotPwd', payload).then(res => {
+                return res;
+            })
+        },
+        resetPwd (payload) {
+            return axiosClient.post('resetPwd', payload).then(res => {
+                return res;
             })
         }
     },

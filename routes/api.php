@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ShowController;
+use App\Http\Controllers\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('comment/{episodeId}', [ForumController::class, 'createComment'])->where(['episodeId' => '[0-9]+']);
 Route::post('likeEpisode/{episodeId}', [ShowController::class, 'likeEpisode'])->where(['episodeId' => '[0-9]+']);
 
+
+Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
+Route::post('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
+
+Route::post('forgotPwd', [AuthController::class, 'sendResetPwdEmail']);
+Route::post('resetPwd', [AuthController::class, 'reset']);
 
 Route::middleware('auth:sanctum')->group(function () {
 

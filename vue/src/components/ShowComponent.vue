@@ -116,9 +116,12 @@ onMounted(async() => {
 </script>
 
 <style>
-.fadecard-enter-active,
-.fadecard-leave-active {
+.fadecard-enter-active {
   transition: opacity 0.3s ease;
+}
+
+.fadecard-leave-active {
+    opacity: 0;
 }
 
 .fadecard-enter-from,
@@ -126,8 +129,7 @@ onMounted(async() => {
   opacity: 0;
 }
 
-.fadecard-leave-active {
-    position: absolute;
-}
+
+
 
 </style>

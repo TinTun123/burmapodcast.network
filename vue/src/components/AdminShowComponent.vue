@@ -54,6 +54,7 @@
 
 
     <Teleport to="body">
+
         <transition name="modal">
         
             <div v-if="openEditShow" class="modal-mask">
@@ -91,7 +92,7 @@
         <transition name="modal">
         
             <div v-if="opneAddEpisode" class="modal-mask">
-                <div class="modal-container rounded-[10px] relative">
+                <div class="modal-container laptop:w-[50%] rounded-[10px] relative">
                     <button @click="opneAddEpisode = false; editEpi = {}; scrollToAddShow()" class="absolute left-1 top-1 group" type="button">
                       <div class="w-8 h-8">
                         <svg class="w-full h-full" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -101,9 +102,9 @@
                       </div>
                     </button>
 
-                    <div class="flex overflow-hidden">
+                    <div class="flex overflow-x-hidden">
 
-                      <div class="w-full flex-none" ref="addEpisode">
+                      <div class="flex-none w-full laptop:w-auto" ref="addEpisode">
                         <AddEpisodeComponent :editEpi="editEpi" :seasons="showStore.currentShow.seasons" @close="opneAddEpisode = false" @scrollToAddUser="scrollToAddUser"/>
                       </div>
 

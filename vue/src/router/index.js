@@ -13,6 +13,8 @@ import AudienceShowsComponent from '../components/AudienceShowsComponent.vue';
 import myFavoriteComponent from '../components/myFavoriteComponent.vue';
 import playListComponent from '../components/playListComponent.vue';
 
+const VerifyComponent = () => import('../components/VerifyComponent.vue');
+const ResetPwdComponent = () => import('../components/ResetPwdComponent.vue');
 const AdminManageShowsComponent = () => import('../components/AdminManageShowsComponent.vue');
 const AdminManageHostComponent = () => import('../components/AdminManageHostComponent.vue');
 const AdminDashboardComponent = () => import('../components/AdminDashboardComponent.vue');
@@ -88,7 +90,16 @@ const router = createRouter({
       name : 'playList',
       component : playListComponent
     },
-
+    {
+      path : '/resetpwd',
+      name : 'pwdreset',
+      component : ResetPwdComponent
+    },
+    {
+      path : '/verify',
+      name : 'verify',
+      component : VerifyComponent
+    },
     {
       path : '/adminDashborad/forum',
       name : 'Adminforum',

@@ -1,7 +1,7 @@
 
 <template>
   <div class="bg-black/90 overflow-y-hidden laptop:h-[100vh] laptop:pt-4">
-    <HeaderComponent />
+    <HeaderComponent v-if="route.name !== 'pwdreset' && route.name !== 'verify'"/>
 
     <div :class="[type === 'desktop' ? 'flex gap-x-6 justify-stretch overflow-y-hidden ' : '']" 
   class="relative">
@@ -9,7 +9,7 @@
       <h2 class="text-white">{{ notiStore.message }}</h2>
     </div>
 
-    <SideBarComponent v-if="type === 'desktop'"/>
+    <SideBarComponent v-if="type === 'desktop' && route.name !== 'pwdreset' && route.name !== 'verify'"/>
 
     <div class="flex-1">
 
@@ -22,12 +22,13 @@
       laptop:h-[85vh]
       overflow-y-scroll
       scroll-container
-      laptop:relative">
+      laptop:relative"
+      :class="[route.name === 'pwdreset' || route.name === 'verify' ? 'bg-none' : '']">
       <div class="min-h-[100vh]">
         <RouterView />
       </div>
 
-        <FooterComponent />
+        <FooterComponent v-if="route.name !== 'pwdreset' && route.name !== 'verify'" />
         <transition appear>
           <SongComponent v-if="showStore.currentEpisode.title"/>      
         </transition>
@@ -53,8 +54,10 @@ import SideBarComponent from './components/SideBarComponent.vue';
 import { useNotificationStore } from './stores/NotiStore';
 import { useShowsStore } from './stores/ShowsStore';
 import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 const showStore = useShowsStore();
+const route = useRoute();
 const notiStore = useNotificationStore();
 const {type} = useBreakPoints();
 

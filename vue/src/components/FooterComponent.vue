@@ -152,8 +152,8 @@
         <transition name="modal">
         
             <div v-if="open" class="modal-mask">
-                <div class="modal-container rounded-[15px] relative">
-                    <button @click="open = false" class="absolute left-[-16px] top-[-16px] group" type="button">
+                <div class="modal-container laptop:w-[20%] rounded-[15px] relative">
+                    <button @click="open = false; showResend = false; password = ''; email = ''" class="absolute left-[-16px] top-[-16px] group" type="button">
                       <div class="w-8 h-8">
                         <svg class="w-full h-full" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M6.2376 11.2624L8.5008 9ZM10.7632 6.7376L8.5008 9ZM8.5008 9L6.2376 6.7376ZM8.5008 9L10.7632 11.2624ZM8.5 17C12.9184 17 16.5 13.4184 16.5 9C16.5 4.5816 12.9184 1 8.5 1C4.0816 1 0.5 4.5816 0.5 9C0.5 13.4184 4.0816 17 8.5 17Z" class="fill-white/80 group-hover:fill-white/40 group-active:fill-white/60"/>
@@ -162,50 +162,89 @@
                       </div>
                     </button>
 
-                    <h1 class="modal-header mb-4 text-white/80 text-lg font-semibold text-center">Host Login</h1>
+                    <div class="flex gap-x-2 overflow-x-hidden">
+                      <div class="login flex-none w-full" ref="loginref">
+                        <h1 class="modal-header mb-4 text-white/80 text-lg font-semibold text-center">Host Login</h1>
 
+                        <div class="flex flex-col mb-4 gap-y-4">
+                            <!-- <label for="email">Email</label> -->
+                            <input type="mail" id="email" name="email" v-model="email" 
+                            class="focus:outline-none
+                            appearance-none
+                            border
+                            border-white/40 
+                            pl-2 py-1 
+                            rounded-[10px] 
+                            text-base 
+                            text-white/80 focus:border-white/80
+                            bg-transparent"
+                            placeholder="Email">
 
-                      <div class="flex flex-col mb-4 gap-y-4">
-                        <!-- <label for="email">Email</label> -->
-                        <input type="mail" id="email" name="email" v-model="email" 
-                        class="focus:outline-none
-                        appearance-none 
-                        border
-                        border-white/40 
-                        pl-2 py-1 
-                        rounded-[10px] 
-                        text-base 
-                        text-white/80 focus:border-white/80
-                        bg-transparent"
-                        placeholder="Email">
-
-                        <input 
-                        type="password" 
-                        id="pwd" 
-                        name="password" 
-                        v-model="password" 
-                        class="focus:outline-none
-                        appearance-none 
-                        border
-                        border-white/40 
-                        pl-2 py-1 
-                        rounded-[10px] 
-                        text-base 
-                        text-white/80 focus:border-white/80
-                        bg-transparent">
+                            <input 
+                            type="password" 
+                            id="pwd" 
+                            name="password" 
+                            v-model="password" 
+                            class="focus:outline-none
+                            appearance-none 
+                            border
+                            border-white/40 
+                            pl-2 py-1 
+                            rounded-[10px] 
+                            text-base 
+                            text-white/80 focus:border-white/80
+                            bg-transparent">
+                          </div>
+                          <div class="">
+                            <span @click="resendVerify" class="text-white/60 inline text-sm font-medium border-b border-white/40 mr-4 laptop:cursor-pointer laptop:hover:text-white/80" v-if="showResend">resend verification email</span>
+                            <span @click="scrollToforgotPwd" class="text-white/60 inline text-sm font-medium border-b border-white/40 mr-4 laptop:cursor-pointer laptop:hover:text-white/80">forgot password</span>
+                          <button 
+                          class="modal-footer 
+                          modal-default-button 
+                          text-black/80
+                          bg-white/80
+                          rounded-full
+                          px-4  py-1
+                          float-right
+                          font-medium" @click="login">Login</button>
+                          </div>
                       </div>
-                      <div class="flex gap-x-2 justify-end">
-            
-                      <button 
-                      class="modal-footer 
-                      modal-default-button 
-                      text-black/80
-                      bg-white/80
-                      rounded-full
-                      px-4  py-1
-                      float-right
-                      font-medium" @click="login">Login</button>
+
+                      <div class="flex-none w-full flex flex-col gap-y-2" ref="forgotPwdref">
+                        <h1 class="modal-header mb-4 text-white/80 text-lg font-semibold text-center">Password reset</h1>
+                        <input type="mail" id="email" name="email" v-model="emailforgot" 
+                            class="focus:outline-none
+                            appearance-none
+                            border
+                            border-white/40 
+                            pl-2 py-1 
+                            rounded-[10px] 
+                            text-base 
+                            text-white/80 focus:border-white/80
+                            bg-transparent
+                            w-full"
+                            placeholder="Email">
+
+                            <div class="mt-auto flex gap-x-2 justify-end">
+                              <button 
+                              class=" 
+                              text-black/80
+                              bg-white/80
+                              rounded-full
+                              px-4  py-1
+                              float-right
+                              font-medium" @click="scrollTologin">back</button>
+                              <button 
+                              class="
+                              text-black/80
+                              bg-white/80
+                              rounded-full
+                              px-4  py-1
+                              float-right
+                              font-medium" @click="resetPwd">Submit</button>
+                          </div>
                       </div>
+                    </div>
 
                 </div>
 
@@ -216,18 +255,27 @@
 </template>
 
 <script setup>
+
 import { ref } from 'vue';
 import { useUserStore } from '../stores/userStore';
 import { useRouter } from 'vue-router';
 import { useNotificationStore } from '../stores/NotiStore';
+
 const userStore = useUserStore();
 const router = useRouter();
 const open = ref(false);
 const email = ref('');
+const emailforgot = ref('');
 const password = ref('');
 const error = ref('');
+const showResend = ref(false);
 const notiStore = useNotificationStore();
+
+const loginref =ref(null);
+const forgotPwdref = ref(null);
+
 function login() {
+
     error.value = '';
 
     if (email.value && password.value) {
@@ -237,12 +285,24 @@ function login() {
         formData.append('password', password.value);
         // eslint-disable-next-line no-unused-vars
         userStore.login(formData).then(res => {
+          error.value = '';
+          if (res.status === 200) {
+            email.value = '';
+            password.value = '';
+            showResend.value = '';
             open.value = false;
             router.push({
-                path : '/adminDashboard'
+                path : '/adminDashboard/shows'
             });
+
+          } else if (res.status === 403) {
+            showResend.value = true;
+          }
+
         }).catch(error => {
-            console.log('error', error);
+            if (error.response.status === 403) {
+              showResend.value = true;
+            }
         })
 
     } else {
@@ -252,11 +312,43 @@ function login() {
 
 }
 
-function routeToAdminDash() {
-  router.push({
-    name : 'adminManageShows'
-  })
+function resetPwd() {
+  if (emailforgot.value) {
+
+    const formData = new FormData();
+
+    formData.append('email', emailforgot.value);
+
+    userStore.forgotPwd(formData).then(res => {
+      if (res.status === 200) {
+        return '';
+      }
+    })
+  } else {
+    error.value = 'Email require'
+  }
 }
+
+function scrollTologin() {
+  loginref.value.scrollIntoView({behavior : 'smooth', inline : 'end'});
+}
+
+function scrollToforgotPwd() {
+  forgotPwdref.value.scrollIntoView({behavior : 'smooth', inline : 'end'});
+}
+
+function resendVerify() {
+  if (email.value) {
+    const formData = new FormData();
+
+    formData.append('email', email.value);
+
+    userStore.resendVerify(formData).then(res => {
+      return res;
+    })
+  }
+}
+
 </script>
 
 <style>

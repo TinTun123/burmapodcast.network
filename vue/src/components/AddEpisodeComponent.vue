@@ -34,7 +34,7 @@
                 overflow-hidden 
                 group
                 w-[50%]
-                laptop:w-full">
+                laptop:w-[30%]">
 
                     <div :style="{'background-image' : `URL(${coverImg})`}" class="aspect-square w-full img_block flex justify-center items-center">
 
@@ -45,14 +45,14 @@
 
                 </div>
 
-
                 <input hidden ref="imgInput" @change="onFileSelected" type="file" name="img" id="img">
 
 
                 <!-- image input end -->
 
-                <!-- dat input  -->
+                <!-- data input  -->
                 <div class="flex flex-col flex-1 gap-y-2">
+
                     <div class="flex gap-x-2">
 
                         <select 
@@ -83,7 +83,7 @@
                         <textarea v-model="desc"
                         placeholder="description"
                         class="bg-transparent h-[20vh] appearance-none focus:outline-none text-white w-full p-2 rounded-[15px] border border-[#D6D6D6]/60 focus:border-[#D6D6D6] placeholder:text-white/40"  
-                        name="desc" id="desc" cols="10" rows="5"></textarea>
+                        name="desc" id="desc" rows="5"></textarea>
                     </div>
                     
 
@@ -97,7 +97,9 @@
                     </div>
                 </div>
             </div>
+
         </div>
+
         <div @click="selectAudio" class="inline-block bg-[#2F2F2F] hover:bg-[#2F2F2F]/60 mt-4 transition rounded-[10px] cursor-pointer">
             <div class="flex items-center gap-x-2 px-2 py-1">
                 
