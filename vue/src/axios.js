@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useNotificationStore } from './stores/NotiStore';
 
 const axiosClient = axios.create({
-    baseURL : 'http://localhost:8000/api'
+    baseURL : 'https://burmapodcast.network/api'
 })
 
 axiosClient.interceptors.request.use((config) => {
