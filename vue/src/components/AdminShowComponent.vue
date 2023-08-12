@@ -104,7 +104,7 @@
 
                     <div class="flex overflow-x-hidden">
 
-                      <div class="flex-none w-full laptop:w-auto" ref="addEpisode">
+                      <div class="flex-none w-full" ref="addEpisode">
                         <AddEpisodeComponent :editEpi="editEpi" :seasons="showStore.currentShow.seasons" @close="opneAddEpisode = false" @scrollToAddUser="scrollToAddUser"/>
                       </div>
 
