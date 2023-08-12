@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\Console\Input\Input;
 
 class ShowController extends Controller
 {
@@ -112,8 +113,8 @@ class ShowController extends Controller
             'host' => 'required|array',
             'host.*' => 'integer',
             'date' => 'nullable|date',
-            'seasonId' => 'integer'
-
+            'seasonId' => 'integer',
+            'duration' => 'required|integer'
         ]);
 
 
@@ -175,6 +176,7 @@ class ShowController extends Controller
         $episode->audio_url = $this->storeImage($request->file('audio'), $episodeId, 'audio');
         $episode->number_of_likes = 0;
         $episode->created_at = $date;
+        $episode->duration = $request->input('duration');
         $episode->save();
 
         $episode->users()->attach(array_map('intval', $request->input('host')));
@@ -200,6 +202,70 @@ class ShowController extends Controller
 
     }
 
+    public function search(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'query' => 'required|string|max:255',
+            'category' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+
+            return response()->json(['error' => $validator->errors()], 402);
+
+        }
+
+        $query = $request->input('query');
+        $category = $request->input('category');
+        $episodes = [];
+
+        switch ($category) {
+            case 'shows':
+                # code...
+                $episodes = Episode::whereHas('season.show', function ($que) use ($query) {
+                    $que->where('title', 'LIKE', "%$query%");
+                })->with(['season.show' => function ($query) {
+                    $query->select('id', 'title');
+                }, 'users'])->withCount('comments')->get();
+    
+                return response()->json(['msg' => 'found ' . $episodes->count() . ' episodes of ' . $episodes[0]->season->show->title, 'episodes' => $episodes], 200);
+                break;
+            
+            case 'hosts' :
+
+                $episodes = Episode::whereHas('users', function ($que) use ($query) {
+                    $que->where('name', 'LIKE', "%$query%");
+                })->with(['season.show', 'users'])->withCount('comments')->get();
+
+                return response()->json(['msg' => 'found ' . $episodes->count() . ' episodes where ' . $query . ' host.', 'episodes' => $episodes], 200);
+                break;
+
+            case 'episodes':
+
+                $episodes = Episode::where('title', 'LIKE', "%$query%")->with(['season.show', 'users'])->withCount('comments')->get();
+                return response()->json(['msg' => 'found ' . $episodes->count() . ' episodes which title include ' . $query, 'episodes' => $episodes], 200);
+
+                break;
+
+            case 'most':
+                $episodes = Episode::orderByDesc('number_of_likes')
+                ->limit(5)
+                ->with(['season.show', 'users'])
+                ->withCount('comments')
+                ->get();
+
+                return response()->json(['msg' => $episodes->count() . ' most listen episdoes.', 'episodes' => $episodes], 200);
+                break;
+            default:
+                # code...
+                break;
+        }
+
+
+
+        return response()->json(['success' => 'No episode was found.'], 200);
+    }
+
     public function editEpisode(Request $request, $showId, $episodeId) {
 
         $validator = Validator::make($request->all(), [
@@ -211,7 +277,8 @@ class ShowController extends Controller
             'host' => 'required|array',
             'host.*' => 'integer',
             'date' => 'nullable|date',
-            'seasonId' => 'integer'
+            'seasonId' => 'integer',
+            'duration' => 'required|integer'
 
         ]);
 
@@ -247,7 +314,7 @@ class ShowController extends Controller
             $episode->created_at = $date;
             $episode->img_url = $this->storeImage($request->file('img'), $episode->id, 'episode');
             $episode->audio_url = $this->storeImage($request->file('audio'), $episode->id, 'audio');
-
+            $episode->duration = $request->input('duration');
         }
 
         $episode->users()->detach();
@@ -361,7 +428,28 @@ class ShowController extends Controller
     }
 
      public function getShows() {
-        $shows = Show::get()->toArray();
+        $shows = Show::with(['seasons.episodes' => function ($query) {
+            $query->select('id', 'season_id', 'number_of_likes', 'duration');
+        }])->get()->toArray();
+
+        foreach($shows as &$show) {
+            $totallikes = 0;
+            $totalduration = 0;
+            foreach($show['seasons'] as $season) {
+                foreach($season['episodes'] as $epi) {
+                    $totallikes += $epi['number_of_likes'];
+                    $totalduration += $epi['duration'];
+                }
+            }
+
+            $show['total_likes'] = $totallikes;
+            $show['total_duration'] = $totalduration;
+            unset($show['seasons']);
+        }
+
+        Log::info('shows', [
+            $shows
+        ]);
 
         $etag = md5(json_encode($shows));
 

@@ -1,6 +1,7 @@
 <template>
     <div>
         <Teleport to="body">
+          <div>
         <transition name="modal">
         
             <div v-if="open" class="modal-mask">
@@ -50,6 +51,7 @@
 
             </div>                
         </transition>
+        </div>
 
     </Teleport>
     </div>
@@ -63,10 +65,13 @@ const userStore = useUserStore();
 const open = ref(false);
 const audiencename = ref('');
 const emittype = ref('');
-const emit = defineEmits(['createAnswer'])
-async function openModal(emittypepara) {
+const payloadArg = ref();
+const emit = defineEmits(['createAnswer', 'likeEpisode'])
+async function openModal(emittypepara, payload) {
     open.value = true;
     emittype.value = emittypepara;
+    payloadArg.value = payload;
+    console.log(payload);
 }
 
 defineExpose({
@@ -81,7 +86,7 @@ function addAudience() {
         formData.append('audienceName', audiencename.value);
 
         userStore.addAudience(formData).then(res => {
-            emit(emittype.value);
+            emit(emittype.value, payloadArg.value);
             audiencename.value = '';
             open.value = false;
             return res;

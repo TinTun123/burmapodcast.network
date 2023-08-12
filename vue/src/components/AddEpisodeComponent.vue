@@ -181,19 +181,13 @@ const audioFilename = ref('');
 const size = ref();
 const props = defineProps(['seasons', 'editEpi']);
 const emit = defineEmits(['close', 'scrollToAddUser']);
+const duration = ref(0);
 
 
 function addEpisode () {
 
-    if (title.value && img.value && desc.value && host.value && audio.value) {
+    if (title.value && img.value && desc.value && host.value && audio.value && duration.value) {
 
-        console.log('addEpisode');
-
-        if (props.editEpi) {
-            console.log('edit');
-        } else {
-            console.log('create');
-        }
 
         const formData = new FormData();
 
@@ -201,6 +195,8 @@ function addEpisode () {
         formData.append('desc', desc.value);
         formData.append('img', img.value);
         formData.append('audio', audio.value);
+        formData.append('duration', duration.value);
+
         
         for (let i = 0; i < host.value.length; i++) {
             formData.append('host[]', Number(host.value[i]));
@@ -224,6 +220,7 @@ function addEpisode () {
                     desc.value = '';
                     host.value = [];
                     seasonId.value = '';
+                    duration.value = 0;
                     emit('close');
                 }
                 return res;
@@ -240,6 +237,7 @@ function addEpisode () {
                     desc.value = '';
                     host.value = [];
                     seasonId.value = '';
+                    duration.value = 0;
                     emit('close');
                 }
             })
@@ -261,6 +259,7 @@ function deleteEpisode(epId, showId) {
             desc.value = '';
             host.value = [];
             seasonId.value = '';
+            duration.value = 0;
             emit('close');
         }
         return res;
@@ -284,6 +283,7 @@ function openFile() {
 }
 
 function selectAudio() {
+    duration.value = 0;
     audioInput.value.click();
 }
 
@@ -302,13 +302,32 @@ function onFileSelected(e) {
     }
 }
 
-function onAudioSelected(e) {
+async function onAudioSelected(e) {
+
     const files = e.target.files;
+    const audioFile = files[0];
+    const allowedFormat = ['audio/mpeg', 'audio/wav', 'audio/ogg'];
 
     if (files.length) {
-        audio.value = files[0];
-        audioFilename.value = files[0].name;
-        size.value = (files[0].size / (1024 * 1024)).toFixed(2);
+        if (allowedFormat.includes(audioFile.type)) {
+            
+
+            audio.value = audioFile;
+            audioFilename.value = audioFile.name;
+            size.value = (audioFile.size / (1024 * 1024)).toFixed(2);
+
+            const audioEle = new Audio();
+            audioEle.src = URL.createObjectURL(audioFile);
+
+            audioEle.addEventListener('loadedmetadata', () => {
+                duration.value = Math.floor(audioEle.duration / 60);
+                audioEle.pause();
+                URL.revokeObjectURL(audioEle.src);
+                console.log(duration.value);
+            })
+
+        }
+
     }
 }
 

@@ -50,22 +50,22 @@
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M11.707 0.293031C11.5194 0.105559 11.2651 0.000244141 11 0.000244141C10.7348 0.000244141 10.4805 0.105559 10.293 0.293031L3.29296 7.29303L1.29296 9.29303C1.19745 9.38528 1.12127 9.49562 1.06886 9.61763C1.01645 9.73963 0.988862 9.87085 0.987709 10.0036C0.986555 10.1364 1.01186 10.2681 1.06214 10.391C1.11242 10.5139 1.18667 10.6255 1.28056 10.7194C1.37446 10.8133 1.48611 10.8876 1.60901 10.9379C1.7319 10.9881 1.86358 11.0134 1.99636 11.0123C2.12914 11.0111 2.26036 10.9835 2.38236 10.9311C2.50437 10.8787 2.61471 10.8025 2.70696 10.707L2.99996 10.414V17C2.99996 17.7957 3.31603 18.5587 3.87864 19.1214C4.44125 19.684 5.20431 20 5.99996 20H16C16.7956 20 17.5587 19.684 18.1213 19.1214C18.6839 18.5587 19 17.7957 19 17V10.414L19.293 10.707C19.4816 10.8892 19.7342 10.99 19.9964 10.9877C20.2586 10.9854 20.5094 10.8803 20.6948 10.6948C20.8802 10.5094 20.9854 10.2586 20.9876 9.99643C20.9899 9.73423 20.8891 9.48163 20.707 9.29303L11.707 0.293031Z" fill="#CCCCCC"/>
                         </svg>
                     </div>
-                    <span>
+                    <span class="font-semibold text-base">
                         Home
                     </span>
                 </router-link>
 
                 
-                <span @click.stop="routeToSAudiencehows" :class="[route.name === 'audienceShows' || route.name === 'show' ?  'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                <span @click.stop="routeToSAudiencehows" :class="[route.name === 'audienceShows' || route.name === 'show' ?  'bg-white/20' : '']" class="p-2 text-white/80 font-semibold text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
                     Shows
                 </span>
 
-                <span @click="routeToForum()" :class="[route.name === 'audienceforums' || route.name === 'audienceforum' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                <span @click="routeToForum()" :class="[route.name === 'audienceforums' || route.name === 'audienceforum' ? 'bg-white/20' : '']" class="p-2 text-white/80 font-semibold text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
                     Let's talk
                 </span>
                 
-                <span class="p-2 pt-3 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
-                    About us
+                <span @click="openSearch" class="p-2 pt-3 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 font-semibold cursor-pointer transition">
+                    Search
                 </span>
                 
             </div>
@@ -74,11 +74,11 @@
         <div class="bg-[#282828] laptop:rounded-[10px] laptop:mt-4 overflow-hidden">
             <div class="flex flex-col text-center">
 
-                <span @click="routeToplaylist" :class="[route.name === 'playList' || route.name === 'playList' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                <span @click="routeToplaylist" :class="[route.name === 'playList' || route.name === 'playList' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 font-semibold active:bg-[#282828]/20 cursor-pointer transition">
                     Playlist
                 </span>
 
-                <span @click="routeTofavorite" :class="[route.name === 'myFavorite' || route.name === 'myFavorite' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                <span @click="routeTofavorite" :class="[route.name === 'myFavorite' || route.name === 'myFavorite' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 font-semibold active:bg-[#282828]/20 cursor-pointer transition">
                     My favourite
                 </span>
              
@@ -86,22 +86,22 @@
             </div>
         </div>
 
-        <div v-if="userStore.user_level === 2 && userStore.token" class="bg-[#282828] laptop:rounded-[10px] laptop:mt-4 overflow-hidden">
+        <div v-if="userStore.user_level === 2 && userStore.token" class="bg-[#282828]  laptop:rounded-[10px] laptop:mt-4 overflow-hidden">
             <div class="flex flex-col gap-y-2 text-center">
 
-                <span class="p-2 text-white/80 border-b border-white/20 text-base cursor-pointer transition">
+                <span class="p-2 text-white/80 border-b border-white/20 font-semibold text-base cursor-pointer transition">
                     AdminDashboard
                 </span>
 
-                <span :class="[route.name === 'Adminforum' || route.name === 'forumShow' ? 'bg-white/20' : '']" @click="routeToAdminForum()" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                <span :class="[route.name === 'Adminforum' || route.name === 'forumShow' ? 'bg-white/20' : '']" @click="routeToAdminForum()" class="p-2 text-white/80 text-base font-semibold hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
                     forums
                 </span>
 
-                <span :class="[route.name === 'adminManageHosts' ? 'bg-white/20' : '']" @click.stop="routeToAdminHost"  class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                <span :class="[route.name === 'adminManageHosts' ? 'bg-white/20' : '']" @click.stop="routeToAdminHost"  class="p-2 text-white/80 text-base hover:bg-white/20 font-semibold active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
                     Hosts
                 </span>
                 
-                <span :class="[route.name === 'adminManageShows' || route.name === 'adminShow' ? 'bg-white/20' : '']" @click.stop="routeToManageShows" class="p-2 pt-3 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                <span :class="[route.name === 'adminManageShows' || route.name === 'adminShow' ? 'bg-white/20' : '']" @click.stop="routeToManageShows" class="p-2 pt-3 text-white/80 font-semibold text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
                     Manage shows
                 </span>
                 
@@ -113,10 +113,16 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '../stores/userStore';
+import { useSearchStore } from '../stores/searchStore';
 
 const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
+const searchStore = useSearchStore();
+
+function openSearch() {
+    searchStore.openSearch = true;
+}
 
 function routeToForum() {
     router.push({

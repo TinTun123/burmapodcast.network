@@ -61,10 +61,10 @@
 
                     </div>
 
-                    <div class="w-[48px] aspect-square flex-none">
+                    <!-- <div class="w-[48px] aspect-square flex-none">
                  
                         <img :src="epi.img_url" class="w-full h-full" alt="">
-                    </div>
+                    </div> -->
 
             </div>
 

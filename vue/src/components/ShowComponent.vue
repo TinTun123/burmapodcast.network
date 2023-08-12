@@ -4,10 +4,10 @@
         <div :key="showStore.currentShow.id" v-if="showStore.currentShow.id" class="">
 
             <div class="bg-gradient-to-t from-[#262626]/0 to-[#666666] pt-8 px-4 tablet:px-8">
-                <div class="w-[152px] laptop:w-[288px] aspect-square laptop:float-left laptop:mr-4 overflow-hidden rounded-[10px] mx-auto shadow-img-shadow">
+                <div class="w-[152px] laptop:w-[248px] aspect-square laptop:float-left laptop:mr-4 overflow-hidden rounded-[10px] mx-auto shadow-img-shadow">
                     <img class="w-full h-full" :src="showStore.currentShow.cover_img" alt="">
                 </div>
-                <h1 class="text-white text-lg mt-8 font-semibold">{{ showStore.currentShow.title }}</h1>
+                <h1 class="text-white text-lg mt-8 laptop:mt-8 font-semibold">{{ showStore.currentShow.title }}</h1>
 
                 <div class="flex justify-between mt-4">
                     <div class="flex gap-x-1 items-center">
@@ -20,11 +20,12 @@
                     </div>
 
                     <div>
-                        <span class="text-white/80 text-sm font-medium">+342 likes</span>
+                        <span class="text-white/80 text-sm font-medium">{{ total_likes }} likes</span>
                     </div>
                 </div>
 
-                <p class="text-white/80 text-base leading-6 line-clamp-4 laptop:min-h-[96px]">{{ showStore.currentShow.description }}</p>
+                <p :class="[drop ? 'line-clamp-none' : 'line-clamp-4']" class="text-white/80  text-base leading-6 laptop:min-h-[96px]">{{ showStore.currentShow.description }}</p>
+                <span @click.stop="dropdesc" class="text-white/80 font-semibold text-x-sm">{{ drop ? 'less...' : 'more...' }}</span>
             </div>
 
 
@@ -94,7 +95,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useShowsStore } from '../stores/ShowsStore';
 import EpisodeListComponent from '../components/EpisodeListComponent.vue';
@@ -106,12 +107,34 @@ const tag = {
     EpisodeListComponent,
     LetsTalkComponent
 };
-
+const drop = ref(false);
 const currentTag = ref('EpisodeListComponent');
+
 
 onMounted(async() => {
     await showStore.getShow(route.params.id);
   
+})
+
+function dropdesc () {
+    drop.value = !drop.value;
+}
+
+const total_likes = computed(() => {
+    let totallikes = 0;
+    if (Object.keys(showStore.currentShow).length) {
+        for(let i = 0; i < showStore.currentShow.seasons.length; i++) {
+
+            for (let j = 0; j < showStore.currentShow.seasons[i].episodes.length; j++) {
+                totallikes += showStore.currentShow.seasons[i].episodes[j].number_of_likes;
+            }
+            }
+
+            return totallikes;
+    }
+
+    return 0;
+
 })
 </script>
 
@@ -127,6 +150,12 @@ onMounted(async() => {
 .fadecard-enter-from,
 .fadecard-leave-to {
   opacity: 0;
+}
+
+.transition-max-h {
+  transition-property: max-height;
+  transition-duration: 0.3s; /* Customize the duration */
+  transition-timing-function: ease-in-out; /* Customize the timing function */
 }
 
 

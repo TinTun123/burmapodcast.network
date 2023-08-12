@@ -21,14 +21,14 @@
                                     <h3 class="text-base text-white font-regular line-clamp-1">{{ epi.title }}</h3>
 
                                 </div>
-
+ 
                                 <div class="flex item-center gap-x-2">
 
                                     <div class="w-8 h-auto">
                                         <img v-if="epi.id === showStore.currentEpisode.id" class="w-full h-full" src="../assets/output-onlinegiftools(1).gif" alt="waveform">
                                     </div>
 
-                                    <div @click.stop="likeEpisode(epi)" v-if="route.name === 'episode'">
+                                    <div @click.stop="likeEpisode(epi)" v-if="route.name === 'show'">
 
                                         <svg v-if="showStore.isLike(epi.id)" width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <mask id="mask0_96_3200" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="-1" y="-1" width="18" height="16">
@@ -122,11 +122,11 @@
 
                 </div>
             </div>
-
+            <CollectUserDataComponent @createComment="createComment" @likeEpisode="likeEpisode" ref="collectUserData"/>
         </div> 
     </transition>
 
-        <CollectUserDataComponent @createComment="createComment(dropId)" ref="collectUserData"/>
+
 
 
 </template>
@@ -171,15 +171,15 @@ function edit(epi) {
 
 
 
-async function collectData(emittype) {
-    await collectUserData.value.openModal(emittype);
+async function collectData(emittype, payload) {
+    await collectUserData.value.openModal(emittype, payload);
 }
 
 
 function createComment(epiId) {
 
     if (!Object.keys(userStore.audience).length && !userStore.token) {
-        collectData('createComment');
+        collectData('createComment', epiId);
         return '';
     }
 
@@ -209,6 +209,13 @@ function deleteComment(commentId, episodeId) {
 }
 
 function likeEpisode(epi) {
+
+    if (!Object.keys(userStore.audience).length && !userStore.token) {
+        
+        collectData('likeEpisode', epi);
+        return '';
+    }
+
     if (showStore.isLike(epi.id)) {
 
         return ''

@@ -38,6 +38,8 @@ Route::post('email/resend', [AuthController::class, 'resend'])->name('verificati
 Route::post('forgotPwd', [AuthController::class, 'sendResetPwdEmail']);
 Route::post('resetPwd', [AuthController::class, 'reset']);
 
+Route::get('/search', [ShowController::class, 'search']);
+
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/users', [AuthController::class, 'getUsers']);
