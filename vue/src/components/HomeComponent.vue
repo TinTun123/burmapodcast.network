@@ -52,13 +52,16 @@
 
                             <div class="flex flex-col ">
                                 <div class="flex items-center gap-x-1">
-                                    <span class="text-x-sm text-white/60 font-semibold">{{ shows.total_duration }} min</span>
+
+                                    <span class="text-x-sm text-white/60 font-semibold">{{ shows.totalEpisodes }} Episodes</span>
+
                                     <div>
                                         <svg width="5" height="4" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="2.04778" cy="2" r="2" fill="#D9D9D9"/>
                                         </svg>
                                     </div>
-                                    <span class="text-x-sm text-white/60 font-semibold">{{ shows.total_likes }} Likes</span>
+                                    
+                                    <span class="text-x-sm text-white/60 font-semibold">{{ shows.listener_count }} listen</span>
                                 </div>
 
                                 <span  class="text-white text-base font-medium laptop:w-[174px]">
@@ -130,7 +133,7 @@
                     overflow-hidden 
                     bg-[#404040] 
                     px-1 mb-1
-                    absolute bottom-2 left-2
+                    absolute top-2 right-2
                     group-active:bg-[#404040]/60">
                         <div class="flex gap-x-1 items-start">
                             <span class="text-white/60 text-x-sm font-semibold">+{{ show.forum[0].answers ? show.forum[0].answers.length : 0 }}</span>

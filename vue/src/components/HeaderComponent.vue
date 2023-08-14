@@ -120,7 +120,7 @@
             laptop:py-0">
                 <div @click.stop="routeToHome" class="laptop:hidden w-full bg-transparent">
                     <div class="bg-transparent flex items-center gap-x-4">
-                        <div class="h-[76px]">
+                        <div class="laptop:h-[76px]">
                             <h1 class="text-white/80 my-auto font-bold">LOGO placeholder</h1>
                             <!-- <svg class="w-full h-full" viewBox="0 0 239 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_270_2743)">

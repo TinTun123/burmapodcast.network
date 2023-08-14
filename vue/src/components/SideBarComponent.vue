@@ -74,9 +74,9 @@
         <div class="bg-[#282828] laptop:rounded-[10px] laptop:mt-4 overflow-hidden">
             <div class="flex flex-col text-center">
 
-                <span @click="routeToplaylist" :class="[route.name === 'playList' || route.name === 'playList' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 font-semibold active:bg-[#282828]/20 cursor-pointer transition">
+                <!-- <span @click="routeToplaylist" :class="[route.name === 'playList' || route.name === 'playList' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 font-semibold active:bg-[#282828]/20 cursor-pointer transition">
                     Playlist
-                </span>
+                </span> -->
 
                 <span @click="routeTofavorite" :class="[route.name === 'myFavorite' || route.name === 'myFavorite' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 font-semibold active:bg-[#282828]/20 cursor-pointer transition">
                     My favourite

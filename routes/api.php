@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ShowController;
 use App\Http\Controllers\VerificationController;
+use App\Models\Episode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,7 @@ Route::post('forgotPwd', [AuthController::class, 'sendResetPwdEmail']);
 Route::post('resetPwd', [AuthController::class, 'reset']);
 
 Route::get('/search', [ShowController::class, 'search']);
+Route::get('listen/{episode}', [ShowController::class, 'listen']);
 
 Route::middleware('auth:sanctum')->group(function () {
 

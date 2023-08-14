@@ -44,7 +44,7 @@
         <transition name="modal">
         
             <div v-if="searchStore.openSearch" class="modal-mask">
-                <div class="modal-container rounded-[15px] relative">
+                <div class="modal-container-search rounded-[15px] relative">
                     <button @click="searchStore.openSearch = false; searchStore.episodes = []" class="absolute left-2 top-2 group" type="button">
                       <div class="w-8 h-8">
                         <svg class="w-full h-full" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">

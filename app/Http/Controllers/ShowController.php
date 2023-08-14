@@ -416,6 +416,15 @@ class ShowController extends Controller
         return $publicURL;
     }
 
+    public function listen(Episode $episode) {
+
+        if ($episode) {
+            $episode->increment('listener_count');
+        }
+
+        return response()->json(['msg' => 'all fine'], 200);
+    }
+
     private function generateId($type) {
         if ($type === 'show') {
             $lastId = Show::max('id');
@@ -428,22 +437,29 @@ class ShowController extends Controller
     }
 
      public function getShows() {
-        $shows = Show::with(['seasons.episodes' => function ($query) {
-            $query->select('id', 'season_id', 'number_of_likes', 'duration');
-        }])->get()->toArray();
 
+        $shows = Show::with(['seasons.episodes' => function ($query) {
+            $query->select('id', 'season_id', 'number_of_likes', 'duration', 'listener_count');
+        }])->get()->toArray();
+        
         foreach($shows as &$show) {
             $totallikes = 0;
             $totalduration = 0;
+            $totalEpisode = 0;
+            $totalPlay = 0;
             foreach($show['seasons'] as $season) {
                 foreach($season['episodes'] as $epi) {
                     $totallikes += $epi['number_of_likes'];
                     $totalduration += $epi['duration'];
+                    $totalEpisode += 1;
+                    $totalPlay += $epi['listener_count'];
                 }
             }
 
             $show['total_likes'] = $totallikes;
             $show['total_duration'] = $totalduration;
+            $show['totalEpisodes'] = $totalEpisode;
+            $show['listener_count'] = $totalPlay;
             unset($show['seasons']);
         }
 

@@ -256,6 +256,23 @@ export const useShowsStore = defineStore('Shows', {
             return '';
 
         },
+        isListen (epi) {
+            const index = this.playList.findIndex(list => {
+                return list.id === epi.id;
+            });
+
+            if (index === -1) {
+                return false;
+            } else {
+                return true;
+            }
+        },
+        incrementEpicount (epiId) {
+            return axiosClient.get(`listen/${epiId}`).then(res => {
+                console.log(res);
+                return res;
+            })
+        },
         fetchShows() {
           
             return axiosClient.get('/show').then(res => {
