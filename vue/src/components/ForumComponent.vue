@@ -1,16 +1,16 @@
 <template>
     <div class="mx-4 mt-8 tablet:mx-8">
 
-        <div v-for="(show, i) in forumStore.forums" :key="i">
-
-            <div v-if="show.forum.length > 0" class="flex items-center gap-x-2 my-8">
-                <span class="text-white/80 font-semibold text-lg">{{ show.title }}</span>
-                <div class="w-[90%]">
+        <div  class="flex items-center justify-between gap-x-2 my-8">
+                <span class="text-white/80 font-semibold text-lg">Digital forum & exhibition</span>
+                <div class="w-[60%]">
                     <svg class="w-full" height="2" viewBox="0 0 1000 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="1000" height="2" fill="#CCCCCC" fill-opacity="0.4"/>
                     </svg>
                 </div>
             </div>
+
+        <div v-for="(show, i) in forumStore.forums" :key="i">
 
             <div class="grid grid-cols-1 tablet:grid-cols-2 gap-4">   
 
@@ -24,6 +24,11 @@
                 relative">
 
                 <div class="flex gap-x-2">
+
+                    <div class="flex gap-x-2 items-center rounded-full overflow-hidden  px-2 bg-[#404040] group-active:bg-[#404040]/80 py-1">
+                        <span class="text-x-sm text-white/40 font-bold">show</span>
+                        <span class="text-x-sm text-white/80 line-clamp-1 fount-semibold leading-5 break-all">{{ show.title }}</span>
+                    </div>
 
                     <div class="flex gap-x-2 rounded-full overflow-hidden  px-2 bg-[#404040] group-active:bg-[#404040]/80 py-1">
                         <span class="text-x-sm text-white/60 font-bold">{{ getDate(forum.created_at) }}</span>
