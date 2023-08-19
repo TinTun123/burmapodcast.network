@@ -25,7 +25,7 @@
                 </div>
 
                 <div>
-                    <span class="text-white/80 text-sm font-medium">+342 likes</span>
+                    <span class="text-white/80 text-sm font-medium">{{ total_likes }} likes</span>
                 </div>
             </div>
 
@@ -124,7 +124,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { useShowsStore } from '../stores/ShowsStore';
 import {useRoute} from 'vue-router';
 import AddShowComponent from '../components/AddShowComponent.vue';
@@ -169,6 +169,24 @@ function editEpisode(epi) {
   opneAddEpisode.value = true;
   editEpi.value = epi;
 }
+
+
+const total_likes = computed(() => {
+    let totallikes = 0;
+    if (Object.keys(showStore.currentShow).length) {
+        for(let i = 0; i < showStore.currentShow.seasons.length; i++) {
+
+            for (let j = 0; j < showStore.currentShow.seasons[i].episodes.length; j++) {
+                totallikes += showStore.currentShow.seasons[i].episodes[j].number_of_likes;
+            }
+            }
+
+            return totallikes;
+    }
+
+    return 0;
+
+})
 
 </script>
 

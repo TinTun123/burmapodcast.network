@@ -55,6 +55,10 @@
                     </span>
                 </router-link>
 
+                <span @click="openSearch" class="p-2 pt-3 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 font-semibold cursor-pointer transition">
+                    Search
+                </span>
+
                 
                 <span @click.stop="routeToSAudiencehows" :class="[route.name === 'audienceShows' || route.name === 'show' ?  'bg-white/20' : '']" class="p-2 text-white/80 font-semibold text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
                     Shows
@@ -64,9 +68,7 @@
                     Let's talk
                 </span>
                 
-                <span @click="openSearch" class="p-2 pt-3 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 font-semibold cursor-pointer transition">
-                    Search
-                </span>
+
                 
             </div>
         </div>
@@ -81,6 +83,12 @@
                 <span @click="routeTofavorite" :class="[route.name === 'myFavorite' || route.name === 'myFavorite' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 font-semibold active:bg-[#282828]/20 cursor-pointer transition">
                     My favourite
                 </span>
+
+                <router-link :class="route.name === 'about' ? 'bg-white/20' : ''" class="p-2 pt-3 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition flex gap-x-2 items-center justify-center" :to="{name : 'about'}">
+                    <span class="font-semibold text-base">
+                        About us
+                    </span>
+                </router-link>
              
                 
             </div>
@@ -160,11 +168,11 @@ function routeTofavorite() {
     });
 }
 
-function routeToplaylist() {
-    router.push({
-        name : 'playList'
-    });
-}
+// function routeToplaylist() {
+//     router.push({
+//         name : 'playList'
+//     });
+// }
 
 </script>
 

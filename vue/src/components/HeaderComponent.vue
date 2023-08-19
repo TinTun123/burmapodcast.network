@@ -275,9 +275,12 @@
                 </router-link>
 
 
-                <div class="text-white text-center p-2 border-b border-[#FFFFFF]/10 active:bg-white/10">
-                    About us
-                </div>
+                <router-link :to="{name : 'about'}">
+                    <div class="text-white text-center p-2 border-b border-[#FFFFFF]/10 active:bg-white/10">
+                        About us
+                    </div>
+                </router-link>
+       
 
                 <router-link v-if="userStore.user_level === 2 && userStore.token" :to="{name : 'adminManageShows'}">
 
