@@ -1,13 +1,14 @@
 <template>
     <div class="mx-4 mt-8 tablet:mx-8">
+<!--  flex items-center justify-between -->
 
-        <div  class="flex items-center justify-between gap-x-2 my-8">
-                <span class="text-white/80 font-semibold text-lg">Digital forum & exhibition</span>
-                <div class="w-[60%]">
+        <div  class=" gap-x-2 my-8">   
+                <span class="text-white/80 font-semibold text-lg bg-[#E84344]/80 inline-block py-1 px-4 rounded-bl-[20px] rounded-tr-[20px] shadow-card-shadow">Digital forum & exhibition</span>
+                <!-- <div class="w-[60%]">
                     <svg class="w-full" height="2" viewBox="0 0 1000 2" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect width="1000" height="2" fill="#CCCCCC" fill-opacity="0.4"/>
                     </svg>
-                </div>
+                </div> -->
             </div>
 
         <div v-for="(show, i) in forumStore.forums" :key="i">

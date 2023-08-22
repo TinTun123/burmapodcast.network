@@ -1,70 +1,62 @@
 <template>
     <div class="laptop:ml-4 laptop:h-auto  laptop:w-[15%] h-[100vh]">
-        <!-- <div class="p-4 bg-[#282828] laptop:rounded-[10px]">
-            <div class="w-full h-12">
-                <svg class="w-full h-full"  viewBox="0 0 79 49" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M76.1606 0H40.5544C39.43 0 38.5129 0.927461 38.5129 2.07254V42.4559C38.5129 43.5958 39.43 44.5233 40.5544 44.5233H76.1606C77.2849 44.5233 78.1969 43.5958 78.1969 42.4559V2.07254C78.1969 0.927461 77.2849 0 76.1606 0Z" fill="#E84343"/>
-                <path d="M1 17.3057H6.62694C7.20725 17.3057 7.76165 17.5388 8.17097 17.9533C8.5803 18.373 8.81346 18.9378 8.81346 19.5233V31.8756C8.81346 32.4611 8.5803 33.0259 8.17097 33.4456C7.76165 33.8601 7.20725 34.0932 6.62694 34.0932H1V45.7824C1 46.3678 1.22798 46.9326 1.6373 47.3471C2.04663 47.7668 2.60622 48 3.18653 48H58.2124" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M6.62694 17.3057H14.4404C15.0207 17.3057 15.5751 17.5388 15.9844 17.9533C16.3938 18.373 16.6269 18.9378 16.6269 19.5233V31.8756C16.6269 32.4611 16.3938 33.0259 15.9844 33.4456C15.5751 33.8601 15.0207 34.0932 14.4404 34.0932H13.9896" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M21.7668 43.2487H21.6839C21.1036 43.2487 20.5492 43.0155 20.1347 42.601C19.7254 42.1865 19.4974 41.6217 19.4974 41.0311V19.5233C19.4974 18.9378 19.7254 18.373 20.1399 17.9533C20.5492 17.5388 21.1036 17.3057 21.6839 17.3057H27.3108" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M39.6683 17.3057H45.3005C45.8808 17.3057 46.4352 17.5388 46.8445 17.9533C47.2538 18.373 47.4818 18.9378 47.4818 19.5233V31.8756C47.4818 32.4611 47.2538 33.0259 46.8445 33.4456C46.4352 33.8601 45.8808 34.0932 45.3005 34.0932H39.6683" stroke="black" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M45.3005 34.0984H53.1139C53.6942 34.0932 54.2486 33.8601 54.658 33.4456C55.0673 33.0311 55.2953 32.4663 55.2953 31.8756V19.5285C55.2953 18.9378 55.0673 18.373 54.658 17.9585C54.2486 17.544 53.6942 17.3057 53.1139 17.3057H52.658" stroke="black" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M34.5596 43.2487H34.6425C35.2228 43.2487 35.7772 43.0155 36.1917 42.601C36.601 42.1865 36.829 41.6217 36.829 41.0311V19.5233C36.829 18.9378 36.601 18.373 36.1917 17.9533C35.7772 17.5388 35.2228 17.3057 34.6425 17.3057H29.0155" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M27.0414 17.3057H29.0155V33.0932C29.0155 33.3575 28.9119 33.6114 28.7253 33.7979C28.5388 33.9896 28.2901 34.0932 28.0259 34.0932C27.7668 34.0932 27.5181 33.9896 27.3316 33.7979C27.145 33.6114 27.0414 33.3575 27.0414 33.0932V17.3057Z" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M50.5388 35.9741V44.5233" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M71.8807 34.0984V44.5233" stroke="black" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M53.5958 35.9741V44.5233" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M66.1709 17.3057V31.8808C66.1709 32.4663 65.9429 33.0311 65.5336 33.4456C65.1243 33.8653 64.5699 34.0984 63.9895 34.0984H60.4351C59.8548 34.0984 59.3004 33.8653 58.8911 33.4456C58.4818 33.0311 58.2538 32.4663 58.2538 31.8808V17.3057" stroke="black" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M77.1553 24.0725V34.0984H69.2331V28.7046" stroke="black" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M77.1553 17.3057H69.2331" stroke="black" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M35.7564 14.9638C33.9689 14.9638 32.2539 14.2436 30.9896 12.9586C29.7254 11.6736 29.0155 9.93268 29.0155 8.11402C29.0155 6.29537 29.7254 4.55444 30.9896 3.26946C32.2539 1.98449 33.9689 1.26428 35.7564 1.26428" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M74.6217 14.9638C73.7357 14.9638 72.86 14.7876 72.0414 14.4456C71.2227 14.0985 70.4766 13.5959 69.8548 12.9586C69.2279 12.3213 68.7305 11.5648 68.3885 10.7358C68.0517 9.90677 67.8756 9.01558 67.8756 8.11402C67.8756 7.21247 68.0517 6.32646 68.3885 5.49226C68.7305 4.66325 69.2279 3.90677 69.8548 3.26946C70.4766 2.63216 71.2227 2.12957 72.0414 1.7876C72.86 1.44045 73.7357 1.26428 74.6217 1.26428" stroke="black" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M62.9066 34.0984V45.7771C62.9066 46.3678 63.1398 46.9326 63.5491 47.3471C63.9585 47.7616 64.5129 47.9948 65.0932 47.9948H75.8289" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M77.1553 17.3057L73.9325 21.1191" stroke="black" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M69.2331 17.3057L77.1553 24.0725" stroke="black" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M69.2331 28.6995H71.8807V34.0984" stroke="black" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M39.6683 17.3057H45.3005C45.8808 17.3057 46.4352 17.5388 46.8445 17.9533C47.2538 18.373 47.4818 18.9378 47.4818 19.5233V31.8756C47.4818 32.4611 47.2538 33.0259 46.8445 33.4456C46.4352 33.8601 45.8808 34.0932 45.3005 34.0932H39.6683" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M45.3005 34.0984H53.1139C53.6942 34.0932 54.2486 33.8601 54.658 33.4456C55.0673 33.0311 55.2953 32.4663 55.2953 31.8756V19.5285C55.2953 18.9378 55.0673 18.373 54.658 17.9585C54.2486 17.544 53.6942 17.3057 53.1139 17.3057H52.658" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M50.5388 35.9741V44.5233" stroke="white" stroke-width="1.49898" stroke-miterlimit="10"/>
-                <path d="M71.8807 34.0984V44.5233" stroke="white" stroke-width="1.49898" stroke-miterlimit="10"/>
-                <path d="M53.5958 35.9741V44.5233" stroke="white" stroke-width="1.49898" stroke-miterlimit="10"/>
-                <path d="M66.1709 17.3057V31.8808C66.1709 32.4663 65.9429 33.0311 65.5336 33.4456C65.1243 33.8653 64.5699 34.0984 63.9895 34.0984H60.4351C59.8548 34.0984 59.3004 33.8653 58.8911 33.4456C58.4818 33.0311 58.2538 32.4663 58.2538 31.8808V17.3057" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M77.1553 24.0725V34.0984H69.2331V28.7046" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M77.1553 17.3057H69.2331" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M74.6217 14.9638C73.7357 14.9638 72.86 14.7876 72.0414 14.4456C71.2227 14.0985 70.4766 13.5959 69.8548 12.9586C69.2279 12.3213 68.7305 11.5648 68.3885 10.7358C68.0517 9.90677 67.8756 9.01558 67.8756 8.11402C67.8756 7.21247 68.0517 6.32646 68.3885 5.49226C68.7305 4.66325 69.2279 3.90677 69.8548 3.26946C70.4766 2.63216 71.2227 2.12957 72.0414 1.7876C72.86 1.44045 73.7357 1.26428 74.6217 1.26428" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M62.9066 34.0984V44.5233" stroke="white" stroke-width="1.49898" stroke-miterlimit="10"/>
-                <path d="M77.1553 17.3057L73.9325 21.1191" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M69.2331 17.3057L77.1553 24.0725" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                <path d="M69.2331 28.6995H71.8807V34.0984" stroke="white" stroke-width="1.49898" stroke-miterlimit="10" stroke-linecap="round"/>
-                </svg>
-            </div>
 
-        </div> -->
+        <div class="flex justify-center items-center cursor-pointer">
+                            <router-link :class="route.name === 'home' ? '' : ''" :to="{name : 'home'}">
+            <svg class="" width="107" height="115" viewBox="0 0 107 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M106.561 76.2452C106.466 97.6551 87.9314 114.794 65.6147 114.794H12.0537C5.39578 114.794 0 109.615 0 103.231V12.8916C0 5.77221 6.01411 0 13.4355 0H41.2633C58.2801 0 72.0899 13.3584 71.3548 29.6697C71.2335 32.4085 70.7065 35.0455 69.8292 37.523C71.5958 37.6709 73.3296 37.9294 75.0258 38.2971C93.1266 42.1606 106.644 57.6948 106.561 76.2452Z" fill="#E84344"/>
+<path d="M18.7908 55.6285C17.9719 52.6325 15.6962 50.3719 12.9129 49.4657C11.576 49.0305 10.1881 49.9928 10.1881 51.3471V56.1197C10.1881 57.2141 11.1134 58.1017 12.2542 58.1017H16.7846C18.1336 58.1003 19.1322 56.878 18.7908 55.6285Z" fill="#F7F2EB"/>
+<path d="M47.6456 58.6212C46.3446 58.6212 45.2861 57.6115 45.2816 56.362C45.2457 47.6498 41.6914 39.4604 35.2731 33.3033C28.8532 27.1447 20.3149 23.7351 11.2331 23.7007C9.92757 23.6963 8.87357 22.6766 8.87807 21.4242C8.88256 20.1747 9.94105 19.165 11.2421 19.165C11.2451 19.165 11.2481 19.165 11.2511 19.165C21.589 19.2038 31.3086 23.0859 38.6162 30.0962C45.9224 37.105 49.9692 46.4276 50.0111 56.3433C50.0156 57.5957 48.9616 58.6154 47.6561 58.6212C47.6516 58.6212 47.6486 58.6212 47.6456 58.6212Z" fill="#F7F2EB"/>
+<path d="M57.211 58.6196C55.9085 58.6196 54.8515 57.6085 54.847 56.3589C54.8096 45.1966 50.2597 34.7049 42.0358 26.8171C33.8149 18.9308 22.8811 14.5661 11.2496 14.5273C9.94409 14.523 8.88859 13.5047 8.89308 12.2509C8.89757 11.0013 9.95457 9.99023 11.2571 9.99023C11.2601 9.99023 11.2631 9.99023 11.2661 9.99023C24.1537 10.0333 36.2687 14.8691 45.3789 23.6086C54.4922 32.3509 59.5331 43.9758 59.5751 56.3432C59.5795 57.5955 58.524 58.6153 57.2185 58.6181C57.2155 58.6196 57.2125 58.6196 57.211 58.6196Z" fill="#F7F2EB"/>
+<path d="M37.3976 58.6241C36.0981 58.6241 35.0411 57.6173 35.0336 56.3678C34.9991 50.2796 32.5109 44.5577 28.0254 40.2561C23.5354 35.9489 17.5647 33.5619 11.2122 33.5331C9.90668 33.5274 8.85268 32.5077 8.85867 31.2538C8.86466 30.0043 9.92166 28.9961 11.2227 28.9961C11.2272 28.9961 11.2302 28.9961 11.2347 28.9961C18.8418 29.0306 25.9922 31.8901 31.3685 37.0476C36.7403 42.1994 39.7197 49.0531 39.7616 56.3434C39.7691 57.5958 38.7151 58.6169 37.4096 58.6241C37.4066 58.6241 37.4021 58.6241 37.3976 58.6241Z" fill="#F7F2EB"/>
+<path d="M27.1511 58.6256C25.8546 58.6256 24.7991 57.6231 24.7871 56.3779C24.7557 52.9122 23.3319 49.6549 20.7807 47.2075C18.2205 44.7516 14.816 43.3872 11.1929 43.3627C9.88733 43.3541 8.83482 42.3315 8.84381 41.0791C8.85279 39.8325 9.90979 38.8257 11.2078 38.8257C11.2138 38.8257 11.2183 38.8257 11.2243 38.8257C16.0991 38.8573 20.6804 40.6942 24.1239 43.999C27.5583 47.2937 29.4732 51.6756 29.5151 56.3376C29.5271 57.59 28.4776 58.6141 27.1721 58.6256C27.1646 58.6256 27.1571 58.6256 27.1511 58.6256Z" fill="#F7F2EB"/>
+<path d="M9.06982 63.0122H13.5478C15.3609 63.0122 16.5871 63.5752 16.5871 65.2757C16.5871 66.1963 16.1469 66.7852 15.2935 67.1816C16.4658 67.5004 17.0392 68.3579 17.0392 69.4953C17.0392 71.3495 15.3998 72.1423 13.6811 72.1423H9.06982V63.0122ZM11.1629 66.7076H13.2813C14.0284 66.7076 14.5614 66.3888 14.5614 65.6204C14.5614 64.7644 13.8682 64.572 13.1226 64.572H11.1629V66.7076ZM11.1629 70.5811H13.4026C14.2156 70.5811 14.9492 70.3255 14.9492 69.379C14.9492 68.4455 14.3488 68.0749 13.443 68.0749H11.1644V70.5811H11.1629Z" fill="#F7F2EB"/>
+<path d="M26.5313 68.6896C26.5313 71.1571 25.0117 72.3592 22.4665 72.3592C19.8944 72.3592 18.4152 71.1829 18.4152 68.6896V63.0122H20.5082V68.6896C20.5082 69.6864 20.7747 70.6716 22.468 70.6716C23.9607 70.6716 24.4398 70.0583 24.4398 68.6896V63.0122H26.5328V68.6896H26.5313Z" fill="#F7F2EB"/>
+<path d="M33.7296 68.7657L36.3946 72.1538H33.8359L31.4375 68.8677H30.4119V72.1538H28.3054V63.0122H32.5978C34.9962 63.0122 35.917 64.457 35.917 65.9407C35.917 67.1816 35.2373 68.434 33.6518 68.7657H33.7296ZM30.4104 64.572V67.3209H32.0363C33.0365 67.3209 33.8629 67.104 33.8629 65.9407C33.8629 64.7515 33.0365 64.572 32.0363 64.572H30.4104Z" fill="#F7F2EB"/>
+<path d="M38.1537 63.0122H40.8725L43.0719 67.0394L45.2308 63.0122H47.99V72.1409H46.0303V65.6836H46.0033L43.8863 69.84H42.2739L40.1674 65.7482H40.1404V72.1409H38.1537V63.0122Z" fill="#F7F2EB"/>
+<path d="M49.1113 72.1407L53.4292 63.0249H55.5357L59.7876 72.1407H57.7619L56.8292 70.1199H52.0173L51.0172 72.1407H49.1113ZM54.5086 64.7383L52.9096 68.2671H56.0687L54.5221 64.7383H54.5086Z" fill="#F7F2EB"/>
+<path d="M9.06982 78.3569H13.3622C15.7487 78.3569 16.6545 79.8018 16.6545 81.2854C16.6545 82.769 15.7487 84.2139 13.3622 84.2139H11.1629V87.4871H9.06982V78.3569ZM11.1629 82.6527H12.7888C13.7485 82.6527 14.6273 82.4488 14.6273 81.284C14.6273 80.1192 13.747 79.9152 12.7888 79.9152H11.1629V82.6527Z" fill="#F7F2EB"/>
+<path d="M22.1985 87.5998C19.4796 87.5998 17.2803 85.49 17.2803 82.8818C17.2803 80.2607 19.4796 78.1509 22.1985 78.1509C24.9038 78.1509 27.1301 80.2607 27.1301 82.8818C27.1301 85.49 24.9053 87.5998 22.1985 87.5998ZM19.294 82.8818C19.294 84.4028 20.613 85.6695 22.1999 85.6695C23.7854 85.6695 25.079 84.4042 25.079 82.8818C25.079 81.3609 23.7854 80.0812 22.1999 80.0812C20.613 80.0812 19.294 81.3609 19.294 82.8818Z" fill="#F7F2EB"/>
+<path d="M28.3442 78.3569H32.4495C34.9153 78.3569 36.7673 79.8535 36.7673 82.8696C36.7673 85.5165 35.354 87.4856 32.4495 87.4856H28.3442V78.3569ZM30.4373 85.798H32.3027C33.5154 85.798 34.6757 85.0814 34.6757 83.062C34.6757 81.2208 33.996 80.0445 31.9299 80.0445H30.4373V85.798Z" fill="#F7F2EB"/>
+<path d="M42.6197 87.5109C39.9547 87.5109 37.7943 85.4398 37.7943 82.8819C37.7943 80.3498 39.9532 78.2529 42.6197 78.2529C44.4462 78.2529 45.9913 79.2238 46.8042 80.6184C45.9913 81.0277 45.9239 81.0665 45.0181 81.4873C44.551 80.7074 43.6452 80.1703 42.6197 80.1703C41.0596 80.1703 39.7945 81.3983 39.7945 82.8805C39.7945 84.377 41.0611 85.5906 42.6197 85.5906C43.6857 85.5906 44.6184 85.0405 45.099 84.1716C46.0048 84.6197 46.0317 84.67 46.8851 85.0406C46.0721 86.5127 44.4986 87.5109 42.6197 87.5109Z" fill="#F7F2EB"/>
+<path d="M47.2714 87.4854L51.5892 78.3696H53.6957L57.9476 87.4854H55.922L54.9892 85.4646H50.1774L49.1772 87.4854H47.2714ZM52.6701 80.0816L51.0712 83.6104H54.2302L52.6836 80.0816H52.6701Z" fill="#F7F2EB"/>
+<path d="M60.3611 84.775C60.5737 85.9771 61.6936 86.1423 62.4676 86.1423C63.2012 86.1423 64.3196 85.9384 64.3196 85.0048C64.3196 83.0616 58.6558 84.314 58.6558 80.9001C58.6558 79.02 60.4943 78.1382 62.2146 78.1382C64.1998 78.1382 66.0264 78.9698 66.0264 81.0796L64.0007 80.7981C63.7477 79.7367 62.7745 79.6979 62.1217 79.6979C61.4555 79.6979 60.683 79.9665 60.683 80.7334C60.683 81.4113 61.1366 81.565 63.5216 82.1151C64.2283 82.2817 66.3467 82.7025 66.3467 84.775C66.3467 86.4496 64.9873 87.7035 62.3882 87.7035C60.2563 87.7035 58.3369 86.7067 58.3369 84.4562L60.3611 84.775Z" fill="#F7F2EB"/>
+<path d="M69.9984 80.0443H66.9727V78.3696H75.0903V80.0572H72.0915V87.4854H69.9984V80.0443Z" fill="#F7F2EB"/>
+<path d="M10.7092 96.5262V102.843H8.88269V93.6753H11.2811L15.5331 99.3786V93.6753H17.3057V102.843H15.5331L10.7092 96.5262Z" fill="#F7F2EB"/>
+<path d="M20.7327 101.129H26.1045V102.817H18.707V93.6621H25.6509V95.3497H20.7327V97.4078H25.0775V99.1844H20.7327V101.129Z" fill="#F7F2EB"/>
+<path d="M30.0241 95.3875H26.9983V93.7129H35.1159V95.4005H32.1171V102.829H30.0241V95.3875Z" fill="#F7F2EB"/>
+<path d="M45.379 102.83H43.2994L41.687 96.6153H41.66L40.0745 102.83H37.9545L35.4348 93.7011H37.5278L38.8738 99.9401L39.0609 99.9143L40.7138 93.6997H42.6736L44.2995 99.9904L44.4867 100.003L45.8865 93.6997H47.9391L45.379 102.83Z" fill="#F7F2EB"/>
+<path d="M53.0969 102.945C50.378 102.945 48.1787 100.835 48.1787 98.227C48.1787 95.6059 50.378 93.4961 53.0969 93.4961C55.8023 93.4961 58.0285 95.6059 58.0285 98.227C58.0285 100.835 55.8023 102.945 53.0969 102.945ZM50.1909 98.227C50.1909 99.748 51.5099 101.015 53.0969 101.015C54.6824 101.015 55.9759 99.7494 55.9759 98.227C55.9759 96.7046 54.6824 95.4264 53.0969 95.4264C51.5099 95.4264 50.1909 96.7061 50.1909 98.227Z" fill="#F7F2EB"/>
+<path d="M64.6654 99.4532L67.3304 102.841H64.7717L62.3733 99.5552H61.3477V102.841H59.2412V93.6997H63.5336C65.932 93.6997 66.8528 95.1446 66.8528 96.6282C66.8528 97.8691 66.1731 99.1215 64.5876 99.4532H64.6654ZM61.3477 95.2595V98.0084H62.9736C63.9737 98.0084 64.8002 97.7915 64.8002 96.6282C64.8002 95.439 63.9737 95.2595 62.9736 95.2595H61.3477Z" fill="#F7F2EB"/>
+<path d="M77.2491 102.83H74.3701L71.8908 100.274L70.6511 101.922V102.83H68.5192V93.6885H70.6511V98.8661L74.3701 93.6885H76.9692L73.3834 98.8661L77.2491 102.83Z" fill="#F7F2EB"/>
+<path d="M79.0352 102.971C78.5816 102.971 78.2627 102.626 78.2627 102.165C78.2627 101.691 78.5966 101.359 79.0622 101.359C79.5293 101.359 79.8482 101.691 79.8482 102.165C79.8482 102.625 79.5413 102.971 79.0487 102.971H79.0352Z" fill="#F7F2EB"/>
+</svg>
+                </router-link>
+        </div>
 
+        <div class="bg-[#121212] laptop:rounded-[10px] laptop:mt-4 overflow-hidden shadow-card-shadow">
+            <div class="flex flex-col gap-y-2 laptop:gap-y-0 text-center">
 
-        <div class="bg-[#282828] laptop:rounded-[10px] laptop:mt-4 overflow-hidden">
-            <div class="flex flex-col gap-y-2 text-center">
-                <router-link :class="route.name === 'home' ? 'bg-white/20' : ''" class="p-2 pt-3 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition flex gap-x-2 items-center justify-center" :to="{name : 'home'}">
-                    <div class="">
+                    <!-- <div class="">
                         <svg width="16" height="15" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M11.707 0.293031C11.5194 0.105559 11.2651 0.000244141 11 0.000244141C10.7348 0.000244141 10.4805 0.105559 10.293 0.293031L3.29296 7.29303L1.29296 9.29303C1.19745 9.38528 1.12127 9.49562 1.06886 9.61763C1.01645 9.73963 0.988862 9.87085 0.987709 10.0036C0.986555 10.1364 1.01186 10.2681 1.06214 10.391C1.11242 10.5139 1.18667 10.6255 1.28056 10.7194C1.37446 10.8133 1.48611 10.8876 1.60901 10.9379C1.7319 10.9881 1.86358 11.0134 1.99636 11.0123C2.12914 11.0111 2.26036 10.9835 2.38236 10.9311C2.50437 10.8787 2.61471 10.8025 2.70696 10.707L2.99996 10.414V17C2.99996 17.7957 3.31603 18.5587 3.87864 19.1214C4.44125 19.684 5.20431 20 5.99996 20H16C16.7956 20 17.5587 19.684 18.1213 19.1214C18.6839 18.5587 19 17.7957 19 17V10.414L19.293 10.707C19.4816 10.8892 19.7342 10.99 19.9964 10.9877C20.2586 10.9854 20.5094 10.8803 20.6948 10.6948C20.8802 10.5094 20.9854 10.2586 20.9876 9.99643C20.9899 9.73423 20.8891 9.48163 20.707 9.29303L11.707 0.293031Z" fill="#CCCCCC"/>
                         </svg>
                     </div>
-                    <span class="font-semibold text-base">
+                    <span class="font-semibold text-white text-base">
                         Home
-                    </span>
-                </router-link>
+                    </span> -->
 
-                <span @click="openSearch" class="p-2 pt-3 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 font-semibold cursor-pointer transition">
+
+                <span @click="openSearch" class="p-2 pt-3 text-white/80 text-base hover:text-white active:text-white/40 active:bg-[#282828]/20 font-semibold cursor-pointer transition">
                     Search
                 </span>
 
                 
-                <span @click.stop="routeToSAudiencehows" :class="[route.name === 'audienceShows' || route.name === 'show' ?  'bg-white/20' : '']" class="p-2 text-white/80 font-semibold text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                <span @click.stop="routeToSAudiencehows" :class="[route.name === 'audienceShows' || route.name === 'show' ?  'bg-white/5' : '']" class="p-2 text-white/80 font-semibold text-base hover:text-white active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
                     Shows
                 </span>
 
-                <span @click="routeToForum()" :class="[route.name === 'audienceforums' || route.name === 'audienceforum' ? 'bg-white/20' : '']" class="p-2 text-white/80 font-semibold text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                <span @click="routeToForum()" :class="[route.name === 'audienceforums' || route.name === 'audienceforum' ? 'bg-white/5' : '']" class="p-2 text-white/80 font-semibold text-base hover:text-white active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
                     Let's talk
                 </span>
                 
@@ -73,18 +65,18 @@
             </div>
         </div>
 
-        <div class="bg-[#282828] laptop:rounded-[10px] laptop:mt-4 overflow-hidden">
+        <div class="bg-[#121212] laptop:rounded-[10px] laptop:mt-4 overflow-hidden shadow-card-shadow">
             <div class="flex flex-col text-center">
 
                 <!-- <span @click="routeToplaylist" :class="[route.name === 'playList' || route.name === 'playList' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 font-semibold active:bg-[#282828]/20 cursor-pointer transition">
                     Playlist
                 </span> -->
 
-                <span @click="routeTofavorite" :class="[route.name === 'myFavorite' || route.name === 'myFavorite' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 font-semibold active:bg-[#282828]/20 cursor-pointer transition">
+                <span @click="routeTofavorite" :class="[route.name === 'myFavorite' || route.name === 'myFavorite' ? 'bg-white/5' : '']" class="p-2 text-white/80 text-base hover:text-white active:text-white/40 font-semibold active:bg-[#282828]/20 cursor-pointer transition">
                     My favourite
                 </span>
 
-                <router-link :class="route.name === 'about' ? 'bg-white/20' : ''" class="p-2 pt-3 text-white/80 text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition flex gap-x-2 items-center justify-center" :to="{name : 'about'}">
+                <router-link :class="route.name === 'about' ? 'bg-white/5' : ''" class="p-2 pt-3 text-white/80 text-base hover:text-white active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition flex gap-x-2 items-center justify-center" :to="{name : 'about'}">
                     <span class="font-semibold text-base">
                         About us
                     </span>
@@ -94,22 +86,18 @@
             </div>
         </div>
 
-        <div v-if="userStore.user_level === 2 && userStore.token" class="bg-[#282828]  laptop:rounded-[10px] laptop:mt-4 overflow-hidden">
-            <div class="flex flex-col gap-y-2 text-center">
+        <div v-if="userStore.user_level === 2 && userStore.token" class="bg-[#121212]  laptop:rounded-[10px] laptop:mt-4 overflow-hidden">
+            <div class="flex flex-col gap-y-2 laptop:gap-y-0 text-center">
 
-                <span class="p-2 text-white/80 border-b border-white/20 font-semibold text-base cursor-pointer transition">
-                    AdminDashboard
-                </span>
-
-                <span :class="[route.name === 'Adminforum' || route.name === 'forumShow' ? 'bg-white/20' : '']" @click="routeToAdminForum()" class="p-2 text-white/80 text-base font-semibold hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                <span :class="[route.name === 'Adminforum' || route.name === 'forumShow' ? 'bg-white/5' : '']" @click="routeToAdminForum()" class="p-2 text-white/80 text-base font-semibold hover:text-white active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
                     forums
                 </span>
 
-                <span :class="[route.name === 'adminManageHosts' ? 'bg-white/20' : '']" @click.stop="routeToAdminHost"  class="p-2 text-white/80 text-base hover:bg-white/20 font-semibold active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                <span :class="[route.name === 'adminManageHosts' ? 'bg-white/5' : '']" @click.stop="routeToAdminHost"  class="p-2 text-white/80 text-base hover:text-white/80 font-semibold active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
                     Hosts
                 </span>
                 
-                <span :class="[route.name === 'adminManageShows' || route.name === 'adminShow' ? 'bg-white/20' : '']" @click.stop="routeToManageShows" class="p-2 pt-3 text-white/80 font-semibold text-base hover:bg-white/20 active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                <span :class="[route.name === 'adminManageShows' || route.name === 'adminShow' ? 'bg-white/5' : '']" @click.stop="routeToManageShows" class="p-2 pt-3 text-white/80 font-semibold text-base hover:text-white active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
                     Manage shows
                 </span>
                 

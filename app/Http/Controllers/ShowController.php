@@ -23,7 +23,7 @@ class ShowController extends Controller
 
             'title' => 'required|string|max:255',
             'desc' => 'required|string',
-            'img_file' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048'
+            'img_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048'
 
         ]);
 
@@ -108,7 +108,7 @@ class ShowController extends Controller
 
             'title' => 'required|string|max:255',
             'desc' => 'required|string',
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
             'audio' => 'required|file|mimes:mp3,ogg,wav',
             'host' => 'required|array',
             'host.*' => 'integer',
@@ -227,8 +227,12 @@ class ShowController extends Controller
                 })->with(['season.show' => function ($query) {
                     $query->select('id', 'title');
                 }, 'users'])->withCount('comments')->get();
-    
-                return response()->json(['msg' => 'found ' . $episodes->count() . ' episodes of ' . $episodes[0]->season->show->title, 'episodes' => $episodes], 200);
+                if(count($episodes) > 0) {
+                    return response()->json(['msg' => 'found ' . $episodes->count() . ' episodes of ' . $episodes[0]->season->show->title, 'episodes' => $episodes], 200);
+                }
+
+                return response()->json(['msg' => 'No episode was found', 'episodes' => $episodes], 200);
+
                 break;
             
             case 'hosts' :
@@ -237,13 +241,22 @@ class ShowController extends Controller
                     $que->where('name', 'LIKE', "%$query%");
                 })->with(['season.show', 'users'])->withCount('comments')->get();
 
-                return response()->json(['msg' => 'found ' . $episodes->count() . ' episodes where ' . $query . ' host.', 'episodes' => $episodes], 200);
+                if(count($episodes) > 0) {
+                    return response()->json(['msg' => 'found ' . $episodes->count() . ' episodes of ' . $episodes[0]->season->show->title, 'episodes' => $episodes], 200);
+                }
+
+                return response()->json(['msg' => 'No episode was found', 'episodes' => $episodes], 200);
                 break;
 
             case 'episodes':
 
                 $episodes = Episode::where('title', 'LIKE', "%$query%")->with(['season.show', 'users'])->withCount('comments')->get();
-                return response()->json(['msg' => 'found ' . $episodes->count() . ' episodes which title include ' . $query, 'episodes' => $episodes], 200);
+
+                if(count($episodes) > 0) {
+                    return response()->json(['msg' => 'found ' . $episodes->count() . ' episodes of ' . $episodes[0]->season->show->title, 'episodes' => $episodes], 200);
+                }
+
+                return response()->json(['msg' => 'No episode was found', 'episodes' => $episodes], 200);
 
                 break;
 
@@ -254,7 +267,11 @@ class ShowController extends Controller
                 ->withCount('comments')
                 ->get();
 
-                return response()->json(['msg' => $episodes->count() . ' most listen episdoes.', 'episodes' => $episodes], 200);
+                if(count($episodes) > 0) {
+                    return response()->json(['msg' => 'found ' . $episodes->count() . ' episodes of ' . $episodes[0]->season->show->title, 'episodes' => $episodes], 200);
+                }
+
+                return response()->json(['msg' => 'No episode was found', 'episodes' => $episodes], 200);
                 break;
             default:
                 # code...
@@ -263,7 +280,7 @@ class ShowController extends Controller
 
 
 
-        return response()->json(['success' => 'No episode was found.'], 200);
+        return response()->json(['success' => 'No episode was found.'], 401);
     }
 
     public function editEpisode(Request $request, $showId, $episodeId) {

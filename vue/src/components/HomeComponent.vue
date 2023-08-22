@@ -6,11 +6,11 @@
             <popupEpiComponent />
         </div>
         <!-- show -------- -->
-        <div class="relative mb-8">
+        <!-- <div class="relative mb-8">
 
             <hr class="w-[80%] ml-auto h-px bg-white/30 rounded-full">
-            <span class="absolute text-white/80 font-semibold text-lg top-[50%] -translate-y-[50%]">Shows</span>
-        </div>
+            <span class="absolute text-[#E84344] font-semibold text-lg top-[50%] -translate-y-[50%]">Shows</span>
+        </div> -->
 
 
         <!-- shows list ----------------- -->
@@ -57,7 +57,7 @@
 
                                     <div>
                                         <svg width="5" height="4" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="2.04778" cy="2" r="2" fill="#D9D9D9"/>
+                                            <circle cx="2.04778" cy="2" r="2" fill="#E84344"/>
                                         </svg>
                                     </div>
                                     
@@ -78,10 +78,10 @@
 
         <!-- show list end ----------------- -->
 
-        <div class="relative mb-8" id="lets-talk">
+        <div class="relative mb-8 bg-[#E84344]/80 inline-block py-1 px-4 rounded-bl-[20px] rounded-tr-[20px] shadow-card-shadow" id="lets-talk">
 
-            <hr class="w-[65%] ml-auto h-px bg-white/30 rounded-full">
-            <span class="absolute text-white/80 font-semibold text-lg top-[50%] -translate-y-[50%]">Let's talk</span>
+            <!-- <hr class="w-[65%] ml-auto h-px bg-white/30 rounded-full"> -->
+            <span class="text-[#ffffff] font-semibold text-lg top-[50%] -translate-y-[50%]">Let's talk</span>
         </div>
 
         <div class="grid grid-cols-1 tablet:grid-cols-2 lg-tablet:grid-cols-3 gap-4 mb-8">
@@ -156,8 +156,8 @@
         <!-- Listen on ---------------  -->
 
         <div class="relative mb-8">
-            <hr class="w-[65%] ml-auto h-px bg-white/30 rounded-full">
-            <span class="absolute text-white/80 font-semibold text-lg top-[50%] -translate-y-[50%]">Listen on</span>
+            <!-- <hr class="w-[65%] ml-auto h-px bg-white/30 rounded-full"> -->
+            <span class=" bg-[#E84344]/80 inline-block py-1 px-4 rounded-bl-[20px] rounded-tr-[20px] shadow-card-shadow text-white/80 font-semibold text-lg">Listen on</span>
         </div>
 
         <div class="grid grid-cols-2 lg-tablet:grid-cols-3 gap-4">
@@ -169,6 +169,7 @@
                         <path d="M12.688 19.1429H13.312C13.9621 19.143 14.5898 18.9717 15.0772 18.6612C15.5646 18.3507 15.8781 17.9224 15.9587 17.4568L16.6253 13.6072C16.6722 13.3363 16.6388 13.0614 16.5272 12.8005C16.4156 12.5397 16.2285 12.2991 15.9782 12.0944C15.7279 11.8898 15.4201 11.726 15.0754 11.6138C14.7307 11.5016 14.3568 11.4436 13.9787 11.4437H12.0213C11.6432 11.4436 11.2693 11.5016 10.9246 11.6138C10.5799 11.726 10.2721 11.8898 10.0218 12.0944C9.77154 12.2991 9.58439 12.5397 9.47281 12.8005C9.36124 13.0614 9.32779 13.3363 9.37468 13.6072L10.0413 17.4568C10.122 17.9224 10.4354 18.3507 10.9228 18.6612C11.4102 18.9717 12.0379 19.143 12.688 19.1429ZM10.3333 6.63161C10.3333 7.1421 10.6143 7.63169 11.1144 7.99266C11.6145 8.35363 12.2928 8.55643 13 8.55643C13.7073 8.55643 14.3855 8.35363 14.8856 7.99266C15.3857 7.63169 15.6667 7.1421 15.6667 6.63161C15.6667 6.12111 15.3857 5.63153 14.8856 5.27055C14.3855 4.90958 13.7073 4.70679 13 4.70679C12.2928 4.70679 11.6145 4.90958 11.1144 5.27055C10.6143 5.63153 10.3333 6.12111 10.3333 6.63161Z" class="group-hover:stroke-white/60 stroke-white" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
+
                 <span class="text-sm text-white group-hover:text-white/60 font-bold">Apple Podcasts</span>
             </div>
 

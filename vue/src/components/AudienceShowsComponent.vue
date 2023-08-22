@@ -1,11 +1,11 @@
 <template>
     <div class="mx-4 mt-8 tablet:mx-8">
                 <!-- show -------- -->
-                <div class="relative mb-8">
+                <!-- <div class="relative mb-8">
 
                     <hr class="w-[80%] ml-auto h-px bg-white/30 rounded-full">
                     <span class="absolute text-white/80 font-semibold text-lg top-[50%] -translate-y-[50%]">Shows</span>
-                    </div>
+                    </div> -->
 
 
                     <!-- shows list ----------------- -->
@@ -47,7 +47,7 @@
                                                 <span class="text-x-sm text-white/60 font-semibold">{{ shows.totalEpisodes }} Episodes</span>
                                                 <div>
                                                     <svg width="5" height="4" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <circle cx="2.04778" cy="2" r="2" fill="#D9D9D9"/>
+                                                        <circle cx="2.04778" cy="2" r="2" fill="#E84344"/>
                                                     </svg>
                                                 </div>
                                                 <span class="text-x-sm text-white/60 font-semibold">{{ shows.listener_count }} listen</span>

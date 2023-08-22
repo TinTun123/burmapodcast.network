@@ -1,17 +1,24 @@
 
 <template>
-  <div class="laptop:bg-black/80 bg-gradient-to-t from-[#121212] to-[#292929] laptop:bg-none overflow-y-hidden laptop:h-[100vh] laptop:pt-4">
-    <HeaderComponent v-if="route.name !== 'pwdreset' && route.name !== 'verify'"/>
-
-    <div :class="[type === 'desktop' ? 'flex gap-x-6 justify-stretch overflow-y-hidden ' : '']" 
-  class="relative">
-    <div v-if="notiStore.hasMessage" :class="[notiStore.type === 'info' ? 'bg-[#2BFF00]/40' : 'bg-[#FF0F00]/40']" class="fixed bottom-8 left-8 p-2 z-[9999] rounded-[15px] transition-all">
-      <h2 class="text-white">{{ notiStore.message }}</h2>
+  <div class="laptop:bg-black/90 bg-gradient-to-t from-[#121212] to-[#292929] laptop:bg-none overflow-y-hidden laptop:h-[100vh] laptop:pt-4 relative">
+    
+    <div class="absolute left-[-100px] bottom-[-250px]">
+      <svg width="445" height="672" viewBox="0 0 445 672" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M208.26 173.558L208.26 173.56C207.467 189.308 204.024 204.472 198.287 218.725L197.009 221.901L200.422 222.152C212.083 223.011 223.524 224.512 234.714 226.646L234.721 226.648C354.294 249.103 443.047 339.245 442.497 446.325C441.879 569.863 320.134 669.5 172.565 669.5H-183.801C-227.132 669.5 -261.5 639.921 -261.5 604.31V75.4673C-261.5 35.551 -223.018 2.5 -174.607 2.5H10.5441C122.836 2.5 213.054 79.9578 208.26 173.558Z" class="stroke-[#E84344]/40" stroke-width="5"/>
+      </svg>
     </div>
+    <div :class="[type === 'desktop' ? 'flex gap-x-6 justify-stretch overflow-y-hidden ' : '']" class="relative">
+
+      <div v-if="notiStore.hasMessage" :class="[notiStore.type === 'info' ? 'bg-[#2BFF00]/40' : 'bg-[#FF0F00]/40']" class="fixed bottom-8 left-8 p-2 z-[9999] rounded-[15px] transition-all">
+        
+        <h2 class="text-white">{{ notiStore.message }}</h2>
+      
+      </div>
 
     <SideBarComponent v-if="type === 'desktop' && route.name !== 'pwdreset' && route.name !== 'verify'"/>
 
     <div class="flex-1">
+      <HeaderComponent v-if="route.name !== 'pwdreset' && route.name !== 'verify'"/>
 
       <div 
       class="

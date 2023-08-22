@@ -1,8 +1,8 @@
 <template>
     <transition name="fade" mode="out-in">
-        <div :key="currentEpisode.type" v-if="currentEpisode"  class="flex flex-col lg-tablet:flex-row lg-tablet:flex-nowrap laptop:flex-nowrap items-stretch laptop:items-center laptop:flex-row w-full gap-x-4 gap-y-4 laptop:px-4">
+        <div :key="currentEpisode.type" v-if="currentEpisode"  class="flex flex-col lg-tablet:flex-row lg-tablet:flex-nowrap laptop:flex-nowrap items-stretch laptop:items-center laptop:flex-row w-full gap-x-4 gap-y-4">
 
-            <div @click.stop="routeToShow(epi.season.show.id, epi)" v-for="(epi,i) in currentEpisode.episode" :key="i" class="flex justify-between gap-x-2 p-2 bg-[#1A1A1A] laptop:bg-[#282828] hover:bg-[#282828]/80 laptop:cursor-pointer rounded-[10px] shadow-img-shadow laptop:shadow-none">
+            <div @click.stop="routeToShow(epi.season.show.id, epi)" v-for="(epi,i) in currentEpisode.episode" :key="i" class="flex justify-between gap-x-2 p-2  bg-[#1A1A1A] laptop:bg-[#282828] hover:bg-[#282828]/80 laptop:cursor-pointer rounded-[10px] shadow-img-shadow laptop:shadow-none">
                 <div class="">
 
                     <div class="flex justify-between">

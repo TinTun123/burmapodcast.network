@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-center mt-8 text-white font-bold">About burmanetwork.podcast</h1>
+        <h1 class="text-center text-lg text-white font-semibold mt-8">About BurmaPodcast.Network</h1>
     </div>
 </template>
 
