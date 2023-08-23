@@ -3,11 +3,11 @@
     <Transition name="fadecard" >
         <div :key="showStore.currentShow.id" v-if="showStore.currentShow.id" class="">
 
-            <div class="bg-gradient-to-t from-[#262626]/0 to-[#666666] pt-8 px-4 laptop:flex tablet:px-8">
-                <div class="w-[152px] laptop:flex-none laptop:max-h-[248px] laptop:w-[248px] aspect-square laptop:mr-4 overflow-hidden rounded-[10px] mx-auto shadow-img-shadow">
+            <div class="bg-gradient-to-t from-[#262626]/0 to-[#666666] pt-8 px-4 laptop:flex  tablet:px-8">
+                <div class="w-[152px] laptop:flex-none laptop:max-h-[248px] laptop:w-[248px] aspect-square laptop:mr-4 laptop:ml-0 overflow-hidden rounded-[10px] mx-auto shadow-img-shadow">
                     <img class="w-full h-full" :src="showStore.currentShow.cover_img" alt="">
                 </div>
-                <div>
+                <div class="flex-1">
                 <div class="flex justify-between items-center mt-8  laptop:mt-8">
                     <h1 class="text-white text-lg  font-semibold">{{ showStore.currentShow.title }}</h1>
 
