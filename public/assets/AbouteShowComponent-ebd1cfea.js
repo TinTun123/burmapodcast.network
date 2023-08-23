@@ -1,1 +1,0 @@
-import{o as s,c as r,a}from"./index-fae8f111.js";const _=(t,e)=>{const o=t.__vccOpts||t;for(const[c,n]of e)o[c]=n;return o},l={},d=a("h1",{class:"text-center text-lg text-white font-semibold mt-8"},"About BurmaPodcast.Network",-1),f=[d];function i(t,e){return s(),r("div",null,f)}const u=_(l,[["render",i]]);export{u as default};
