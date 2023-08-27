@@ -18,6 +18,7 @@
     <SideBarComponent v-if="type === 'desktop' && route.name !== 'pwdreset' && route.name !== 'verify'"/>
 
     <div class="flex-1">
+
       <HeaderComponent v-if="route.name !== 'pwdreset' && route.name !== 'verify'"/>
 
       <div 
@@ -27,10 +28,12 @@
       laptop:mt-4 
       laptop:rounded-[10px]
       laptop:h-[80vh]
-      overflow-y-scroll
       scroll-container
-      laptop:relative"
+      laptop:relative
+      overflow-y-scroll"
+
       :class="[route.name === 'pwdreset' || route.name === 'verify' ? 'bg-none' : '']">
+
       <div class="min-h-[100vh]">
         <RouterView />
       </div>

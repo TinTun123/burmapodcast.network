@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-transparent mt-8 px-4 border-t border-white/20 py-4">
+    <div class="bg-transparent px-4 border-t border-white/20 py-4">
         <div class="flex flex-col justify-center gap-y-2">
           <div class="flex justify-between lg-tablet:justify-around items-center laptop:justify-evenly">
             

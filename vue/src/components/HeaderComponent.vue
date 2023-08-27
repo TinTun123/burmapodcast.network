@@ -193,7 +193,7 @@
 
 
         <transition name="slide-down">
-            <div v-if="drop" class="flex flex-col mt-4 items-stretch gap-y-2 bg-black">
+            <div v-if="drop" class="flex flex-col mt-4 items-stretch gap-y-2">
 
                 <div @click.stop="openSearch" class="text-white flex justify-center items-center gap-x-2 text-center p-2 border-y border-[#FFFFFF]/10 active:bg-white/10">
                     Search
