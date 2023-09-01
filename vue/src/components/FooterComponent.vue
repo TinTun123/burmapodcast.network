@@ -31,10 +31,12 @@
 
             <div class="flex flex-col justify-center gap-y-2">
 
+              <router-link :to="{name : 'about'}">
+                <span  class="text-white text-sm cursor-pointer active:text-white/60 hover:text-white/80">
+                  About us
+                </span>
+              </router-link>
 
-              <span class="text-white text-sm cursor-pointer active:text-white/60 hover:text-white/80">
-                About us
-              </span>
 
 
               <span class="text-white text-sm cursor-pointer active:text-white/60 hover:text-white/80">
