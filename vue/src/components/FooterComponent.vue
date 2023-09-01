@@ -23,18 +23,17 @@
               <span v-if="userStore.user_level === 1 && userStore.token" class="text-white text-sm cursor-pointer active:text-white/60 hover:text-white/80">
                 Co-Host
               </span>
-
-              <!-- <span @click="routeToAdminDash" v-if="userStore.token && userStore.user_level === 2" class="text-white text-sm cursor-pointer active:text-white/60 hover:text-white/80">
-                AdminDashboard
-              </span> -->
+              
             </div>
 
             <div class="flex flex-col justify-center gap-y-2">
 
               <router-link :to="{name : 'about'}">
+
                 <span  class="text-white text-sm cursor-pointer active:text-white/60 hover:text-white/80">
                   About us
                 </span>
+
               </router-link>
 
 

@@ -5,7 +5,7 @@
 
             <div v-for="(show, i) in forumStore.forums" :key="i">
 
-                <div v-if="show.forum.length > 0" class="flex items-center gap-x-2 my-8">
+                <div v-if="show.forum.length > 0" class="flex items-center gap-2 my-8">
                     <span class="text-white/80 font-semibold text-lg">{{ show.title }}</span>
                     <div class="w-[90%]">
                         <svg class="w-full" height="2" viewBox="0 0 1000 2" fill="none" xmlns="http://www.w3.org/2000/svg">
