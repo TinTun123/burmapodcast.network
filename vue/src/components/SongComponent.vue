@@ -65,7 +65,7 @@
 
                     <div class="flex gap-x-2">
 
-                        <div>
+                        <div @click.stop="copyToClipboard" class="laptop:cursor-pointer">
                             <svg width="16" height="16" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.5237 19.3327L15.394 19.7191C15.366 19.8025 15.3423 19.9053 15.3257 20.0303C15.3083 20.1607 15.3 20.2838 15.3 20.4C15.3 21.2689 15.5984 21.9913 16.2036 22.5964C16.8087 23.2016 17.5311 23.5 18.4 23.5C19.2689 23.5 19.9913 23.2016 20.5965 22.5964C21.2016 21.9913 21.5 21.2689 21.5 20.4C21.5 19.5311 21.2016 18.8087 20.5965 18.2036C19.9915 17.5986 19.2694 17.3002 18.4009 17.3L15.5237 19.3327ZM15.5237 19.3327L15.1714 19.1278M15.5237 19.3327L15.1714 19.1278M15.1714 19.1278L6.71139 14.2078L6.39963 14.0265M15.1714 19.1278L6.39963 14.0265M6.39963 14.0265L6.12921 14.2651M6.39963 14.0265L6.12921 14.2651M6.12921 14.2651C5.83148 14.5278 5.49977 14.7331 5.13205 14.8823C4.77294 15.028 4.39715 15.1007 4.00089 15.1H4.00002M6.12921 14.2651L4.00002 15.1M4.00002 15.1C3.13112 15.1 2.40874 14.8016 1.80358 14.1964C1.19841 13.5913 0.900024 12.8689 0.900024 12C0.900024 11.1311 1.19841 10.4087 1.80358 9.80355C2.40874 9.19839 3.13112 8.9 4.00002 8.9C4.39657 8.9 4.77266 8.97311 5.13205 9.11892C5.50004 9.26822 5.83191 9.47329 6.12971 9.73536L6.40007 9.97327M4.00002 15.1L6.40007 9.97327M6.40007 9.97327L6.71139 9.79222M6.40007 9.97327L6.71139 9.79222M6.71139 9.79222L15.1714 4.87222L15.523 4.66775M6.71139 9.79222L15.523 4.66775M15.523 4.66775L15.3944 4.28189M15.523 4.66775L15.3944 4.28189M15.3944 4.28189C15.366 4.19683 15.3422 4.0935 15.3256 3.96934C15.3083 3.84015 15.3 3.71713 15.3 3.6C15.3 2.73109 15.5984 2.00872 16.2036 1.40355C16.8087 0.798386 17.5311 0.5 18.4 0.5C19.2689 0.5 19.9913 0.798386 20.5965 1.40355C21.2016 2.00872 21.5 2.7311 21.5 3.6C21.5 4.46891 21.2016 5.19128 20.5965 5.79645C19.9913 6.40161 19.2689 6.7 18.4 6.7C18.0032 6.7 17.6268 6.62717 17.2672 6.48197C16.9001 6.33372 16.5688 6.12871 16.2713 5.86552L16.0008 5.62622M15.3944 4.28189L16.0008 5.62622M6.46002 9.36C6.12002 9.0608 5.74002 8.826 5.32002 8.6556C4.90002 8.4852 4.46002 8.4 4.00002 8.4C3.00002 8.4 2.15002 8.75 1.45002 9.45C0.750024 10.15 0.400024 11 0.400024 12C0.400024 13 0.750024 13.85 1.45002 14.55C2.15002 15.25 3.00002 15.6 4.00002 15.6C4.46002 15.6008 4.90002 15.516 5.32002 15.3456L6.46002 9.36ZM6.46002 9.36L14.92 4.44L6.46002 9.36ZM16.0008 5.62622L15.6887 5.80778M16.0008 5.62622L15.6887 5.80778M15.6887 5.80778L7.22866 10.7278L6.87706 10.9323M15.6887 5.80778L6.87706 10.9323M6.87706 10.9323L7.00568 11.3181M6.87706 10.9323L7.00568 11.3181M7.00568 11.3181C7.03394 11.4029 7.05776 11.5065 7.07439 11.6315C7.09174 11.762 7.10002 11.8847 7.10002 12C7.10002 12.1162 7.09172 12.2393 7.07439 12.3697C7.05777 12.4947 7.03401 12.5975 7.006 12.6809L6.87634 13.0673M7.00568 11.3181L6.87634 13.0673M6.87634 13.0673L7.22866 13.2722M6.87634 13.0673L7.22866 13.2722M7.22866 13.2722L15.6887 18.1922L16.0004 18.3735M7.22866 13.2722L16.0004 18.3735M16.0004 18.3735L16.2708 18.1349M16.0004 18.3735L16.2708 18.1349M16.2708 18.1349C16.5684 17.8724 16.8998 17.6676 17.2672 17.5192M16.2708 18.1349L17.2672 17.5192M17.2672 17.5192C17.6271 17.3739 18.0037 17.3007 18.4008 17.3L17.2672 17.5192Z" stroke="white"/>
                             </svg>
@@ -249,10 +249,12 @@ import { storeToRefs } from 'pinia';
 import router from '../router';
 import CollectUserDataComponent from '../components/CollectUserDataComponent.vue';
 import { useUserStore } from '../stores/userStore';
+import { useNotificationStore } from '../stores/NotiStore';
 
 const elementRef = ref(null);
 const showStore = useShowsStore();
 const userStore = useUserStore();
+const notificationStore = useNotificationStore();
 const translateY = ref(0);
 const scrolled = ref(false);
 const touchOffsetY = ref('0');
@@ -261,14 +263,13 @@ const {type} = useBreakPoints();
 const collectUserData = ref(null);
 
 const audio = ref(null);
-
 const nextEpi = ref();
 const preEpi = ref();
 
 const isPlaying = ref(false);
 const currentTime = ref(0);
 const totalTime = ref(0);
-const {currentEpisode} = storeToRefs(showStore);
+const {currentEpisode, scrollState} = storeToRefs(showStore);
 const remainingTime = computed(() => totalTime.value - currentTime.value);
 
 const formatTime = (time) => {
@@ -277,6 +278,7 @@ const formatTime = (time) => {
     const seconds = Math.floor(time % 60);
 
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
 }
 
 const formatDuration = (time) => {
@@ -345,7 +347,11 @@ onMounted(() => {
 
     showStore.addplaylist(showStore.currentEpisode, showStore.currentShow.id, showStore.currentShow.title);
 
-
+    if (showStore.scrollState) {
+        console.log('scrolled');
+        scroll();
+        audio.value.play();
+    }
 })
 
 function getDate(date) {
@@ -355,6 +361,14 @@ function getDate(date) {
         month : 'short',
         day : 'numeric'
     });
+}
+
+function copyToClipboard() {
+    const texttoCopy = `https://burmapodcast.network/show/${showStore.currentShow.id}?epid=${showStore.currentEpisode.id}`;
+
+    navigator.clipboard.writeText(texttoCopy);
+
+    notificationStore.showNotification('Episode link has been copied.')
 }
 
 function scroll() {
@@ -486,6 +500,7 @@ watch((currentEpisode), (newEpi, oldEpi) => {
     }
 
 })
+
 </script>
 
 <style>

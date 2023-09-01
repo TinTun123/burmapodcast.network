@@ -139,7 +139,7 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import { useShowsStore } from '../stores/ShowsStore';
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useUserStore } from '../stores/userStore';
 import CollectUserDataComponent from '../components/CollectUserDataComponent.vue';
 import { useCommentStore } from '../stores/commentStore';
@@ -171,21 +171,53 @@ function play(epi) {
 }
 
 function edit(epi) {
+
     emit('editEpisode', epi);
+
+}
+
+onMounted(async () => {
+
+    if (route.query.epid) {
+
+        const epi = getEpisodeplay(route.query.epid);
+        play(epi); 
+        
+        
+        showStore.scrollState = true;
+
+    }
+
+})
+
+
+function getEpisodeplay(epiid) {
+
+for (let i = 0; i < showStore.currentShow.seasons.length; i++) {
+    for (let j = 0; j < showStore.currentShow.seasons[i].episodes.length; j++) {
+        if (Number(epiid) === showStore.currentShow.seasons[i].episodes[j].id) {
+            return showStore.currentShow.seasons[i].episodes[j];
+        }
+    }
+}
+
 }
 
 
-
 async function collectData(emittype, payload) {
+
     await collectUserData.value.openModal(emittype, payload);
+
 }
 
 
 function createComment(epiId) {
 
     if (!Object.keys(userStore.audience).length && !userStore.token) {
+
         collectData('createComment', epiId);
         return '';
+
     }
 
     if (comment.value) {

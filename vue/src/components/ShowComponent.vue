@@ -132,8 +132,12 @@ const currentTag = ref('EpisodeListComponent');
 
 onMounted(async() => {
     await showStore.getShow(route.params.id);
+
+
   
 })
+
+
 
 function dropdesc () {
     drop.value = !drop.value;

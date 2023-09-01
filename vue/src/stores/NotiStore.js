@@ -13,7 +13,7 @@ export const useNotificationStore = defineStore('notification', {
     showNotification(message, type = 'info') {
       this.message = message;
       this.type = type;
-      console.log(message);
+      
       setTimeout(() => this.closeNotification(), 5000); // Automatically close after 5 seconds
     },
     closeNotification() {

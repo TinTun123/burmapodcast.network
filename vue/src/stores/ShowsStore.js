@@ -19,7 +19,8 @@ export const useShowsStore = defineStore('Shows', {
             nexrEpisode : {},
             latestEpi : {},
             mostWatchEpi : {},
-            likeEpiId : JSON.parse(localStorage.getItem('likeEpiId')) ? JSON.parse(localStorage.getItem('likeEpiId')) : []
+            likeEpiId : JSON.parse(localStorage.getItem('likeEpiId')) ? JSON.parse(localStorage.getItem('likeEpiId')) : [],
+            scrollState : false
         }
     },
 
@@ -259,7 +260,7 @@ export const useShowsStore = defineStore('Shows', {
             const index = this.playList.findIndex(list => {
                 return list.id === epi.id;
             });
-
+ 
             if (index === -1) {
                 return false;
             } else {
