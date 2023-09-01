@@ -160,7 +160,7 @@
             <span class=" bg-[#E84344]/80 inline-block py-1 px-4 rounded-bl-[20px] rounded-tr-[20px] shadow-card-shadow text-white/80 font-semibold text-lg">Listen on</span>
         </div>
 
-        <div class="grid grid-cols-2 lg-tablet:grid-cols-3 gap-4">
+        <div class="grid grid-cols-2 lg-tablet:grid-cols-3 gap-4 mb-8">
 
             <div class="flex gap-x-2 col-span-1 cursor-pointer group">
                 <div>

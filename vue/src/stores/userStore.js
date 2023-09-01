@@ -107,7 +107,16 @@ export const useUserStore = defineStore('UserStore', {
     },
     getters : {
         hasValideToken : (state) => {
-            return (state.user_level === 2 && state.token) ? true : false;
+            return (state.token) ? true : false;
+        },
+        isAdmin : (state) => {
+            return state.user_level === 3 ? true : false;
+        },
+        isHost : (state) => {
+            return state.user_level === 2 ? true : false;
+        },
+        iscoHost : (state) => {
+            return state.user_level === 1 ? true : false;
         }
     }
 })

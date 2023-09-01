@@ -18,8 +18,16 @@
             mb-8
             laptop:justify-center"
             name="showList" tag="div">
-                <div @click="routeTo(shows.id)" v-for="(shows, index) in showStore.shows" :key="index" class="col-span-1 cursor-pointer group">
-                    <div class="inline-block laptop:h-full laptop:shadow-card-shadow">
+                <div @click="routeTo(shows.id)" v-for="(shows, index) in showStore.shows" :key="index" class="col-span-1 laptop:cursor-pointer group">
+
+                    <div class="inline-block laptop:h-full relative laptop:shadow-card-shadow">
+                        
+                        <div class="absolute bottom-1 right-1">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="12" :class="[shows.state ? 'fill-[#8AFF80]' : 'fill-[#FFCC80]']"/>
+                            </svg>
+                        </div>
+
                         <div class="flex 
                         flex-col 
                         gap-y-2
@@ -57,6 +65,8 @@
                             </div>
                         </div>
                     </div>
+
+
 
                 </div>
                 <div :key="100" @click="open = true" 

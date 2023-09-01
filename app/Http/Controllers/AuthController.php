@@ -107,10 +107,12 @@ class AuthController extends Controller
         $currentUser = Auth::user();
 
         $currentUser = User::findOrFail($currentUser->id);
-
-        if ($currentUser->user_level !== 2) {
-            return response()->json(['error' => 'only host can add new user.'], 304);
+      ;
+        if ($currentUser->user_level !== 2 && $currentUser->user_level !== 3) {
+            return response()->json(['error' => 'only admin and host can add new user.'], 301);
         }
+
+    
 
         $admin = User::create([
             'name' => $request->input('name'),
@@ -229,8 +231,8 @@ class AuthController extends Controller
 
         $currentUser = User::findOrFail($currentUser->id);
 
-        if ($currentUser->user_level !== 2) {
-            return response()->json(['error' => 'only host can update user info.'], 304);
+        if ($currentUser->user_level !== 2 && $currentUser->user_level !== 3) {
+            return response()->json(['error' => 'only host can update user info.'], 302);
         }
 
         if ($request->input('name')) {

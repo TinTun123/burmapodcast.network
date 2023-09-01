@@ -16,9 +16,14 @@
                             <div @click.stop="play(epi)" class="flex justify-between transition hover:bg-white/10 laptop:active:bg-white/20 rounded-[10px] p-2"> 
 
                                 <div class="flex gap-x-1 items-center">
-
+                                    <div v-if="userStore.token" class="">
+                                        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="12" :class="[epi.state ? 'fill-[#6ac562]' : 'fill-[#d3a968]']"/>
+                                        </svg>
+                                    </div>
                                     <h2 class="text-base text-white font-medium">0{{ epi.episode_number }}</h2>
                                     <h3 class="text-base text-white font-regular line-clamp-1">{{ epi.title }}</h3>
+                                    
 
                                 </div>
  
@@ -50,7 +55,7 @@
                                         </svg>
                                     </div>
 
-                                    <div v-if="userStore.token && (route.name !== 'episode'&& route.name !== 'show') && userStore.user_level === 2" @click.stop="edit(epi)">
+                                    <div v-if="userStore.token && (route.name !== 'episode'&& route.name !== 'show') && (userStore.isAdmin || userStore.iscoHost)" @click.stop="edit(epi)">
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M15.74 3.59283C16.0867 3.24622 16.0867 2.66852 15.74 2.33968L13.6603 0.259964C13.3315 -0.0866546 12.7538 -0.0866546 12.4072 0.259964L10.7718 1.8864L14.1047 5.21928M0 12.6671V16H3.33287L13.1626 6.16137L9.82975 2.8285L0 12.6671Z" fill="#CCCCCC"/>
                                         </svg>

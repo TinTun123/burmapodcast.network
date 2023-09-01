@@ -60,8 +60,9 @@
             class="rounded-full bg-[#2F2F2F] text-white text-sm px-2 py-1 font-semibold"
             name="level" id="level" v-model="level">
                 <option value="" disabled>user type</option>
-                <option value="1">Gust Host</option>
+                <option value="1">CoHost</option>
                 <option value="2">Host</option>
+                <option value="3">Admin</option>
             </select>
         </div>
 
@@ -126,7 +127,7 @@ function addUser() {
         userStore.register(formData).then(res => {
             emit('scrollToAddShow');
            return res; 
-        });
+        })
     
     } else {
         notiStore.showNotification('Please fill all require fields!', 'error');

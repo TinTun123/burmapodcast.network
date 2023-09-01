@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import axiosClient from '../axios';
 import { useProgressStore } from './progressStore';
+import { useUserStore } from './userStore';
 
 
 export const useShowsStore = defineStore('Shows', {
@@ -75,8 +76,6 @@ export const useShowsStore = defineStore('Shows', {
                         console.log(this.shows[i].id === res.data.show.id);
                         if (this.shows[i].id === res.data.show.id) {
                             this.shows[i] = res.data.show;
-
-                            console.log(this.currentShow);
                         }
                     }
 
@@ -274,15 +273,28 @@ export const useShowsStore = defineStore('Shows', {
             })
         },
         fetchShows() {
-          
-            return axiosClient.get('/show').then(res => {
-                if (res.status === 200 || res.status === 304) {
-                    this.shows = res.data.shows
-                }
-                    
-              
-                return res.data.success;
-            })
+ 
+            const userStore = useUserStore();
+            if (userStore.user_level === 3 || userStore.user_level === 1 || userStore.user_level === 2) {
+                return axiosClient.get('/fetchAdminShows').then(res => {
+                    if (res.status === 200 || res.status === 304) {
+                        this.shows = res.data.shows
+                    }
+                        
+                  
+                    return res.data.success;
+                })
+            } else {
+                return axiosClient.get('/show').then(res => {
+                    if (res.status === 200 || res.status === 304) {
+                        this.shows = res.data.shows
+                    }
+                        
+                  
+                    return res.data.success;
+                })
+            }
+
         },
         fetchLatest () {
 
@@ -312,6 +324,7 @@ export const useShowsStore = defineStore('Shows', {
 
         },
         async getShow(id) {
+            const userStore = useUserStore();
 
             for(let i = 0; i < this.episodes.length; i++) {
                 if (this.episodes[i].id === Number(id)) {
@@ -321,19 +334,37 @@ export const useShowsStore = defineStore('Shows', {
 
                 }
             }
-            return axiosClient.get(`/show/${id}`).then(res => {
 
-                if (res.status === 200 || res.status === 304) {
+            if ((userStore.isAdmin || userStore.isHost || userStore.iscoHost) && userStore.token) {
+                return axiosClient.get(`/fetchAdminEpisodes/${id}`).then(res => {
 
-                    this.episodes.push(res.data.episodes);
-                    this.currentShow = res.data.episodes;
-                    
-                }
+                    if (res.status === 200 || res.status === 304) {
+    
+                        this.episodes.push(res.data.episodes);
+                        this.currentShow = res.data.episodes;
+                        
+                        
+                    }
+    
+    
+                    return '';
+                })
+            } else {
+                return axiosClient.get(`/show/${id}`).then(res => {
 
-                console.log('current show', this.currentShow);
+                    if (res.status === 200 || res.status === 304) {
+    
+                        this.episodes.push(res.data.episodes);
+                        this.currentShow = res.data.episodes;
+                        
+                        
+                    }
 
-                return '';
-            })
+    
+                    return '';
+                })
+            }
+
         },
 
         getNext (episodeId) {

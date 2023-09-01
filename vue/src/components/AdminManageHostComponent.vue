@@ -22,10 +22,12 @@
         </div>
 
         <div class="bg-[#404040] px-2 rounded-full absolute top-2 right-2 flex items-center shadow-card-shadow">
-        <span class="text-white text-x-sm font-semibold">{{ user.user_level === 2 ? 'Host' : 'Gust' }}</span>
+        <span v-if="user.user_level === 3" class="text-white text-x-sm font-semibold">Admin</span>
+        <span v-if="user.user_level === 2" class="text-white text-x-sm font-semibold">Host</span>
+        <span v-if="user.user_level === 1" class="text-white text-x-sm font-semibold">Co-host</span>
         </div>
 
-        <div @click.stop="openEditUser = true; name = user.name; email = user.email; level = user.user_level; userId = user.id" class="absolute bottom-2 right-2 group cursor-pointer" v-if="user.user_level === 1">
+        <div @click.stop="openEditUser = true; name = user.name; email = user.email; level = user.user_level; userId = user.id" class="absolute bottom-2 right-2 group cursor-pointer" v-if="(user.user_level === 1 || user.user_level === 2) && (userStore.user_level === 3 || userStore.user_level === 2)">
             <div class="w-3 h-3">
             <svg class="w-full h-full" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path class="fill-[#CCCCCC] group-hover:fill-[#CCCCCC]/80 group-active:fill-[#CCCCCC]" d="M15.74 3.59283C16.0867 3.24622 16.0867 2.66852 15.74 2.33968L13.6603 0.259964C13.3315 -0.0866546 12.7538 -0.0866546 12.4072 0.259964L10.7718 1.8864L14.1047 5.21928M0 12.6671V16H3.33287L13.1626 6.16137L9.82975 2.8285L0 12.6671Z" />
@@ -35,7 +37,7 @@
         </div>
 
         <div class="text-end">
-        <div @click="openAddUser = true" class="bg-[#D9D9D9]/10 rounded-[10px] px-4  inline-block cursor-pointer hover:bg-[#D9D9D9]/20 active:bg-[#D9D9D9]/10">
+        <div v-if="userStore.user_level === 3 || userStore.user_level === 2" @click="openAddUser = true" class="bg-[#D9D9D9]/10 rounded-[10px] px-4  inline-block cursor-pointer hover:bg-[#D9D9D9]/20 active:bg-[#D9D9D9]/10">
         <span class="text-white text-base font-medium">New</span>
         </div>
         </div>

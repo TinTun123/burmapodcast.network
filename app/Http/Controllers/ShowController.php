@@ -13,42 +13,26 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Symfony\Component\Console\Input\Input;
 
 class ShowController extends Controller
 {
     //
     public function createShow(Request $request) {
+
+
         $validator = Validator::make($request->all(), [
-
-            'title' => 'required|string|max:255',
-            'desc' => 'required|string',
-            'img_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048'
-
-        ]);
-
-        if($validator->fails()) {
-
-            return response()->json(['error' => $validator->errors()], 402);
-
-        }
-
-        $show = new Show();
-        $show->id = $this->generateId('show');
-        $show->title = $request->input('title');
-        $show->description = $request->input('desc');
-        $show->cover_img = $this->storeImage($request->file('img_file'), $show->id, 'show');
-        $show->save();
         
-        return response()->json(['success' => 'New show added', 'show' => $show], 200);
-    }
-
-    public function editShow(Request $request, $id) {
-        $validator = Validator::make($request->all(), [
-
             'title' => 'required|string|max:255',
             'desc' => 'required|string',
-            'img_file' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048'
+            'img_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'google_podcast' => 'nullable|url',
+            'apple_podcast' => 'nullable|url',
+            'sound_cloud' => 'nullable|url',
+            'pod_beam' => 'nullable|url',
+            'spotify' => 'nullable|url',
+            'state' => ['required', Rule::in(['true', 'false'])]
 
         ]);
 
@@ -60,14 +44,74 @@ class ShowController extends Controller
 
         $user = Auth::user();
 
-        if ($user && $user->user_level !== 2) {
-            return response()->json(['error' => 'Only host can edit show data'], 403);
+        if ($user && $user->user_level !== 1 && $user->user_level !== 3) {
+            return response()->json(['error' => 'Only Admin & co-host can edit show data'], 403);
         }
 
-        $show = Show::findOrFail($id);
+        $show = new Show();
+        $show->id = $this->generateId('show');
         $show->title = $request->input('title');
         $show->description = $request->input('desc');
-        $show->cover_img = $this->storeImage($request->file('img_file'), $id, 'show');
+        $show->cover_img = $this->storeImage($request->file('img_file'), $show->id, 'show');
+        $show->pod_beam = $request->input('pod_beam');
+        $show->sound_cloud = $request->input('sound_cloud');
+        $show->apple_podcast = $request->input('apple_podcast');
+        $show->google_podcast = $request->input('google_podcast');
+        $show->spotify = $request->input('spotify');
+
+        if ($request->input('state') === 'true') {
+            $show->state = 1;
+        } else {
+            $show->state = 0;
+        }
+
+        $show->save();
+        
+        return response()->json(['success' => 'New show added', 'show' => $show], 200);
+    }
+
+    public function editShow(Request $request, $id) {
+        $validator = Validator::make($request->all(), [
+
+            'title' => 'required|string|max:255',
+            'desc' => 'required|string',
+            'google_podcast' => 'nullable|url',
+            'apple_podcast' => 'nullable|url',
+            'sound_cloud' => 'nullable|url',
+            'pod_beam' => 'nullable|url',
+            'spotify' => 'nullable|url',
+            'state' => ['required', Rule::in(['true', 'false'])],
+        ]);
+
+        if($validator->fails()) {
+
+            return response()->json(['error' => $validator->errors()], 402);
+
+        }
+
+        $user = Auth::user();
+
+        if ($user && $user->user_level !== 1 && $user->user_level !== 3) {
+            return response()->json(['error' => 'Only Admin & Co-host can edit show data'], 403);
+        }
+
+        $show = Show::with('seasons.episodes.users')->find($id);
+        $show->title = $request->input('title');
+        $show->description = $request->input('desc');
+        if ($request->file('img_file')) {
+            $show->cover_img = $this->storeImage($request->file('img_file'), $id, 'show');
+        }
+        $show->pod_beam = $request->input('pod_beam');
+        $show->sound_cloud = $request->input('sound_cloud');
+        $show->apple_podcast = $request->input('apple_podcast');
+        $show->google_podcast = $request->input('google_podcast');
+        $show->spotify = $request->input('spotify');
+
+        if ($request->input('state') === 'true') {
+            $show->state = 1;
+        } else {
+            $show->state = 0;
+        }
 
         $show->save();
 
@@ -81,8 +125,8 @@ class ShowController extends Controller
 
         $currentUser = User::findOrFail($user->id);
 
-        if ($currentUser->user_level !== 2) {
-            return response()->json(['error' => 'Only host can delete shows.'], 304);
+        if ($currentUser->user_level !== 1 && $currentUser->user_level !== 3) {
+            return response()->json(['error' => 'Only Admin & co-host can delete shows.'], 302);
         }
 
         try {
@@ -114,7 +158,13 @@ class ShowController extends Controller
             'host.*' => 'integer',
             'date' => 'nullable|date',
             'seasonId' => 'integer',
-            'duration' => 'required|integer'
+            'duration' => 'required|integer',
+            'google_podcast' => 'nullable|url',
+            'apple_podcast' => 'nullable|url',
+            'sound_cloud' => 'nullable|url',
+            'pod_beam' => 'nullable|url',
+            'spotify' => 'nullable|url',
+            'state' => ['required', Rule::in(['true', 'false'])]
         ]);
 
 
@@ -122,9 +172,9 @@ class ShowController extends Controller
 
         $currentUser = User::findOrFail($user->id);
 
-        if ($currentUser->user_level !== 2) {
+        if ($currentUser->user_level !== 3 && $currentUser->user_level !== 1) {
 
-            return response()->json(['error' => 'Only host can create episode.'], 304);
+            return response()->json(['error' => 'Only Admin & Cohost can create episode.'], 302);
 
         }
 
@@ -169,6 +219,7 @@ class ShowController extends Controller
         } else {
             $episode_number = 1;
         }
+        
         $episode->episode_number = $episode_number;
         $episode->title = $request->input('title');
         $episode->description = $request->input('desc');
@@ -177,6 +228,19 @@ class ShowController extends Controller
         $episode->number_of_likes = 0;
         $episode->created_at = $date;
         $episode->duration = $request->input('duration');
+
+        $episode->pod_beam = $request->input('pod_beam');
+        $episode->sound_cloud = $request->input('sound_cloud');
+        $episode->apple_podcast = $request->input('apple_podcast');
+        $episode->google_podcast = $request->input('google_podcast');
+        $episode->spotify = $request->input('spotify');
+
+        if ($request->input('state') === 'true') {
+            $episode->state = 1;
+        } else {
+            $episode->state = 0;
+        }
+
         $episode->save();
 
         $episode->users()->attach(array_map('intval', $request->input('host')));
@@ -289,13 +353,16 @@ class ShowController extends Controller
 
             'title' => 'required|string|max:255',
             'desc' => 'required|string',
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
-            'audio' => 'required|file|mimes:mp3,ogg,wav',
             'host' => 'required|array',
             'host.*' => 'integer',
             'date' => 'nullable|date',
             'seasonId' => 'integer',
-            'duration' => 'required|integer'
+            'google_podcast' => 'nullable|url',
+            'apple_podcast' => 'nullable|url',
+            'sound_cloud' => 'nullable|url',
+            'pod_beam' => 'nullable|url',
+            'spotify' => 'nullable|url',
+            'state' => ['required', Rule::in(['true', 'false'])]
 
         ]);
 
@@ -303,8 +370,11 @@ class ShowController extends Controller
 
         $currentUser = User::findOrFail($user->id);
 
-        if ($currentUser->user_level !== 2) {
-            return response()->json(['error' => 'Only host can edit episodes.'], 304);
+
+        if ($currentUser->user_level !== 3 && $currentUser->user_level !== 1) {
+
+            return response()->json(['error' => 'Only Admin & Cohost can edit episode.'], 302);
+
         }
 
         if ($validator->fails()) {
@@ -329,9 +399,30 @@ class ShowController extends Controller
             $episode->title = $request->input('title');
             $episode->description = $request->input('desc');
             $episode->created_at = $date;
-            $episode->img_url = $this->storeImage($request->file('img'), $episode->id, 'episode');
-            $episode->audio_url = $this->storeImage($request->file('audio'), $episode->id, 'audio');
-            $episode->duration = $request->input('duration');
+
+            if ($request->file('img')) {
+                $episode->img_url = $this->storeImage($request->file('img'), $episode->id, 'episode');
+            }
+
+            if ($request->file('audio')) {
+
+                $episode->audio_url = $this->storeImage($request->file('audio'), $episode->id, 'audio');
+                $episode->duration = $request->input('duration');
+            }
+
+
+            if ($request->input('state') === 'true') {
+                $episode->state = 1;
+            } else {
+                $episode->state = 0;
+            }
+
+            $episode->pod_beam = $request->input('pod_beam');
+            $episode->sound_cloud = $request->input('sound_cloud');
+            $episode->apple_podcast = $request->input('apple_podcast');
+            $episode->google_podcast = $request->input('google_podcast');
+            $episode->spotify = $request->input('spotify');
+
         }
 
         $episode->users()->detach();
@@ -352,9 +443,10 @@ class ShowController extends Controller
         $user = Auth::user();
 
         $currentUser = User::findOrFail($user->id);
+        if ($currentUser->user_level !== 3 && $currentUser->user_level !== 1) {
 
-        if ($currentUser->user_level !== 2) {
-            return response()->json(['error' => 'Only host can delete episodes.'], 304);
+            return response()->json(['error' => 'Only Admin & Cohost can delete episode.'], 302);
+
         }
 
         DB::beginTransaction();
@@ -453,11 +545,12 @@ class ShowController extends Controller
         return $nextId;
     }
 
-     public function getShows() {
+     public function getShows(Request $request) {
 
-        $shows = Show::with(['seasons.episodes' => function ($query) {
-            $query->select('id', 'season_id', 'number_of_likes', 'duration', 'listener_count');
-        }])->get()->toArray();
+            $shows = Show::with(['seasons.episodes' => function ($query) {
+                $query->where('state', true)
+                      ->select('id', 'season_id', 'number_of_likes', 'duration', 'listener_count');
+            }])->where('state', true)->get()->toArray();
         
         foreach($shows as &$show) {
             $totallikes = 0;
@@ -480,10 +573,6 @@ class ShowController extends Controller
             unset($show['seasons']);
         }
 
-        Log::info('shows', [
-            $shows
-        ]);
-
         $etag = md5(json_encode($shows));
 
         $lastModified = DB::table('shows')->max('updated_at');
@@ -491,6 +580,54 @@ class ShowController extends Controller
         return response()->json(['success' => ' ', 'shows' => $shows], 200)
         ->header('ETag', $etag)
         ->header('Last-Modified', $lastModified);
+    }
+
+
+    public function getAdminShows() {
+
+
+            $user = Auth::user();
+    
+            if ($user) {
+                $userlevel = $user->user_level;
+    
+                if ($userlevel === 3 || $userlevel === 1 || $userlevel === 2) {
+                    $shows = Show::with(['seasons.episodes' => function ($query) {
+                        $query->select('id', 'season_id', 'number_of_likes', 'duration', 'listener_count');
+                    }])->get()->toArray();
+                }
+    
+            }
+            
+            foreach($shows as &$show) {
+                $totallikes = 0;
+                $totalduration = 0;
+                $totalEpisode = 0;
+                $totalPlay = 0;
+                foreach($show['seasons'] as $season) {
+                    foreach($season['episodes'] as $epi) {
+                        $totallikes += $epi['number_of_likes'];
+                        $totalduration += $epi['duration'];
+                        $totalEpisode += 1;
+                        $totalPlay += $epi['listener_count'];
+                    }
+                }
+    
+                $show['total_likes'] = $totallikes;
+                $show['total_duration'] = $totalduration;
+                $show['totalEpisodes'] = $totalEpisode;
+                $show['listener_count'] = $totalPlay;
+                unset($show['seasons']);
+            }
+    
+            $etag = md5(json_encode($shows));
+    
+            $lastModified = DB::table('shows')->max('updated_at');
+    
+            return response()->json(['success' => ' ', 'shows' => $shows], 200)
+            ->header('ETag', $etag)
+            ->header('Last-Modified', $lastModified);
+    
     }
 
     public function getLatest (Request $request) {
@@ -510,7 +647,15 @@ class ShowController extends Controller
 
     public function getEpisode(Request $request, $showId) {
 
-        $show = Show::with('seasons.episodes.users')->find($showId);
+        // $show = Show::with(['seasons.episodes.users'])->whereHas('seasons.episodes', function ($query) {
+        //     $query->where('state', 1);
+        // })->find($showId);
+
+        $show = Show::with(['seasons' => function ($query) {
+            $query->with(['episodes' => function ($query) {
+                $query->where('state', true)->with('users');
+            }]);
+        }])->find($showId);
 
         $etag = md5(json_encode($show));
 
@@ -529,4 +674,27 @@ class ShowController extends Controller
         ->header('ETag', $etag)
         ->header('Last-Modified', $lastModified);
     }
+
+    public function adminGetEpisodes(Request $request, $showId) {
+        $show = Show::with('seasons.episodes.users')->find($showId);
+        
+        $etag = md5(json_encode($show));
+
+        $lastModifiedSeason = DB::table('seasons')->max('updated_at');
+        $lastModifiedEpisode = DB::table('episodes')->max('updated_at');
+
+        if($lastModifiedSeason && $lastModifiedEpisode) {
+            $lastModified = max($lastModifiedEpisode, $lastModifiedSeason);
+        } else {
+            $lastModified = '';
+        }
+
+ 
+        
+        return response()->json(['success' => ' ', 'episodes' => $show], 200)
+        ->header('ETag', $etag)
+        ->header('Last-Modified', $lastModified);
+    }
 }
+
+

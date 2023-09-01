@@ -225,7 +225,7 @@
                 </router-link>
        
 
-                <router-link v-if="userStore.user_level === 2 && userStore.token" :to="{name : 'adminManageShows'}">
+                <router-link v-if="(userStore.isAdmin || userStore.isHost || userStore.iscoHost)  && userStore.token" :to="{name : 'adminManageShows'}">
 
                     <div :class="[route.name === 'adminManageShows' || route.name === 'adminShow' ? 'bg-white/20' : '']" class="text-white text-center p-2 border-b border-[#FFFFFF]/10 active:bg-white/10">
                         Manage Shows
@@ -233,7 +233,7 @@
 
                 </router-link>
 
-                <router-link v-if="userStore.user_level === 2 && userStore.token" :to="{name : 'adminManageHosts'}">
+                <router-link v-if="userStore.isAdmin || userStore.isHost || userStore.iscoHost" :to="{name : 'adminManageHosts'}">
 
                     <div :class="[route.name === 'adminManageHosts' ? 'bg-white/20' : '']" class="text-white text-center p-2 border-b border-[#FFFFFF]/10 active:bg-white/10">
                         Hosts
@@ -241,7 +241,7 @@
 
                 </router-link>
 
-                <router-link v-if="userStore.user_level === 2 && userStore.token" :to="{name : 'Adminforum'}">
+                <router-link v-if="userStore.isAdmin || userStore.isHost || userStore.iscoHost" :to="{name : 'Adminforum'}">
 
                     <div :class="[route.name === 'Adminforum' || route.name === 'forumShow' ? 'bg-white/20' : '']" class="text-white text-center p-2 border-b border-[#FFFFFF]/10 active:bg-white/10">
                         Forums

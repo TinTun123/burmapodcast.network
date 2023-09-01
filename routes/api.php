@@ -61,6 +61,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/comment/{commentId}', [ForumController::class, 'deleteComment'])->where(['commentId' => '[0-9]+']);
     Route::post('/forum', [ForumController::class, 'addForum']);
     Route::put('/forum/{forum}', [ForumController::class, 'editForum']);
+    Route::get('/fetchAdminShows', [ShowController::class, 'getAdminShows']);
+    Route::get('/fetchAdminEpisodes/{id}', [ShowController::class, 'adminGetEpisodes']);
     
 });
 

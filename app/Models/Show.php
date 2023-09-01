@@ -12,7 +12,8 @@ class Show extends Model
     protected $fillable = [
         'title',
         'description',
-        'cover_img'
+        'cover_img',
+        'state'
     ];
 
     public function seasons() {

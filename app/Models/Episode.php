@@ -16,7 +16,8 @@ class Episode extends Model
         'description',
         'audio_url',
         'img_url',
-        'listener_count'
+        'listener_count',
+        'state'
 
     ];
 

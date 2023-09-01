@@ -12,6 +12,18 @@
                 Logout
               </span>
 
+              <span v-if="userStore.user_level === 3 && userStore.token" class="text-white text-sm cursor-pointer active:text-white/60 hover:text-white/80">
+                Admin
+              </span>
+
+              <span v-if="userStore.user_level === 2 && userStore.token" class="text-white text-sm cursor-pointer active:text-white/60 hover:text-white/80">
+                Host
+              </span>
+
+              <span v-if="userStore.user_level === 1 && userStore.token" class="text-white text-sm cursor-pointer active:text-white/60 hover:text-white/80">
+                Co-Host
+              </span>
+
               <!-- <span @click="routeToAdminDash" v-if="userStore.token && userStore.user_level === 2" class="text-white text-sm cursor-pointer active:text-white/60 hover:text-white/80">
                 AdminDashboard
               </span> -->

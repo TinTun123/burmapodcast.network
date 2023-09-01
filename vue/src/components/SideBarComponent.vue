@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <div v-if="userStore.user_level === 2 && userStore.token" class="bg-[#121212]  laptop:rounded-[10px] laptop:mt-4 overflow-hidden">
+        <div v-if="(userStore.isAdmin || userStore.isHost || userStore.iscoHost) && userStore.token" class="bg-[#121212]  laptop:rounded-[10px] laptop:mt-4 overflow-hidden">
             <div class="flex flex-col gap-y-2 laptop:gap-y-0 text-center">
 
                 <span :class="[route.name === 'Adminforum' || route.name === 'forumShow' ? 'bg-white/5' : '']" @click="routeToAdminForum()" class="p-2 text-white/80 text-base font-semibold hover:text-white active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
