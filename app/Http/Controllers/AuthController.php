@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Audience;
 use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
 use App\Rules\AtLeastOneRequired;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -48,10 +50,14 @@ class AuthController extends Controller
             }
             
             $token = $user->createToken('api-token')->plainTextToken;
+            Log::info('user', [
+                $user->id
+            ]);
 
             return response()->json([
                 'token' => $token,
                 'user_level' => $user->user_level,
+                'user_id' => $user->id,
                 'success' => 'Login Successful.'
             ], 200);
         } else {
@@ -122,6 +128,20 @@ class AuthController extends Controller
         ]);
 
         $admin->sendEmailVerificationNotification();
+
+        if ($admin->user_level === 3) {
+            $role = 'admin';
+        } else if ($admin->user_level === 2) {
+            $role = 'host';
+        } else if ($admin->user_level === 1) {
+            $role = 'co-host';
+        }
+
+        ActivityLog::create([
+            'name' => $currentUser->name,
+            'log_details' => "Add new $role '$admin->name'",
+            'log_type' => 'create'
+        ]);
 
         return response()->json([
             'success' => 'User register successful',
@@ -231,8 +251,10 @@ class AuthController extends Controller
 
         $currentUser = User::findOrFail($currentUser->id);
 
-        if ($currentUser->user_level !== 2 && $currentUser->user_level !== 3) {
-            return response()->json(['error' => 'only host can update user info.'], 302);
+        if ($request->input('level') > 1) {
+            if ($currentUser->user_level !== 2 && $currentUser->user_level !== 3) {
+                return response()->json(['error' => 'only Admin/host can assign user privilege.'], 302);
+            }
         }
 
         if ($request->input('name')) {
@@ -247,8 +269,17 @@ class AuthController extends Controller
             $user->password = Hash::make($request->input('password'));
         }
 
+        if ($request->input('level')) {
+            $user->user_level = $request->input('level');
+        }
 
         $user->save();
+
+        ActivityLog::create([
+            'name' => $currentUser->name,
+            'log_details' => "Edited $user->name info",
+            'log_type' => 'edit'
+        ]);
 
         return response()->json(['success' => $user->name . ' user info was updated.', 'user' => $user], 200);
     }
@@ -259,11 +290,17 @@ class AuthController extends Controller
 
         $currentUser = User::findOrFail($currentUserid);
 
-        if ($currentUser->user_level !== 2) {
-            return response()->json(['error' => 'only host can delete users.', 304]);
+        if ($currentUser->user_level !== 2 && $currentUser->user_level !== 3) {
+            return response()->json(['error' => 'only admin/host can delete users.', 302]);
         }
 
         $user->delete();
+
+        ActivityLog::create([
+            'name' => $currentUser->name,
+            'log_details' => "Delete $user->name",
+            'log_type' => 'delete'
+        ]);
 
         return response()->json(['success' => $user->name . ' was deleted.', 'user' => $user], 200);
     }
@@ -274,6 +311,17 @@ class AuthController extends Controller
         $user->tokens()->delete();
 
         return response()->json(['success' => 'Logout successful'], 200);
+    }
+
+    public function getLog(Request $request) {
+        $logs = ActivityLog::orderBy('created_at', 'desc')->paginate(5);
+
+        Log::info('log', [
+            $logs
+        ]);
+    
+
+        return response()->json(['log' => $logs], 200);
     }
 
     /**

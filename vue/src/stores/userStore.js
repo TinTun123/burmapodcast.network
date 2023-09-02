@@ -7,9 +7,53 @@ export const useUserStore = defineStore('UserStore', {
             audience : getAudienceFromStorage(),
             token : localStorage.getItem('token'),
             user_level : Number(localStorage.getItem('user_level')),
+            user_id : Number(localStorage.getItem('user_id')),
+            logs : [],
+            prev_url : '',
+            next_url : '',
+            current_page : '',
+            total_page : '',
         }
     },
     actions : {
+        fetchLog () {
+            return axiosClient.get('fetchLog').then(res => {
+                if (res.status === 200) {
+                    this.logs = res.data.log.data;
+                    this.prev_url = res.data.log.prev_page_url;
+                    this.next_url = res.data.log.next_page_url;
+                    this.current_page = res.data.log.current_page;
+                    this.total_page = res.data.log.last_page;
+                }
+            })
+        },
+        getNextLog () {
+            if (this.next_url) {
+                return axiosClient.get(this.next_url).then(res => {
+                    if (res.status === 200) {
+                        this.logs = res.data.log.data;
+                        this.prev_url = res.data.log.prev_page_url;
+                        this.next_url = res.data.log.next_page_url;
+                        this.current_page = res.data.log.current_page;
+                        this.total_page = res.data.log.last_page;
+                    }
+                })
+            }
+        },
+        getPrevLog () {
+            if (this.prev_url) {
+                return axiosClient.get(this.prev_url).then(res => {
+                    if (res.status === 200) {
+                        this.logs = res.data.log.data;
+                        this.prev_url = res.data.log.prev_page_url;
+                        this.next_url = res.data.log.next_page_url;
+
+                        this.current_page = res.data.log.current_page;
+                        this.total_page = res.data.log.last_page;
+                    }
+                })
+            }
+        },
       async getUsers() {
             return axiosClient.get('users').then((res) => {
 
@@ -24,8 +68,10 @@ export const useUserStore = defineStore('UserStore', {
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('user_level', res.data.user_level);
                 localStorage.removeItem('audience');
+                localStorage.setItem('user_id', res.data.user_id);
                 this.token = res.data.token;
                 this.user_level = res.data.user_level;
+                this.user_id = res.data.user_id;
                 return res;
             })
         },
@@ -44,7 +90,7 @@ export const useUserStore = defineStore('UserStore', {
                     this.users = [];
                     localStorage.removeItem('token');
                     localStorage.removeItem('user_level');
-                   
+                    localStorage.removeItem('user_id');
                     return res.data
                 }
             })

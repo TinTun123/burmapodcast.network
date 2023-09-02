@@ -63,6 +63,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/forum/{forum}', [ForumController::class, 'editForum']);
     Route::get('/fetchAdminShows', [ShowController::class, 'getAdminShows']);
     Route::get('/fetchAdminEpisodes/{id}', [ShowController::class, 'adminGetEpisodes']);
+    Route::get('/fetchLog', [AuthController::class, 'getLog']);
     
 });
 

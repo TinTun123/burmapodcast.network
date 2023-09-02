@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Episode;
 use App\Models\Seasons;
 use App\Models\Show;
@@ -66,6 +67,12 @@ class ShowController extends Controller
         }
 
         $show->save();
+
+        ActivityLog::create([
+            'name' => $user->name,
+            'log_details' => "Created new show '$show->title'",
+            'log_type' => 'create'
+        ]);
         
         return response()->json(['success' => 'New show added', 'show' => $show], 200);
     }
@@ -115,6 +122,12 @@ class ShowController extends Controller
 
         $show->save();
 
+        ActivityLog::create([
+            'name' => $user->name,
+            'log_details' => "Edited $show->title show",
+            'log_type' => 'Edit'
+        ]);
+
         return response()->json(['success' => 'Show' . $request->input('title') . 'was updated!', 'show' => $show], 200);
     }
 
@@ -137,6 +150,12 @@ class ShowController extends Controller
             $show->delete();
 
             DB::commit();
+
+            ActivityLog::create([
+                'name' => $user->name,
+                'log_details' => "Delete $show->title show",
+                'log_type' => 'delete'
+            ]);
 
             return response()->json(['success' => $show->title . ' was deleted.', 'showId' => $show->id], 200);
             } catch (\Exception $ex) {
@@ -246,6 +265,12 @@ class ShowController extends Controller
         $episode->users()->attach(array_map('intval', $request->input('host')));
 
         $episode->load('users');
+
+        ActivityLog::create([
+            'name' => $user->name,
+            'log_details' => "Create new episode '$episode->title' ",
+            'log_type' => 'create'
+        ]);
         
         if (!$request->input('seasonId')) {
             $season['episodes'] = [ $episode ];
@@ -433,6 +458,12 @@ class ShowController extends Controller
 
         $episode->load('users');
 
+        ActivityLog::create([
+            'name' => $user->name,
+            'log_details' => "Edited '$episode->title' episode",
+            'log_type' => 'edit'
+        ]);
+
 
         return response()->json(['success' => 'Episode ' . $episode->title . ' was edited.', 'episode' => $episode], 200);
 
@@ -476,6 +507,12 @@ class ShowController extends Controller
             }
     
             DB::commit();
+
+            ActivityLog::create([
+                'name' => $user->name,
+                'log_details' => "Delete '$episode->title' episode",
+                'log_type' => 'delete'
+            ]);
 
             return response()->json([
                 'success' => $episode->title . ' was deleted',
