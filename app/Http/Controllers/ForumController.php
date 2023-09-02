@@ -33,9 +33,9 @@ class ForumController extends Controller
 
         $currentUser = User::findOrFail($user->id);
 
-        if ($currentUser->user_level !== 2) {
-            return response()->json(['error' => 'Only hosts can create forums'], 304);
-        }
+        // if ($currentUser->user_level !== 2) {
+        //     return response()->json(['error' => 'Only hosts can create forums'], 304);
+        // }
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 403);
@@ -61,9 +61,9 @@ class ForumController extends Controller
 
         $currentUser = User::findOrFail($user->id);
 
-        if ($currentUser->user_level !== 2) {
-            return response()->json(['error' => 'Only hosts can delete forums'], 304);
-        }
+        // if ($currentUser->user_level !== 3 || $currentUser->user_level !== 1) {
+        //     return response()->json(['error' => 'Only Admin/host can delete forums'], 302);
+        // }
 
         $forum = Forum::findOrFail($forumId);
 
@@ -84,9 +84,9 @@ class ForumController extends Controller
 
         $currentUser = User::findOrFail($user->id);
 
-        if ($currentUser->user_level !== 2) {
-            return response()->json(['error' => 'Only hosts can edit forums'], 304);
-        }
+        // if ($currentUser->user_level !== 2) {
+        //     return response()->json(['error' => 'Only hosts can edit forums'], 304);
+        // }
 
 
         if ($validator->fails()) {
@@ -142,7 +142,7 @@ class ForumController extends Controller
         $user = auth('sanctum')->user();
         
 
-        if ($user && ($user->user_level === 1 || $user->user_level === 2)) {
+        if ($user && ($user->user_level === 1 || $user->user_level === 2 || $user->user_level === 3)) {
             $answer = Answer::create([
                 'answer' => $request->input('answer'),
                 'forum_id' => $forumId,
@@ -170,7 +170,7 @@ class ForumController extends Controller
     public function deleteAnswer(Request $request, $answerId) {
         $user = auth('sanctum')->user();
 
-        if ($user->user_level === 2) {
+        if ($user->user_level >= 1) {
             $answer = Answer::findOrFail($answerId);
 
             $answer->delete();
@@ -196,7 +196,7 @@ class ForumController extends Controller
             $user = auth('sanctum')->user();
             
 
-            if ($user && ($user->user_level === 1 || $user->user_level === 2)) {
+            if ($user && ($user->user_level === 1 || $user->user_level === 2 || $user->user_level === 3)) {
 
 
                 $reply = Replie::create([
@@ -229,7 +229,7 @@ class ForumController extends Controller
     public function deleteReply(Request $request, $replyId) {
         $user = auth('sanctum')->user();
 
-        if ($user->user_level === 2) {
+        if ($user->user_level >= 1) {
             $reply = Replie::findOrFail($replyId);
 
             $reply->delete();
@@ -250,7 +250,7 @@ class ForumController extends Controller
 
         $user = auth('sanctum')->user();
 
-        if ($user && ($user->user_level === 1 || $user->user_level === 2)) {
+        if ($user && ($user->user_level === 1 || $user->user_level === 2 || $user->user_level === 3)) {
             $comment = Comment::create([
                 'content' => $request->input('comment'),
                 'user_id' => $user->id,
@@ -292,7 +292,7 @@ class ForumController extends Controller
 
         $user = auth('sanctum')->user();
 
-        if ($user->user_level === 2) {
+        if ($user->user_level >= 1) {
             $comment = Comment::findOrFail($commentId);
 
             $comment->delete();
