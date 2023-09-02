@@ -1,7 +1,7 @@
 <template>
-    <div class="w-full relative laptop:flex laptop:flex-col" id="cover">
+    <div class="w-full flex flex-col min-h-screen justify-between" id="cover">
 
-        <div class="laptop:p-16 p-4 tablet:p-8 pt-12 flex flex-col gap-y-8 text-x-lg h-full laptop:flex laptop:flex-col laptop:gap-y-12 laptop:items-start laptop:gap-x-4 laptop:justify-evenly">
+        <div class="laptop:p-16 p-4 tablet:p-8 pt-12 flex flex-col justify-between gap-y-8 text-x-lg h-full laptop:flex laptop:flex-col laptop:gap-y-12 laptop:items-start laptop:gap-x-4 laptop:justify-evenly">
 
                 <div class="relative">
 
@@ -27,6 +27,8 @@
 
 
                 </div>
+
+                
 
 
                 <div class="relative">
