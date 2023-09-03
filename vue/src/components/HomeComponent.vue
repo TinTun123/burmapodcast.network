@@ -230,7 +230,16 @@ onMounted(async () => {
 
     if (!showStore.shows.length) {
 
-        await showStore.fetchShows();
+        await showStore.fetchShows().then(res => {
+            return res;
+        }).catch(error => {
+            if (error.response.status === 401) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user_level');
+                console.log('token clear');
+                router.push({name : 'home'});
+            }
+        });
 
     }
 
