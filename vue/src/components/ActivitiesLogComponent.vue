@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(log, i) in userStore.logs" :key="i" class=" bg-black/10 border-b border-white/20">
-                        <th  class="px-6 py-4 font-medium dark:text-white">
+                        <th  class="px-6 py-4 font-medium text-white">
                            {{ log.name }}
                         </th>
                         <td class="px-6 py-4">
@@ -35,7 +35,7 @@
                         </td>
                     </tr>
                     <tr class="bg-black/10 border-b  border-white/20">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        <th scope="row" class="px-6 py-4 font-medium text-white">
                             page: {{ userStore.current_page }} / {{ userStore.total_page }}
                         </th>
                         <td class="px-6 py-4">
