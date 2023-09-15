@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'v1';
+const CACHE_NAME = 'v2';
 
 const GETSHOW_URL = 'https://burmapodcast.network/api/show';
 // const GETSHOW_URL = 'http://localhost:8000/api/show';
@@ -253,7 +253,7 @@ self.addEventListener('fetch', (event) => {
                     reader.read().then(( {done, value} ) => {
 
                       if (done) {
-                        const modifiedRequest = event.request.clone();
+                        const request = event.request.clone();
 
                         let tempURL = modifiedRequest.url;
 
@@ -262,13 +262,28 @@ self.addEventListener('fetch', (event) => {
                         tempURL = tempURL.substring(0, indesOfsearch);
                         // noSearchPara.search = '';
 
+                        const modifiedRequest = new Request(tempURL, {
+                          method: request.method,
+                          headers: request.headers,
+                          mode: request.mode,
+                          credentials: request.credentials,
+                          redirect: request.redirect,
+                          referrer: request.referrer,
+                          referrerPolicy: request.referrerPolicy,
+                          integrity: request.integrity,
+                          cache: request.cache,
+                          body: request.body,
+                          bodyUsed: request.bodyUsed,
+                          signal: request.signal,
+                        });
+
                         // modifiedRequest.url = noSearchPara.toString();
                         console.log('modified url: ', tempURL);
                         controller.close();
                         
                         caches.open(CACHE_NAME).then((cache) => {
 
-                          cache.put(tempURL, cloneResponse);
+                          cache.put(modifiedRequest, cloneResponse);
 
                         });
 
