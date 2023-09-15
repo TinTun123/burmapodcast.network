@@ -25,7 +25,7 @@
         </div>
 
         <audio controls hidden ref="audio" @ended="isPlaying = false">
-            <source :src="currentEpisode.audio_url" type="audio/mpeg">
+            <source :src="currentEpisode.audio_url">
         </audio>
 
         <div class="flex items-center justify-between gap-x-4" :class="[scrolled ? 'flex-col items-stretch laptop:flex-row laptop:mx-4 laptop:justify-start' : 'pr-4']">
@@ -251,6 +251,7 @@ import CollectUserDataComponent from '../components/CollectUserDataComponent.vue
 import { useUserStore } from '../stores/userStore';
 import { useNotificationStore } from '../stores/NotiStore';
 
+
 const elementRef = ref(null);
 const showStore = useShowsStore();
 const userStore = useUserStore();
@@ -269,8 +270,10 @@ const preEpi = ref();
 const isPlaying = ref(false);
 const currentTime = ref(0);
 const totalTime = ref(0);
+// eslint-disable-next-line no-unused-vars
 const {currentEpisode, scrollState} = storeToRefs(showStore);
 const remainingTime = computed(() => totalTime.value - currentTime.value);
+
 
 const formatTime = (time) => {
 
@@ -327,6 +330,7 @@ const progressPercentage = computed(() => {
     return (currentTime.value / totalTime.value) * 100;
 })
 
+
 onMounted(() => {
 
     audio.value.addEventListener('loadedmetadata', () => {
@@ -338,15 +342,16 @@ onMounted(() => {
     audio.value.play();
     isPlaying.value = true;
 
-    showStore.fetchAudio(currentEpisode.value.audio_url).then(res => {
 
-        console.log('audioFetch res: ', res);
+    // showStore.fetchAudio(currentEpisode.value.audio_url).then(res => {
 
-    }).catch(error => {
+    //     console.log('audioFetch res: ', res);
 
-        console.log('error', error);
+    // }).catch(error => {
 
-    });
+    //     console.log('error', error);
+
+    // });
 
     nextEpi.value = showStore.getNext(showStore.currentEpisode.id);
     preEpi.value = showStore.getPre(showStore.currentEpisode.id);
@@ -475,6 +480,8 @@ function routeTofavourite() {
     })
 }
 
+
+
 // function routeToplaylist() {
 //     translateY.value = 0;
 //     scrolled.value = false;
@@ -491,15 +498,16 @@ watch((currentEpisode), (newEpi, oldEpi) => {
 
         audio.value.src = newEpi.audio_url;
         audio.value.load();
-        showStore.fetchAudio(newEpi.audio_url).then(res => {
 
-            console.log('audioFetch res: ', res);
+        // showStore.fetchAudio(newEpi.audio_url).then(res => {
 
-        }).catch(error => {
+        //     console.log('audioFetch res: ', res);
 
-            console.log('error', error);
+        // }).catch(error => {
 
-        });
+        //     console.log('error', error);
+
+        // });
 
         audio.value.addEventListener('loadedMetaData', () => {
             console.log('play loaded');

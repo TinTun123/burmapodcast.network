@@ -1,7 +1,7 @@
 
-const CACHE_NAME = 'v3';
-// const GETSHOW_URL = 'https://burmapodcast.network/api/show';
+const CACHE_NAME = 'v6';
 const GETSHOW_URL = 'https://burmapodcast.network/api/show';
+// const GETSHOW_URL = 'http://localhost:8000/api/show';
 
 const addResourcesToCache = async (resource) => {
   const cache = await caches.open(CACHE_NAME);
@@ -16,7 +16,7 @@ self.addEventListener('install', event => {
       addResourcesToCache([
 
           '/',
-          '/assets/index-1ad74290.js',
+          '/assets/index-e93d1c24.js',
           '/assets/index-49bc5687.css',
           '/index.html',
           '/rwpodcast-logo.svg'
@@ -234,6 +234,7 @@ self.addEventListener('fetch', (event) => {
             const reader = networkResponse.body.getReader();
 
             return new Response(
+              
               new ReadableStream({
                 start(controller) {
                   function push () {
@@ -267,6 +268,13 @@ self.addEventListener('fetch', (event) => {
                           client.postMessage({ type: 'progress', progress });
                         });
                       });
+
+                      self.clients.matchAll().then((clients) => {
+                        clients.forEach((client) => {
+                          client.postMessage({ type: 'audioChunk', audioChunk: value });
+                        });
+                      });
+                      
 
                       controller.enqueue(value);
                       push();
