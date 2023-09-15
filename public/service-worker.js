@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'v3';
+const CACHE_NAME = 'v9';
 const GETSHOW_URL = 'https://burmapodcast.network/api/show';
 
 const addResourcesToCache = async (resource) => {
