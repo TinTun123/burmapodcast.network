@@ -25,7 +25,7 @@
         </div>
 
         <audio controls hidden ref="audio" @ended="isPlaying = false">
-            <source :src="currentEpisode.audio_url">
+            <source :src="currentEpisode.audio_url + `?source=axios`">
         </audio>
 
         <div class="flex items-center justify-between gap-x-4" :class="[scrolled ? 'flex-col items-stretch laptop:flex-row laptop:mx-4 laptop:justify-start' : 'pr-4']">
@@ -64,6 +64,12 @@
 
 
                     <div class="flex gap-x-2">
+
+                        <div @click.stop="saveAudio" class="laptop:cursor-pointer">
+                            <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.3335 12.3333L3.3335 7.33325L4.7335 5.88325L7.3335 8.48325V0.333252H9.3335V8.48325L11.9335 5.88325L13.3335 7.33325L8.3335 12.3333ZM2.3335 16.3333C1.7835 16.3333 1.3125 16.1373 0.920498 15.7453C0.528498 15.3533 0.332831 14.8826 0.333498 14.3333V11.3333H2.3335V14.3333H14.3335V11.3333H16.3335V14.3333C16.3335 14.8833 16.1375 15.3543 15.7455 15.7463C15.3535 16.1383 14.8828 16.3339 14.3335 16.3333H2.3335Z" fill="white"/>
+                            </svg>
+                        </div>
 
                         <div @click.stop="copyToClipboard" class="laptop:cursor-pointer">
                             <svg width="16" height="16" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -116,6 +122,7 @@
             </div>
 
         </div>
+
         <p v-if="scrolled" class="mx-4 text-white max-h-[180px]  tablet:max-h-[1000px] overflow-y-scroll py-2 scroll-container">
 
             {{ currentEpisode.description }}
@@ -326,6 +333,19 @@ function playPre() {
 }
 
 
+function saveAudio() {
+    showStore.fetchAudio(currentEpisode.value.audio_url).then(res => {
+        console.log(res);
+        return res;
+
+    }).catch(error => {
+
+        console.log(error);
+
+    })
+}
+
+
 const progressPercentage = computed(() => {
     return (currentTime.value / totalTime.value) * 100;
 })
@@ -496,7 +516,7 @@ watch((currentEpisode), (newEpi, oldEpi) => {
 
     if (audio.value) {
 
-        audio.value.src = newEpi.audio_url;
+        audio.value.src = newEpi.audio_url + `?source=axios`;
         audio.value.load();
 
         // showStore.fetchAudio(newEpi.audio_url).then(res => {

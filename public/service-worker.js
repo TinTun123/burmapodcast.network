@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'v5';
+const CACHE_NAME = 'v2';
 
 const GETSHOW_URL = 'https://burmapodcast.network/api/show';
 // const GETSHOW_URL = 'http://localhost:8000/api/show';
@@ -17,12 +17,11 @@ self.addEventListener('install', event => {
       addResourcesToCache([
 
           '/',
-          '/assets/index-e93d1c24.js',
+          '/assets/index-99b55940.js',
           '/assets/index-49bc5687.css',
           '/index.html',
           '/rwpodcast-logo.svg'
           // Add other files to cache
-
         ])
       );
     })
@@ -51,7 +50,20 @@ const deleteOldCaches = async () => {
 };
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.url.includes('show/editEpisode/') || event.request.url.includes('show/createEpisode/')) {
+  const requestUrl  = new URL(event.request.url);
+
+  let searchParams = '';
+  
+  if (requestUrl.searchParams.has('source')) {
+
+    searchParams = requestUrl.searchParams.get('source');
+ 
+  }
+
+  console.log('testing', event.request.url.endsWith('axios'));
+
+  if (event.request.url.includes('show/editEpisode/') || event.request.url.includes('show/createEpisode/') || ((event.request.url.endsWith('.mp3') || event.request.url.endsWith('.ogg') || event.request.url.endsWith('.wav')) && searchParams != 'axios')) {
+    
     return;
 
   } else {
@@ -198,8 +210,10 @@ self.addEventListener('fetch', (event) => {
             return customResponse;
           })
         }
-  
-        if (event.request.url.endsWith('.mp3') || event.request.url.endsWith('.ogg') || event.request.url.endsWith('.wav')) {
+        
+        console.log(searchParams);
+
+        if ((event.request.url.endsWith('.mp3') || event.request.url.endsWith('.ogg') || event.request.url.endsWith('.wav') ) || searchParams === 'axios') {
           
           console.log('detect request fetching');
           console.log('request clone', event.request.clone());
@@ -210,7 +224,7 @@ self.addEventListener('fetch', (event) => {
 
           return fetch(event.request).then((networkResponse) => {
   
-            console.log('nerwork response!',networkResponse);
+            console.log('nerwork response!', networkResponse);
             
             const cloneResponse = networkResponse.clone();
             // const contentLength = networkResponse.headers.get('content-length');
@@ -271,14 +285,7 @@ self.addEventListener('fetch', (event) => {
                         clients.forEach((client) => {
                           client.postMessage({ type: 'progress', progress });
                         });
-                      });
-
-                      self.clients.matchAll().then((clients) => {
-                        clients.forEach((client) => {
-                          client.postMessage({ type: 'audioChunk', audioChunk: value });
-                        });
-                      });
-                      
+                      });                      
 
                       controller.enqueue(value);
                       push();
@@ -333,11 +340,12 @@ self.addEventListener('fetch', (event) => {
   
         console.log('other request fetching', event.request);
         
-        // return fetch(event.request);
-        return fetch(event.request).then(networkResponse => {
+        return fetch(event.request);
 
-          return networkResponse;
-        })
+        // return fetch(event.request).then(networkResponse => {
+
+        //   return networkResponse;
+        // })
         // .catch (error => {
         //   console.log(error);
         //   const customResponse = new Response(JSON.stringify({
