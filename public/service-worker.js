@@ -1,5 +1,6 @@
 
-const CACHE_NAME = 'v1';
+const CACHE_NAME = 'v4';
+
 const GETSHOW_URL = 'https://burmapodcast.network/api/show';
 // const GETSHOW_URL = 'http://localhost:8000/api/show';
 
@@ -197,9 +198,6 @@ self.addEventListener('fetch', (event) => {
             return customResponse;
           })
         }
-
-  
-  
   
         if (event.request.url.endsWith('.mp3') || event.request.url.endsWith('.ogg') || event.request.url.endsWith('.wav')) {
           
@@ -239,22 +237,28 @@ self.addEventListener('fetch', (event) => {
                 start(controller) {
                   function push () {
                     reader.read().then(( {done, value} ) => {
-                      if (done) {
-                        controller.close();
 
+                      if (done) {
+
+                        controller.close();
+                        
                         caches.open(CACHE_NAME).then((cache) => {
+
                           cache.put(event.request, cloneResponse);
+
                         });
 
-                        console.log('SW fetching done!');
                         self.clients.matchAll().then((clients) => {
+
                           clients.forEach((client) => {
                             client.postMessage({ type: 'complete', isDone : true });
                           });
+
                         });
 
 
                         return;
+
                       }
 
                       receivedLength += value.length;
@@ -311,7 +315,7 @@ self.addEventListener('fetch', (event) => {
 
         console.log('Image fetching');
 
-        if (event.request.url.endsWith('.jpg') || event.request.url.endsWith('.JPG') || event.request.url.endsWith('.png') || event.request.url.endsWith('.PNG') || event.request.url.endsWith('.gif')) {
+        if (event.request.url.endsWith('.jpg') || event.request.url.endsWith('.jpeg') || event.request.url.endsWith('.JPG') || event.request.url.endsWith('.png') || event.request.url.endsWith('.PNG') || event.request.url.endsWith('.gif')) {
 
 
           return fetch(event.request).then(networkResponse => {

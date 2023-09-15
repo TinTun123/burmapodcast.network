@@ -14,16 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/audio/{file}', function ($file) {
-    $filePath = public_path('audio/' . $file);
-    $mimeType = mime_content_type($filePath);
-    $contentLength = filesize($filePath);
-    return response()->file($filePath, [
-        'Content-Type' => $mimeType,
-        'Content-Length' => $contentLength,
-        'Accept-Ranges' => 'bytes'
-    ]);
-});
+
+// Route::get('/audio/{file}', function ($file) {
+//     $filePath = public_path('audio/' . $file);
+//     $mimeType = mime_content_type($filePath);
+//     $contentLength = filesize($filePath);
+//     return response()->file($filePath, [
+//         'Content-Type' => $mimeType,
+//         'Content-Length' => $contentLength,
+//         'Accept-Ranges' => 'bytes'
+//     ]);
+// });
 
 Route::get('/{any}', function () {
     return file_get_contents(public_path('index.html'));
