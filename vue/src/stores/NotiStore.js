@@ -13,8 +13,17 @@ export const useNotificationStore = defineStore('notification', {
     showNotification(message, type = 'info') {
       this.message = message;
       this.type = type;
+
+      console.log('noti type: ', type);
       
-      setTimeout(() => this.closeNotification(), 5000); // Automatically close after 5 seconds
+      if (type === 'progress') {
+        return;
+      } else if (type === 'complete') {
+        setTimeout(() => this.closeNotification(), 5000);      
+      } else {
+        setTimeout(() => this.closeNotification(), 5000);
+      }
+       // Automatically close after 5 seconds
     },
     closeNotification() {
       this.message = null;

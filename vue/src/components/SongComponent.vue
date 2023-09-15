@@ -328,6 +328,7 @@ const progressPercentage = computed(() => {
 })
 
 onMounted(() => {
+
     audio.value.addEventListener('loadedmetadata', () => {
         totalTime.value = audio.value.duration;
     });
@@ -336,6 +337,17 @@ onMounted(() => {
 
     audio.value.play();
     isPlaying.value = true;
+
+    showStore.fetchAudio(currentEpisode.value.audio_url).then(res => {
+
+        console.log('audioFetch res: ', res);
+
+    }).catch(error => {
+
+        console.log('error', error);
+
+    });
+
     nextEpi.value = showStore.getNext(showStore.currentEpisode.id);
     preEpi.value = showStore.getPre(showStore.currentEpisode.id);
 
@@ -476,8 +488,18 @@ function routeTofavourite() {
 watch((currentEpisode), (newEpi, oldEpi) => {
 
     if (audio.value) {
+
         audio.value.src = newEpi.audio_url;
         audio.value.load();
+        showStore.fetchAudio(newEpi.audio_url).then(res => {
+
+            console.log('audioFetch res: ', res);
+
+        }).catch(error => {
+
+            console.log('error', error);
+
+        });
 
         audio.value.addEventListener('loadedMetaData', () => {
             console.log('play loaded');

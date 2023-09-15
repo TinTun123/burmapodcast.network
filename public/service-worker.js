@@ -1,5 +1,6 @@
 
-const CACHE_NAME = 'v9';
+const CACHE_NAME = 'v3';
+// const GETSHOW_URL = 'https://burmapodcast.network/api/show';
 const GETSHOW_URL = 'https://burmapodcast.network/api/show';
 
 const addResourcesToCache = async (resource) => {
@@ -15,7 +16,7 @@ self.addEventListener('install', event => {
       addResourcesToCache([
 
           '/',
-          '/assets/index-ecf39e02.js',
+          '/assets/index-1ad74290.js',
           '/assets/index-49bc5687.css',
           '/index.html',
           '/rwpodcast-logo.svg'
@@ -201,9 +202,14 @@ self.addEventListener('fetch', (event) => {
   
   
         if (event.request.url.endsWith('.mp3') || event.request.url.endsWith('.ogg') || event.request.url.endsWith('.wav')) {
-          console.log('detect request fetching');;
+          
+          console.log('detect request fetching');
           console.log('request clone', event.request.clone());
           console.log('request original', event.request);
+
+          let receivedLength = 0;
+          let totalLength = 0;
+
           return fetch(event.request).then((networkResponse) => {
   
             console.log('nerwork response!',networkResponse);
@@ -217,13 +223,63 @@ self.addEventListener('fetch', (event) => {
             //   headers : {
             //     'Content-Length' : contentLength,
             //     'Content-Type' : networkResponse.headers.get('content-type')
+
+            
             //   }
             // }
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, cloneResponse);
-            });
+
+            const contentLength = +networkResponse.headers.get('content-length');
+            totalLength = contentLength;
+
+            const reader = networkResponse.body.getReader();
+
+            return new Response(
+              new ReadableStream({
+                start(controller) {
+                  function push () {
+                    reader.read().then(( {done, value} ) => {
+                      if (done) {
+                        controller.close();
+
+                        caches.open(CACHE_NAME).then((cache) => {
+                          cache.put(event.request, cloneResponse);
+                        });
+
+                        console.log('SW fetching done!');
+                        self.clients.matchAll().then((clients) => {
+                          clients.forEach((client) => {
+                            client.postMessage({ type: 'complete', isDone : true });
+                          });
+                        });
+
+
+                        return;
+                      }
+
+                      receivedLength += value.length;
+
+                      const progress = Math.round((receivedLength / totalLength) * 100);
+
+                      console.log('SW loading: %', progress);
+
+                      self.clients.matchAll().then((clients) => {
+                        clients.forEach((client) => {
+                          client.postMessage({ type: 'progress', progress });
+                        });
+                      });
+
+                      controller.enqueue(value);
+                      push();
+                    });
+                  }
+
+                  push();
+                }
+              })
+            )
+
   
-            return networkResponse;
+            // return networkResponse;
   
           }).catch(error => {
             console.error('Error in audio fetch', error);

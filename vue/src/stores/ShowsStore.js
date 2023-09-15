@@ -425,6 +425,11 @@ export const useShowsStore = defineStore('Shows', {
 
                 return {};
             }
+        },
+        fetchAudio (url) {
+            return axiosClient.get(url).then(res => {
+                return res;
+            })
         }
     }
 })
