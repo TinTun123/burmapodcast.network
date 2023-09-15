@@ -25,7 +25,7 @@
         </div>
 
         <audio controls hidden ref="audio" @ended="isPlaying = false">
-            <source :src="currentEpisode.audio_url + `?source=axios`">
+            <source :src="currentEpisode.audio_url">
         </audio>
 
         <div class="flex items-center justify-between gap-x-4" :class="[scrolled ? 'flex-col items-stretch laptop:flex-row laptop:mx-4 laptop:justify-start' : 'pr-4']">
@@ -516,7 +516,7 @@ watch((currentEpisode), (newEpi, oldEpi) => {
 
     if (audio.value) {
 
-        audio.value.src = newEpi.audio_url + `?source=axios`;
+        audio.value.src = newEpi.audio_url;
         audio.value.load();
 
         // showStore.fetchAudio(newEpi.audio_url).then(res => {

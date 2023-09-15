@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'v2';
+const CACHE_NAME = 'v1';
 
 const GETSHOW_URL = 'https://burmapodcast.network/api/show';
 // const GETSHOW_URL = 'http://localhost:8000/api/show';
@@ -17,7 +17,7 @@ self.addEventListener('install', event => {
       addResourcesToCache([
 
           '/',
-          '/assets/index-99b55940.js',
+          '/assets/index-f9e0233a.js',
           '/assets/index-49bc5687.css',
           '/index.html',
           '/rwpodcast-logo.svg'
@@ -253,12 +253,22 @@ self.addEventListener('fetch', (event) => {
                     reader.read().then(( {done, value} ) => {
 
                       if (done) {
+                        const modifiedRequest = event.request.clone();
 
+                        let tempURL = modifiedRequest.url;
+
+                        const indesOfsearch = tempURL.indexOf('?');
+
+                        tempURL = tempURL.substring(0, indesOfsearch);
+                        // noSearchPara.search = '';
+
+                        // modifiedRequest.url = noSearchPara.toString();
+                        console.log('modified url: ', tempURL);
                         controller.close();
                         
                         caches.open(CACHE_NAME).then((cache) => {
 
-                          cache.put(event.request, cloneResponse);
+                          cache.put(tempURL, cloneResponse);
 
                         });
 
