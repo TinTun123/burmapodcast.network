@@ -1,6 +1,7 @@
 <?php
 
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/audio/{file}', function ($file) {
+Route::get('/storage/audio/{epiId}/{file}', function ($file) {
     $filePath = public_path('audio/' . $file);
     $mimeType = mime_content_type($filePath);
     $contentLength = filesize($filePath);
+    
+    Log::info('web php', [
+        'get request'
+    ]);
+
     return response()->file($filePath, [
         'Content-Type' => $mimeType,
         'Content-Length' => $contentLength,
