@@ -40,7 +40,7 @@
 
         <FooterComponent v-if="route.name !== 'pwdreset' && route.name !== 'verify'" />
         <transition appear>
-          <SongComponent v-if="showStore.currentEpisode.title"/>      
+          <SongComponent v-show="showStore.currentEpisode.title"/>      
         </transition>
       </div>
 
@@ -111,7 +111,7 @@ navigator.serviceWorker.addEventListener('message', (event) => {
   if (type === 'progress') {
     notiStore.showNotification(`Saving ${progress}%`, type);
   } else if (type === 'complete') {
-    notiStore.showNotification('Complete, Listen offline now', type);
+    notiStore.showNotification('Saved to playList, Listen offline now', type);
   }
 
   

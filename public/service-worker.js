@@ -1,29 +1,33 @@
 
-const CACHE_NAME = 'v1';
+const CACHE_NAME = 'v3';
 
 const GETSHOW_URL = 'https://burmapodcast.network/api/show';
 // const GETSHOW_URL = 'http://localhost:8000/api/show';
 
 const addResourcesToCache = async (resource) => {
+
   const cache = await caches.open(CACHE_NAME);
   await cache.addAll(resource);
+
 }
 
 
 
 self.addEventListener('install', event => {
+
   self.skipWaiting();
     event.waitUntil(
       addResourcesToCache([
 
           '/',
-          '/assets/index-f9e0233a.js',
+          '/assets/index-6441106d.js',
           '/assets/index-49bc5687.css',
           '/index.html',
           '/rwpodcast-logo.svg'
           // Add other files to cache
         ])
       );
+
     })
 
 self.addEventListener('activate', (event) => {
@@ -50,6 +54,7 @@ const deleteOldCaches = async () => {
 };
 
 self.addEventListener('fetch', (event) => {
+  
   const requestUrl  = new URL(event.request.url);
 
   let searchParams = '';

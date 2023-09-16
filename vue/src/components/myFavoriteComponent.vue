@@ -59,8 +59,8 @@
 
 </template>
 
-
 <script setup>
+
 import { useRouter } from 'vue-router';
 import { useShowsStore } from '../stores/ShowsStore';
 
@@ -68,6 +68,7 @@ const router = useRouter();
 const showStore = useShowsStore();
 
 async function play(epi) {
+
     await showStore.getShow(Number(epi.show_id));
     showStore.currentEpisode = epi;
 

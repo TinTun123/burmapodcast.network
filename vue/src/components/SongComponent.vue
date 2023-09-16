@@ -24,8 +24,8 @@
 
         </div>
 
-        <audio controls hidden ref="audio" @ended="isPlaying = false">
-            <source :src="currentEpisode.audio_url">
+        <audio controls hidden ref="audio" @ended="isPlaying = false" id="audioEle">
+            <source :src="currentEpisode.audio_url ? currentEpisode.audio_url : ''">
         </audio>
 
         <div class="flex items-center justify-between gap-x-4" :class="[scrolled ? 'flex-col items-stretch laptop:flex-row laptop:mx-4 laptop:justify-start' : 'pr-4']">
@@ -281,6 +281,8 @@ const totalTime = ref(0);
 const {currentEpisode, scrollState} = storeToRefs(showStore);
 const remainingTime = computed(() => totalTime.value - currentTime.value);
 
+const audioURL = ref('foourl');
+
 
 const formatTime = (time) => {
 
@@ -334,6 +336,10 @@ function playPre() {
 
 
 function saveAudio() {
+
+    console.log('currentEpisode: ', currentEpisode.value);
+    showStore.addplaylist(currentEpisode.value, showStore.currentShow.id, showStore.currentShow.title);
+
     showStore.fetchAudio(currentEpisode.value.audio_url).then(res => {
         console.log(res);
         return res;
@@ -350,46 +356,104 @@ const progressPercentage = computed(() => {
     return (currentTime.value / totalTime.value) * 100;
 })
 
-
 onMounted(() => {
 
-    audio.value.addEventListener('loadedmetadata', () => {
-        totalTime.value = audio.value.duration;
-    });
+    if (audio.value) {
+
+        console.log('audio tag: ', audio.value);
+    }
 
     audio.value.addEventListener('timeupdate', updateCurrentTime);
 
-    audio.value.play();
-    isPlaying.value = true;
+    audio.value.onerror = function() {
+            console.log('error handler registered');
+            console.log('epi not found');
+            showStore.removeEpifromStorage(showStore.currentEpisode);
+            showStore.currentEpisode = {};
+            audioURL.value = '';
+            audio.value.pause();
+            notificationStore.showNotification('Sorry, Episode not available anymore!', 'info');
+            
+        }
+
+    audio.value.addEventListener('loadedmetadata', () => {
+        console.log('play loaded');
+        totalTime.value = audio.value.duration;
+        console.log('total time: ', totalTime.value);
+        audio.value.play();
+    });
 
 
-    // showStore.fetchAudio(currentEpisode.value.audio_url).then(res => {
 
-    //     console.log('audioFetch res: ', res);
+    if (showStore.currentEpisode.title) {
 
-    // }).catch(error => {
+        // let audioEle  = document.getElementById("audioEle");
 
-    //     console.log('error', error);
+        
+        // audioEle.onerror = function() {
+        //     console.log('error handler registered');
+        //     console.log('epi not found');
+        //     showStore.removeEpifromStorage(showStore.currentEpisode);
+        //     showStore.currentEpisode = {};
+
+        //     notificationStore.showNotification('Sorry, Episode not available anymore!', 'info');
+        // }
+
+        // audioURL.value = showStore.currentEpisode.audio_url;
+
+
+
+
+
+        // showStore.fetchAudio(currentEpisode.value.audio_url).then(res => {
+
+        //     console.log('audioFetch res: ', res);
+
+        // }).catch(error => {
+
+        //     console.log('error', error);
+
+        // });
+
+        nextEpi.value = showStore.getNext(showStore.currentEpisode.id);
+        preEpi.value = showStore.getPre(showStore.currentEpisode.id);
+
+        if (!showStore.isListen(showStore.currentEpisode)) {
+            showStore.incrementEpicount(showStore.currentEpisode.id).then(res => {
+                console.log(res);
+            })
+        }
+
+
+        if (showStore.scrollState) {
+            console.log('scrolled');
+            scroll();
+            audio.value.play();
+        }
+
+
+
+        audio.value.play();
+        isPlaying.value = true;
+    }
+
+
+    // audio.value.addEventListener("error", () => {
 
     // });
 
-    nextEpi.value = showStore.getNext(showStore.currentEpisode.id);
-    preEpi.value = showStore.getPre(showStore.currentEpisode.id);
 
-    if (!showStore.isListen(showStore.currentEpisode)) {
-        showStore.incrementEpicount(showStore.currentEpisode.id).then(res => {
-            console.log(res);
-        })
-    }
 
-    showStore.addplaylist(showStore.currentEpisode, showStore.currentShow.id, showStore.currentShow.title);
-
-    if (showStore.scrollState) {
-        console.log('scrolled');
-        scroll();
-        audio.value.play();
-    }
 })
+
+
+// function audioFetchErr() {
+//     console.log('epi not found');
+//     showStore.removeEpifromStorage(currentEpisode);
+//     showStore.currentEpisode = {};
+
+//     notificationStore.showNotification('Sorry, Episode not available anymore!', 'info');
+// }
 
 function getDate(date) {
     const created_at = new Date(date);
@@ -514,11 +578,16 @@ function routeTofavourite() {
 // eslint-disable-next-line no-unused-vars
 watch((currentEpisode), (newEpi, oldEpi) => {
 
-    if (audio.value) {
+    if (showStore.currentEpisode.title) {
 
+
+
+        console.log('change src value');
         audio.value.src = newEpi.audio_url;
-        audio.value.load();
+        // audioURL.value = newEpi.audio_url;
 
+        audio.value.load();
+        console.log('load');
         // showStore.fetchAudio(newEpi.audio_url).then(res => {
 
         //     console.log('audioFetch res: ', res);
@@ -529,10 +598,7 @@ watch((currentEpisode), (newEpi, oldEpi) => {
 
         // });
 
-        audio.value.addEventListener('loadedMetaData', () => {
-            console.log('play loaded');
-            audio.value.play();
-        });
+
         
         audio.value.play();
         isPlaying.value = true;
@@ -541,12 +607,11 @@ watch((currentEpisode), (newEpi, oldEpi) => {
         preEpi.value = showStore.getPre(newEpi.id);
 
         if (!showStore.isListen(showStore.currentEpisode)) {
-        showStore.incrementEpicount(showStore.currentEpisode.id).then(res => {
-            console.log(res);
-        })
-    }
+            showStore.incrementEpicount(showStore.currentEpisode.id).then(res => {
+                console.log(res);
+            })
+        }
 
-        showStore.addplaylist(newEpi, showStore.currentShow.id, showStore.currentShow.title);
     }
 
 })

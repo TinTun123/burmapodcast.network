@@ -347,7 +347,7 @@ export const useShowsStore = defineStore('Shows', {
                         
                     }
     
-    
+                    console.log('admin epi fetch');
                     return '';
                 })
             } else {
@@ -358,7 +358,7 @@ export const useShowsStore = defineStore('Shows', {
                         this.episodes.push(res.data.episodes);
                         this.currentShow = res.data.episodes;
                         
-                        
+                        console.log('usre epi fetch');
                     }
 
     
@@ -432,6 +432,44 @@ export const useShowsStore = defineStore('Shows', {
             return axiosClient.get(`${url}?source=axios`).then(res => {
                 return res;
             })
+        },
+        removeEpifromStorage(epi) {
+            console.log('fave count: ', this.myFavorite.length);
+            console.log('save count: ', this.playList.length);
+
+            console.log('currentEpi: ', epi);
+            console.log('myFav: ', this.myFavorite);
+            
+            for(let i = 0; i  < this.myFavorite.length; i++) {
+                this.myFavorite = this.myFavorite.filter(favepi => {
+                    if (Number(favepi.id) !== Number(epi.id)) {
+                        console.log('found matching fav epi');
+                        return favepi;
+                    }
+
+                    if (Number(favepi.id) === Number(epi.id)) {
+                        console.log('found matching fav epi');
+                    }
+                })
+            }
+
+            for(let i = 0; i  < this.playList.length; i++) {
+                this.playList = this.playList.filter(favepi => {
+                    if (Number(favepi.id) !== Number(epi.id)) {
+                        return favepi;
+                    }
+
+                    if (Number(favepi.id) === Number(epi.id)) {
+                        console.log('found matching playlist epi');
+                    }
+                })
+            }
+
+            console.log('fave count: ', this.myFavorite.length);
+            console.log('save count: ', this.playList.length);
+
+            localStorage.setItem('myFavorite', JSON.stringify(this.myFavorite));
+            localStorage.setItem('playlist', JSON.stringify(this.playList));
         }
     }
 })
