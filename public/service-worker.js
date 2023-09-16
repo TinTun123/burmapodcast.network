@@ -20,7 +20,7 @@ self.addEventListener('install', event => {
       addResourcesToCache([
 
           '/',
-          '/assets/index-6441106d.js',
+          '/assets/index-10562ffa.js',
           '/assets/index-49bc5687.css',
           '/index.html',
           '/rwpodcast-logo.svg'
