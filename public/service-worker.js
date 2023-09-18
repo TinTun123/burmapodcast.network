@@ -11,8 +11,6 @@ const addResourcesToCache = async (resource) => {
 
 }
 
-
-
 self.addEventListener('install', event => {
 
   self.skipWaiting();
@@ -20,8 +18,8 @@ self.addEventListener('install', event => {
       addResourcesToCache([
 
           '/',
-          '/assets/index-10562ffa.js',
-          '/assets/index-c050a749.css',
+          '/assets/index-eadb376e.js',
+          '/assets/index-49bc5687.css',
           '/index.html',
           '/rwpodcast-logo.svg'
           // Add other files to cache

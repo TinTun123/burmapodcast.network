@@ -1,9 +1,6 @@
 <template>
     <div 
-    @touchstart="touchStart" 
-    @touchmove="touchMove" 
-    @touchend="touchEnd" 
-    :draggable="type === 'desktop' ? 'false' : 'true'"
+
     ref="elementRef"
     class="fixed laptop:sticky left-0 right-0 tablet:left-0 tablet:right-0 tablet:bottom-4 transition-all bg-gradient-to-t from-[#292929] to-[#121212]" 
     @click.stop="type === 'desktop' ? scroll() : ''"
@@ -24,11 +21,11 @@
 
         </div>
 
-        <audio controls hidden ref="audio" @ended="isPlaying = false" id="audioEle">
+        <audio controls hidden ref="audio" @ended="isPlaying = false" @canplay="playAudio" id="audioEle">
             <source :src="currentEpisode.audio_url ? currentEpisode.audio_url : ''">
         </audio>
 
-        <div class="flex items-center justify-between gap-x-4" :class="[scrolled ? 'flex-col items-stretch laptop:flex-row laptop:mx-4 laptop:justify-start' : 'pr-4']">
+        <div @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" class="flex items-center justify-between gap-x-4" :class="[scrolled ? 'flex-col items-stretch laptop:flex-row laptop:mx-4 laptop:justify-start' : 'pr-4']">
 
             <img :src="currentEpisode.img_url" :class="[scrolled ? 'mx-auto laptop:mx-0 laptop:ml-4 mb-4 w-[30%] tablet:w-[153px] shadow-card-shadow rounded-[10px]' : 'w-[68px]']" class="aspect-square" alt="">
 
@@ -45,7 +42,9 @@
                                 <path d="M11.8095 12.7619V15.2381H4.19048V12.7619C4.19048 11.7105 5.89715 10.8571 8 10.8571C10.1029 10.8571 11.8095 11.7105 11.8095 12.7619ZM8 3.04762C9.31345 3.04762 10.5731 3.56939 11.5019 4.49814C12.4306 5.42689 12.9524 6.68655 12.9524 8C12.9524 8.95238 12.6857 9.84381 12.221 10.5981L11.0476 9.55428C11.2914 9.08952 11.4286 8.55619 11.4286 8C11.4286 6.09524 9.90476 4.57143 8 4.57143C6.09524 4.57143 4.57143 6.09524 4.57143 8C4.57143 8.55619 4.70857 9.08952 4.95238 9.55428L3.77905 10.5981C3.31429 9.84381 3.04762 8.95238 3.04762 8C3.04762 6.68655 3.56939 5.42689 4.49814 4.49814C5.42689 3.56939 6.68655 3.04762 8 3.04762ZM8 0C10.1217 0 12.1566 0.842855 13.6569 2.34315C15.1571 3.84344 16 5.87827 16 8C16 9.73714 15.4438 11.3448 14.5067 12.6552L13.3638 11.6267C14.0648 10.5905 14.4762 9.34095 14.4762 8C14.4762 6.28241 13.7939 4.63516 12.5794 3.42064C11.3648 2.20612 9.71759 1.52381 8 1.52381C6.28241 1.52381 4.63517 2.20612 3.42064 3.42064C2.20612 4.63516 1.52381 6.28241 1.52381 8C1.52381 9.34095 1.93524 10.5905 2.63619 11.6267L1.49334 12.6552C0.520743 11.298 -0.0015564 9.66977 3.48388e-06 8C3.48388e-06 5.87827 0.842858 3.84344 2.34315 2.34315C3.84344 0.842855 5.87827 0 8 0ZM8 6.09524C8.50518 6.09524 8.98966 6.29592 9.34687 6.65313C9.70408 7.01034 9.90476 7.49482 9.90476 8C9.90476 8.50517 9.70408 8.98966 9.34687 9.34687C8.98966 9.70408 8.50518 9.90476 8 9.90476C7.49483 9.90476 7.01034 9.70408 6.65313 9.34687C6.29592 8.98966 6.09524 8.50517 6.09524 8C6.09524 7.49482 6.29592 7.01034 6.65313 6.65313C7.01034 6.29592 7.49483 6.09524 8 6.09524Z" fill="#8B8B8B"/>
                             </svg>
                         </div>
+
                         <span class="text-x-sm font-semibold text-white/80">{{ user.name }}</span>
+
                     </div>
                 </div>
                 <div v-if="scrolled" class="flex my-1 justify-between laptop:items-center laptop:w-full mx-4">
@@ -189,16 +188,10 @@
 
             <span class="text-white text-sm">{{formattedCurrentTime}}</span>
 
-            <!-- <div class="bg-gray-300/20 w-full h-1 rounded-full">
-                <div :style="{'width' : `${progressPercentage}%`}" class="h-1 rounded-full relative bg-white">
-                    <div  class="w-3 h-3 rounded-full bg-white laptop:cursor-pointer absolute right-0 -top-[4px]">
+    
 
-                    </div>
-                </div>
-            </div> -->
-
-            <div class="w-full">
-                <input type="range" min="0" max="100" @input="slideTrigger" @change="endSlide" v-model="percent" step="0.1" class="bg-gray-300/20 w-full h-1 rounded-full">
+            <div class="w-full flex items-center">
+                <input type="range" min="0" name="slider" max="100" @input.stop="slideTrigger" @change.stop="endSlide" v-model="percent" step="0.1" class="bg-gray-300/20 w-full h-1 rounded-full">
             </div>
 
             <span class="text-white text-sm">{{ formattedRemainingTime }}</span>
@@ -271,7 +264,6 @@ const touchOffsetY = ref('0');
 const startY = ref(0);
 const {type} = useBreakPoints();
 const collectUserData = ref(null);
-const seekPosition = ref(0);
 const percent = ref(0);
 
 const audio = ref(null);
@@ -289,14 +281,24 @@ const audioURL = ref('foourl');
 
 function slideTrigger() {
     isSeeking.value = true;
-    audio.value.pause();
+    // audio.value.pause();
     isPlaying.value = false;
+    console.log(audio.value.currentTime);
 }
 
 function endSlide() {
+    console.log('input percent: ', percent.value);
+    console.log('totalTime: ', totalTime.value);
+    console.log('currentTime: ', percent.value * totalTime.value / 100);
+
     audio.value.currentTime = percent.value * totalTime.value / 100;
+
     isPlaying.value = true;
     isSeeking.value = false;
+    audio.value.play();
+}
+
+function playAudio() {
     audio.value.play();
 }
 
@@ -498,10 +500,10 @@ function copyToClipboard() {
 }
 
 function scroll() {
-    if (type.value === 'desktop') {
+    // if (type.value === 'desktop') {
         scrolled.value = true;
         translateY.value = 0;
-    }
+    // }
 
 }
 
@@ -534,7 +536,7 @@ function touchMove(event) {
 
         translateY.value = frombottom - touchOffsetY.value;
 
-        if (deltaY < 0) {
+        if (deltaY < 30) {
 
             // translateY.value = window.innerHeight - (window.innerHeight * 0.1) - elementRef.value.clientHeight;
             translateY.value = 0;
