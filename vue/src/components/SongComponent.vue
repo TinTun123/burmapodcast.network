@@ -3,9 +3,9 @@
     @touchstart="touchStart" 
     @touchmove="touchMove" 
     @touchend="touchEnd" 
-    draggable="true"
+    :draggable="type === 'desktop' ? 'false' : 'true'"
     ref="elementRef"
-    class="movable fixed laptop:sticky left-0 right-0 tablet:left-0 tablet:right-0 tablet:bottom-4 transition-all bg-gradient-to-t from-[#292929] to-[#121212]" 
+    class="fixed laptop:sticky left-0 right-0 tablet:left-0 tablet:right-0 tablet:bottom-4 transition-all bg-gradient-to-t from-[#292929] to-[#121212]" 
     @click.stop="type === 'desktop' ? scroll() : ''"
     :style="{bottom : `${translateY}px`}"
     :class="[scrolled ? 'pt-8 laptop:bottom-4 laptop:pb-8 rounded-t-[10px]' : 'cursor-pointer']">
@@ -185,19 +185,20 @@
             </span>
             </div>
 
-
-
-
-
-
-
-
         <div v-if="scrolled" class="flex items-center mb-2 mx-4 gap-x-2">
 
             <span class="text-white text-sm">{{formattedCurrentTime}}</span>
 
-            <div class="bg-gray-300/20 w-full h-1 rounded-full">
-                <div :style="{'width' : `${progressPercentage}%`}" class="h-1 rounded-full bg-white"></div>
+            <!-- <div class="bg-gray-300/20 w-full h-1 rounded-full">
+                <div :style="{'width' : `${progressPercentage}%`}" class="h-1 rounded-full relative bg-white">
+                    <div  class="w-3 h-3 rounded-full bg-white laptop:cursor-pointer absolute right-0 -top-[4px]">
+
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="w-full">
+                <input type="range" min="0" max="100" @input="slideTrigger" @change="endSlide" v-model="percent" step="0.1" class="bg-gray-300/20 w-full h-1 rounded-full">
             </div>
 
             <span class="text-white text-sm">{{ formattedRemainingTime }}</span>
@@ -258,6 +259,7 @@ import CollectUserDataComponent from '../components/CollectUserDataComponent.vue
 import { useUserStore } from '../stores/userStore';
 import { useNotificationStore } from '../stores/NotiStore';
 
+const isSeeking = ref(false);
 
 const elementRef = ref(null);
 const showStore = useShowsStore();
@@ -269,6 +271,8 @@ const touchOffsetY = ref('0');
 const startY = ref(0);
 const {type} = useBreakPoints();
 const collectUserData = ref(null);
+const seekPosition = ref(0);
+const percent = ref(0);
 
 const audio = ref(null);
 const nextEpi = ref();
@@ -282,6 +286,19 @@ const {currentEpisode, scrollState} = storeToRefs(showStore);
 const remainingTime = computed(() => totalTime.value - currentTime.value);
 
 const audioURL = ref('foourl');
+
+function slideTrigger() {
+    isSeeking.value = true;
+    audio.value.pause();
+    isPlaying.value = false;
+}
+
+function endSlide() {
+    audio.value.currentTime = percent.value * totalTime.value / 100;
+    isPlaying.value = true;
+    isSeeking.value = false;
+    audio.value.play();
+}
 
 
 const formatTime = (time) => {
@@ -300,13 +317,21 @@ const formatDuration = (time) => {
     return `${minutes} mins ${seconds} secs`;
 }
 
-const formattedCurrentTime = computed(() => formatTime(currentTime.value));
+const formattedCurrentTime = computed(() => {
+    if (!isSeeking.value) {
+        return formatTime(currentTime.value);
+    } else {
+        return formatTime(percent.value * totalTime.value / 100);
+    }
+})
+
 const formattedRemainingTime = computed(() => formatTime(remainingTime.value));
 const formattedDuratiuon = computed(() => formatDuration(totalTime.value));
 
 
 const updateCurrentTime = () => {
     currentTime.value = audio.value.currentTime;
+    percent.value = progressPercentage.value;
 }
 
 const togglePlayBack = () => {
