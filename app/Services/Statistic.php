@@ -9,7 +9,7 @@ use Stevebauman\Location\Facades\Location;
 class Statistic {
     public function recordStatistic($ip, $showId, $episodeId, $action, $audience_id) {
 
-        $ipinfo = Location::get('49.228.116.178');
+        $ipinfo = Location::get($ip);
 
         ModelsStatistic::create([
             'show_id' => $showId,
