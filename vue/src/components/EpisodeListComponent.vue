@@ -7,7 +7,7 @@
 
                 <div v-for="(seasons, index) in showStore.currentShow.seasons" :key="index">
 
-                    <h1 class="text-lg font-medium text-white/80">Season: {{ seasons.season_number }}</h1>
+                    <h1 class="text-lg font-medium text-white/80" v-if="seasons.episodes.length">Season: {{ seasons.season_number }}</h1>
                     
                     <div class="flex flex-col">
 
