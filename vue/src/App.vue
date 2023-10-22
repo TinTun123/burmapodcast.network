@@ -9,9 +9,9 @@
     </div>
     <div :class="[type === 'desktop' ? 'flex gap-x-6 justify-stretch overflow-y-hidden ' : '']" class="relative">
 
-      <div v-if="notiStore.hasMessage" :class="[(notiStore.type === 'info' || notiStore.type === 'complete' || notiStore.type === 'progress') ? 'bg-[#2BFF00]/40' : 'bg-[#FF0F00]/40']" class="fixed bottom-8 left-8 p-2 z-[9999] rounded-[15px] transition-all">
+      <div v-if="notiStore.hasMessage" :class="[(notiStore.type === 'info' || notiStore.type === 'complete' || notiStore.type === 'progress') ? 'bg-white' : 'bg-[#FF0F00]/40']" class="fixed bottom-8 left-8 p-2 z-[9999] rounded-[15px] transition-all">
         
-        <h2 class="text-white">{{ notiStore.message }}</h2>
+        <h2 class="text-[#35A519] font-medium text-sm">{{ notiStore.message }}</h2>
       
       </div>
 
@@ -81,6 +81,7 @@
 </template>
 
 <script setup>
+
 import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import SongComponent from './components/SongComponent.vue';

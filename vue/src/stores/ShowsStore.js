@@ -211,11 +211,13 @@ export const useShowsStore = defineStore('Shows', {
                         }
                     }
                 }
-                console.log(res.status);
             })
         },
 
         likeEpisode(epi, showTitle, showId) {
+
+            const userStore = useUserStore();
+            let audience_id = 0;
             const index = this.likeEpiId.indexOf(Number(epi.id));
             console.log(index);
             if (index !== -1) {
@@ -223,15 +225,22 @@ export const useShowsStore = defineStore('Shows', {
             }
             epi['show_title'] = showTitle;
             epi['show_id'] = showId;
+
             this.myFavorite.push(epi);
             localStorage.setItem('myFavorite', JSON.stringify(this.myFavorite));
 
-            return axiosClient.post(`likeEpisode/${epi.id}`).then(res => {
-                this.likeEpiId.push(res.data.epiId);
-
-                localStorage.setItem('likeEpiId', JSON.stringify(this.likeEpiId));
-                return res;
-            })
+            if (userStore.audience && userStore.audience.id) {
+                audience_id = userStore.audience.id;
+                return axiosClient.post(`likeEpisode/${epi.id}/${audience_id}`, {
+                    showId : this.currentShow.id
+                }).then(res => {
+                    this.likeEpiId.push(res.data.epiId);
+    
+                    localStorage.setItem('likeEpiId', JSON.stringify(this.likeEpiId));
+                    return res;
+                })
+            }
+            
         },
 
         addplaylist (epi, showId, showTitle) {
@@ -266,9 +275,20 @@ export const useShowsStore = defineStore('Shows', {
             } else {
                 return true;
             }
-        },
+        }, 
         incrementEpicount (epiId) {
-            return axiosClient.get(`listen/${epiId}`).then(res => {
+            const userStore = useUserStore();
+            let para = {};
+            if (userStore.audience && userStore.audience.id) {
+                para = {
+                    showId : this.currentShow.id,
+                    audienceId : userStore.audience.id
+                }
+            }
+            console.log(para);
+            return axiosClient.get(`listen/${epiId}`, {
+                params : para
+            }).then(res => {
                 console.log(res);
                 return res;
             })
@@ -280,6 +300,7 @@ export const useShowsStore = defineStore('Shows', {
                 return axiosClient.get('/fetchAdminShows').then(res => {
                     if (res.status === 200 || res.status === 304) {
                         this.shows = res.data.shows
+                   
                     }
                         
                   
@@ -347,7 +368,6 @@ export const useShowsStore = defineStore('Shows', {
                         
                     }
     
-                    console.log('admin epi fetch');
                     return '';
                 })
             } else {
@@ -358,7 +378,6 @@ export const useShowsStore = defineStore('Shows', {
                         this.episodes.push(res.data.episodes);
                         this.currentShow = res.data.episodes;
                         
-                        console.log('usre epi fetch');
                     }
 
     
@@ -402,7 +421,6 @@ export const useShowsStore = defineStore('Shows', {
                     
                 const currentIndex = this.currentShow.seasons[i].episodes.findIndex(epi => epi.id === episodeId);
 
-                console.log('currentIndex', currentIndex);
 
                 if (currentIndex === 0) {
                     
@@ -427,18 +445,26 @@ export const useShowsStore = defineStore('Shows', {
             }
         },
         fetchAudio (url) {
-
-
             return axiosClient.get(`${url}?source=axios`).then(res => {
                 return res;
             })
         },
-        removeEpifromStorage(epi) {
-            console.log('fave count: ', this.myFavorite.length);
-            console.log('save count: ', this.playList.length);
+        recordDownload (audienceId, showId, episodeId) {
 
-            console.log('currentEpi: ', epi);
-            console.log('myFav: ', this.myFavorite);
+            return axiosClient.get(`/recordDownload/${episodeId}/${showId}/${audienceId}`).then(res => {
+
+                return res;
+
+            })
+        },
+        recordShare (audienceId, showId, episodeId) {
+
+            return axiosClient.get(`/recordShare/${episodeId}/${showId}/${audienceId}`).then(res => {
+                return res;
+            })
+        },
+        removeEpifromStorage(epi) {
+    
             
             for(let i = 0; i  < this.myFavorite.length; i++) {
                 this.myFavorite = this.myFavorite.filter(favepi => {
@@ -465,8 +491,7 @@ export const useShowsStore = defineStore('Shows', {
                 })
             }
 
-            console.log('fave count: ', this.myFavorite.length);
-            console.log('save count: ', this.playList.length);
+          
 
             localStorage.setItem('myFavorite', JSON.stringify(this.myFavorite));
             localStorage.setItem('playlist', JSON.stringify(this.playList));

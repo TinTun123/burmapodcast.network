@@ -32,4 +32,8 @@ class Episode extends Model
     public function season() {
         return $this->belongsTo(Seasons::class);
     }
+
+    public function scopeWitCustomColumn($query) {
+        return $query->select('id', 'title');
+    }
  }

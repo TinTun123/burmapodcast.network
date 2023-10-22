@@ -10,14 +10,20 @@ use App\Models\Forum;
 use App\Models\Replie;
 use App\Models\Show;
 use App\Models\User;
+use App\Services\Statistic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class ForumController extends Controller
 {
     //
+    protected $StaticService;
+
+    public function __construct(Statistic $myStatistic)
+    {
+        $this->StaticService = $myStatistic;
+    }
     
 
     public function addForum(Request $request) {
@@ -281,7 +287,7 @@ class ForumController extends Controller
                 'episode_id' => (int) $episodeId
             ];
 
-
+            $this->StaticService->recordStatistic($request->ip(), $request->input('showId'), $episodeId, 'comment', $audience->id);
             return response()->json(['success' => ' ', 'comment' => $episode], 200);
         }
 

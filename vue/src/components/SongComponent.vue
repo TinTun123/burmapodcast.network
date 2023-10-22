@@ -199,9 +199,19 @@
         </div>
 
         <div v-if="scrolled" class="flex items-center justify-evenly mb-4 laptop:mb-0 gap-x-4">
-            <div @click.stop="routeTofavourite" class="w-4 h-4 tablet:w-6 tablet:h-6 group">
-                <svg class="w-full h-full" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path class="fill-white group-active:fill-white/60" d="M8.08 12.44L8 12.52L7.912 12.44C4.112 8.992 1.6 6.712 1.6 4.4C1.6 2.8 2.8 1.6 4.4 1.6C5.632 1.6 6.832 2.4 7.256 3.488H8.744C9.168 2.4 10.368 1.6 11.6 1.6C13.2 1.6 14.4 2.8 14.4 4.4C14.4 6.712 11.888 8.992 8.08 12.44ZM11.6 0C10.208 0 8.872 0.648 8 1.664C7.128 0.648 5.792 0 4.4 0C1.936 0 0 1.928 0 4.4C0 7.416 2.72 9.888 6.84 13.624L8 14.68L9.16 13.624C13.28 9.888 16 7.416 16 4.4C16 1.928 14.064 0 11.6 0Z" />
+            <div @click.stop="likeEpisode(currentEpisode)" class="w-6 h-6">
+
+                <svg v-if="showStore.isLike(currentEpisode.id)" class="w-full h-full" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <mask id="mask0_96_3200" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="-1" y="-1" width="18" height="16">
+                        <path d="M4.4 0.134767C1.97 0.134767 0 2.10477 0 4.53477C0 8.93477 5.2 12.9348 8 13.8652C10.8 12.9348 16 8.93477 16 4.53477C16 2.10477 14.03 0.134767 11.6 0.134767C10.112 0.134767 8.796 0.873567 8 2.00437C7.59427 1.42645 7.05526 0.954802 6.42861 0.629361C5.80196 0.30392 5.10612 0.134267 4.4 0.134767Z" fill="white" stroke="white" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                    </mask>
+                    <g mask="url(#mask0_96_3200)">
+                        <path d="M-1.59998 -3.06519H17.6V16.1348H-1.59998V-3.06519Z" fill="#ED4343" fill-opacity="0.8"/>
+                    </g>
+                </svg>
+
+                <svg v-else width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="fill-[#CCCCCC] " d="M11.7037 0.5C10.1156 0.5 8.74667 1.38609 8 2.85391C7.25333 1.38609 5.88444 0.5 4.2963 0.5C3.15727 0.501611 2.06529 1.03349 1.25987 1.97898C0.454457 2.92447 0.00137221 4.20636 0 5.54348C0 8.02956 1.33333 10.6278 3.95556 13.2643C5.1663 14.4738 6.47359 15.5434 7.85926 16.4583C7.9025 16.4857 7.95086 16.5 8 16.5C8.04914 16.5 8.0975 16.4857 8.14074 16.4583C9.52641 15.5434 10.8337 14.4738 12.0444 13.2643C14.6667 10.6278 16 8.02956 16 5.54348C15.9986 4.20636 15.5455 2.92447 14.7401 1.97898C13.9347 1.03349 12.8427 0.501611 11.7037 0.5ZM8 15.7539C6.96296 15.0617 0.592593 10.593 0.592593 5.54348C0.593769 4.39079 0.984357 3.2857 1.67868 2.47063C2.37301 1.65555 3.31437 1.19703 4.2963 1.19565C5.86 1.19565 7.17407 2.17913 7.72593 3.76174C7.74825 3.82553 7.78622 3.8801 7.83502 3.9185C7.88383 3.9569 7.94125 3.9774 8 3.9774C8.05875 3.9774 8.11617 3.9569 8.16498 3.9185C8.21378 3.8801 8.25175 3.82553 8.27407 3.76174C8.82593 2.17913 10.14 1.19565 11.7037 1.19565C12.6856 1.19703 13.627 1.65555 14.3213 2.47063C15.0156 3.2857 15.4062 4.39079 15.4074 5.54348C15.4074 10.587 9.03704 15.0617 8 15.7539Z"/>
                 </svg>
             </div>
 
@@ -227,7 +237,7 @@
                 </svg>
             </div>
 
-            <div @click.stop="routeToplaylist" class="w-4 h-4 tablet:w-6 tablet:h-6 group">
+            <div @click.stop="routeTofavourite" class="w-4 h-4 tablet:w-6 tablet:h-6 group">
                 <svg class="w-full h-full" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path class="group-active:fill-white/60 fill-white" d="M0 0.842106C0 0.685069 0.0623825 0.534465 0.173424 0.423424C0.284465 0.312383 0.435069 0.25 0.592106 0.25H13.6184C13.7755 0.25 13.9261 0.312383 14.0371 0.423424C14.1482 0.534465 14.2105 0.685069 14.2105 0.842106C14.2105 0.999142 14.1482 1.14975 14.0371 1.26079C13.9261 1.37183 13.7755 1.43421 13.6184 1.43421H0.592106C0.435069 1.43421 0.284465 1.37183 0.173424 1.26079C0.0623825 1.14975 0 0.999142 0 0.842106ZM0.592106 6.17106H9.47369C9.63073 6.17106 9.78133 6.10867 9.89237 5.99763C10.0034 5.88659 10.0658 5.73599 10.0658 5.57895C10.0658 5.42191 10.0034 5.27131 9.89237 5.16027C9.78133 5.04923 9.63073 4.98685 9.47369 4.98685H0.592106C0.435069 4.98685 0.284465 5.04923 0.173424 5.16027C0.0623825 5.27131 0 5.42191 0 5.57895C0 5.73599 0.0623825 5.88659 0.173424 5.99763C0.284465 6.10867 0.435069 6.17106 0.592106 6.17106ZM5.92106 9.72369H0.592106C0.435069 9.72369 0.284465 9.78607 0.173424 9.89711C0.0623825 10.0082 0 10.1588 0 10.3158C0 10.4728 0.0623825 10.6234 0.173424 10.7345C0.284465 10.8455 0.435069 10.9079 0.592106 10.9079H5.92106C6.07809 10.9079 6.2287 10.8455 6.33974 10.7345C6.45078 10.6234 6.51316 10.4728 6.51316 10.3158C6.51316 10.1588 6.45078 10.0082 6.33974 9.89711C6.2287 9.78607 6.07809 9.72369 5.92106 9.72369ZM15.565 4.71596L12.6045 3.8278C12.516 3.80126 12.4227 3.79576 12.3318 3.81173C12.2409 3.8277 12.1549 3.86471 12.0809 3.91979C12.0068 3.97487 11.9467 4.0465 11.9052 4.12896C11.8637 4.21143 11.8421 4.30244 11.8421 4.39474V8.26637C11.3905 8.00565 10.8655 7.90124 10.3486 7.96935C9.83158 8.03746 9.35153 8.27428 8.98288 8.64306C8.61423 9.01184 8.37758 9.49197 8.30966 10.009C8.24174 10.526 8.34633 11.0509 8.60721 11.5024C8.86809 11.9539 9.27068 12.3067 9.75252 12.506C10.2344 12.7054 10.7685 12.7401 11.2721 12.6049C11.7757 12.4696 12.2206 12.172 12.5378 11.7581C12.855 11.3442 13.0267 10.8372 13.0263 10.3158V5.19038L15.2245 5.84984C15.2995 5.87428 15.3787 5.88347 15.4573 5.87688C15.536 5.87029 15.6125 5.84805 15.6824 5.81146C15.7523 5.77488 15.8142 5.72468 15.8645 5.66383C15.9147 5.60298 15.9523 5.5327 15.975 5.45712C15.9977 5.38154 16.005 5.30219 15.9966 5.22373C15.9882 5.14527 15.9642 5.06928 15.926 5.00023C15.8878 4.93118 15.8362 4.87046 15.7742 4.82164C15.7122 4.77282 15.6411 4.73689 15.565 4.71596Z" />
                 </svg>
@@ -235,7 +245,7 @@
         </div>
 
 
-        <CollectUserDataComponent @likeEpisode="likeEpisode" ref="collectUserData"/>
+        <CollectUserDataComponent @likeEpisode="likeEpisode" @saveAudio="saveAudio" ref="collectUserData"/>
     </div>
 
 
@@ -361,14 +371,25 @@ function playPre() {
     }
 }
 
-
 function saveAudio() {
 
-    console.log('currentEpisode: ', currentEpisode.value);
+    if (!Object.keys(userStore.audience).length && !userStore.token) {
+        
+        collectData('saveAudio', null);
+        return '';
+
+    }
+
     showStore.addplaylist(currentEpisode.value, showStore.currentShow.id, showStore.currentShow.title);
+    
+    if (userStore.audience && userStore.audience.id) {
+
+        showStore.recordDownload(userStore.audience.id, showStore.currentShow.id, currentEpisode.value.id);
+
+    }
 
     showStore.fetchAudio(currentEpisode.value.audio_url).then(res => {
-        console.log(res);
+
         return res;
 
     }).catch(error => {
@@ -497,6 +518,10 @@ function copyToClipboard() {
     navigator.clipboard.writeText(texttoCopy);
 
     notificationStore.showNotification('Episode link has been copied.')
+
+    if (userStore.audience && userStore.audience.id) {
+        showStore.recordShare(userStore.audience.id, showStore.currentShow.id, showStore.currentEpisode.id);
+    }
 }
 
 function scroll() {
@@ -593,14 +618,14 @@ function routeTofavourite() {
 
 
 
-function routeToplaylist() {
-    translateY.value = 0;
-    scrolled.value = false;
+// function routeToplaylist() {
+//     translateY.value = 0;
+//     scrolled.value = false;
 
-    router.push({
-        name : 'playList'
-    });
-}
+//     router.push({
+//         name : 'playList'
+//     });
+// }
 
 // eslint-disable-next-line no-unused-vars
 watch((currentEpisode), (newEpi, oldEpi) => {

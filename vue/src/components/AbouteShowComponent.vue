@@ -126,9 +126,9 @@
         </div> -->
 
         <div class="flex gap-x-4 justify-center mx-16 pb-12 tablet:block">
-            <h1 class="text-[#ffd3d3] text-x-lg font-semibold italic   text-shadow  tablet:block">Think</h1>
-            <h1 class="text-[#ffd3d3] text-x-lg font-semibold italic   text-shadow  tablet:block">Talk</h1>
-            <h1 class="text-[#ffd3d3] text-x-lg font-semibold italic   text-shadow  tablet:block">Listen</h1>
+            <h1 class="text-[#E84344] text-x-lg font-semibold italic   text-shadow  tablet:block">Think</h1>
+            <h1 class="text-[#E84344] text-x-lg font-semibold italic   text-shadow  tablet:block">Talk</h1>
+            <h1 class="text-[#E84344] text-x-lg font-semibold italic   text-shadow  tablet:block">Listen</h1>
         </div>
        
 
@@ -140,14 +140,6 @@
 </script>
 
 <style>
-#cover {
-    background-image: url(../assets/aboutuscover.jpeg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-blend-mode: darken;
-}
-
 .text-shadow {
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.80); 
 }

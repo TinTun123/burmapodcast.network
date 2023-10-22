@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ShowController;
+use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\VerificationController;
 use App\Models\Episode;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ Route::post('/answer/{forumId}', [ForumController::class, 'createAnswer'])->wher
 Route::post('/reply/{id}', [ForumController::class, 'createReply'])->where(['id' => '[0-9]+']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('comment/{episodeId}', [ForumController::class, 'createComment'])->where(['episodeId' => '[0-9]+']);
-Route::post('likeEpisode/{episodeId}', [ShowController::class, 'likeEpisode'])->where(['episodeId' => '[0-9]+']);
+Route::post('likeEpisode/{episodeId}/{audience}', [ShowController::class, 'likeEpisode'])->where(['episodeId' => '[0-9]+']);
 
 
 Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
@@ -40,7 +41,9 @@ Route::post('forgotPwd', [AuthController::class, 'sendResetPwdEmail']);
 Route::post('resetPwd', [AuthController::class, 'reset']);
 
 Route::get('/search', [ShowController::class, 'search']);
-Route::get('listen/{episode}', [ShowController::class, 'listen']);
+Route::get('/listen/{episode}', [ShowController::class, 'listen']);
+Route::get('/recordDownload/{episodeId}/{showId}/{audienceId}', [ShowController::class, 'recordDownload']);
+Route::get('/recordShare/{episodeId}/{showId}/{audienceId}', [ShowController::class, 'recordShare']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -64,6 +67,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/fetchAdminShows', [ShowController::class, 'getAdminShows']);
     Route::get('/fetchAdminEpisodes/{id}', [ShowController::class, 'adminGetEpisodes']);
     Route::get('/fetchLog', [AuthController::class, 'getLog']);
+
+    Route::get('/getStatisticByWeek/{episodeId}/{showId}', [StatisticController::class, 'getDataByWeek']);
+    Route::get('/getStatisticByMonth/{episodeId}/{showId}', [StatisticController::class, 'getDataByMonth']);
+    Route::get('/getStatisticByYear/{episodeId}/{showId}', [StatisticController::class, 'getDataByYear']);
+    Route::get('/getStatisticByGeo/{episodeId}/{showId}', [StatisticController::class, 'getDataByGeo']);
+
+    Route::get('/getShowData/{show}', [StatisticController::class, 'getShowData']);
     
 });
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="mx-4 mt-8 tablet:mx-8">
+    <div class="mt-8">
         <div class="flex items-center gap-x-2 mb-8">
             <span class="text-white/80 font-semibold flex-none text-lg">Play list</span>
             <div class="w-[90%]">

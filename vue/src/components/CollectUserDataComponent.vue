@@ -66,7 +66,7 @@ const open = ref(false);
 const audiencename = ref('');
 const emittype = ref('');
 const payloadArg = ref();
-const emit = defineEmits(['createAnswer', 'likeEpisode'])
+const emit = defineEmits(['createAnswer', 'likeEpisode', 'saveAudio'])
 async function openModal(emittypepara, payload) {
     open.value = true;
     emittype.value = emittypepara;

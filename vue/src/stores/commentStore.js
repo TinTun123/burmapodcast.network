@@ -17,15 +17,21 @@ export const useCommentStore = defineStore('comment', {
                 if (res.status === 200) {
 
                     for (let i = 0; i < this.comments.length; i++) {
+
                         if (this.comments[i].episode_id === Number(epiId)) {
-                            this.comments[i].comment.push(res.data.comment.comments)
+
+                            this.comments[i].comment.push(res.data.comment.comments);
+                            
                         }
+
                     }
+
                     this.currentComList.push(res.data.comment.comments);
 
-                    console.log(this.comments);
                 }
+
                 return res;
+
             }).catch(error => {
 
                 return error;

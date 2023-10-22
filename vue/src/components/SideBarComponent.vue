@@ -68,12 +68,12 @@
         <div class="bg-[#121212] laptop:rounded-[10px] laptop:mt-4 overflow-hidden shadow-card-shadow">
             <div class="flex flex-col text-center">
 
-                <span @click="routeToplaylist" :class="[route.name === 'playList' || route.name === 'playList' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 font-semibold active:bg-[#282828]/20 cursor-pointer transition">
+                <!-- <span @click="routeToplaylist" :class="[route.name === 'playList' || route.name === 'playList' ? 'bg-white/20' : '']" class="p-2 text-white/80 text-base hover:bg-white/20 active:text-white/40 font-semibold active:bg-[#282828]/20 cursor-pointer transition">
                     Playlist
-                </span>
+                </span> -->
 
                 <span @click="routeTofavorite" :class="[route.name === 'myFavorite' || route.name === 'myFavorite' ? 'bg-white/5' : '']" class="p-2 text-white/80 text-base hover:text-white active:text-white/40 font-semibold active:bg-[#282828]/20 cursor-pointer transition">
-                    My favourite
+                    Library
                 </span>
 
                 <router-link :class="route.name === 'about' ? 'bg-white/5' : ''" class="p-2 pt-3 text-white/80 text-base hover:text-white active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition flex gap-x-2 items-center justify-center" :to="{name : 'about'}">
@@ -99,6 +99,10 @@
                 
                 <span :class="[route.name === 'adminManageShows' || route.name === 'adminShow' ? 'bg-white/5' : '']" @click.stop="routeToManageShows" class="p-2 pt-3 text-white/80 font-semibold text-base hover:text-white active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
                     Manage shows
+                </span>
+
+                <span :class="[route.name === 'showStatic' || route.name === 'showStatic' ? 'bg-white/5' : '']" @click.stop="routeToAdminStatic" class="p-2 pt-3 text-white/80 font-semibold text-base hover:text-white active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
+                    Shows statics
                 </span>
                 
             </div>
@@ -150,17 +154,23 @@ function routeToAdminHost () {
     });
 }
 
+function routeToAdminStatic () {
+    router.push({
+        name : 'showStatic'
+    });
+}
+
 function routeTofavorite() {
     router.push({
         name : 'myFavorite',
     });
 }
 
-function routeToplaylist() {
-    router.push({
-        name : 'playList'
-    });
-}
+// function routeToplaylist() {
+//     router.push({
+//         name : 'playList'
+//     });
+// }
 
 </script>
 

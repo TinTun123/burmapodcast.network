@@ -167,27 +167,24 @@ function drop(id) {
 }
 
 function play(epi) {
+
     showStore.currentEpisode = epi;
+    
 }
 
 function edit(epi) {
-
     emit('editEpisode', epi);
-
 }
 
 onMounted(async () => {
 
     if (route.query.epid) {
-
+        
         const epi = getEpisodeplay(route.query.epid);
         play(epi); 
-        
-        
         showStore.scrollState = true;
 
     }
-
 })
 
 
@@ -219,11 +216,12 @@ function createComment(epiId) {
         return '';
 
     }
-
+ 
     if (comment.value) {
         const formData = new FormData();
 
         formData.append('comment', comment.value);
+        formData.append('showId', showStore.currentShow.id);
 
         if (Object.keys(userStore.audience).length) {
             formData.append('audienceId', userStore.audience.id);
@@ -268,51 +266,10 @@ watch((dropId), (newDrop, oldDrop) => {
     if (newDrop !== 0) {
         commentStore.getComments(newDrop);
     }
-
-    
 })
 
 
 </script>
 
 <style>
-/* .slide-down-enter-active,
-.slide-down-leave-active {
-    transition: 0.3s ease-in-out;
-}
-
-.slide-down-enter-from {
-    max-height: 0px;
-    opacity: 0;
-}
-
-.slide-down-enter-to {
-    max-height: 1000px;
-    opacity: 1;
-}
-
-.slide-down-leave-from {
-    max-height: 0px;
-    opacity: 0;
-}
-
-.slide-down-leave-to {
-    max-height: 0px;
-    opacity: 0;
-}
-
-.slide-fade-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-    transform: translateX(20px);
-  opacity: 0;
-} */
-
 </style>

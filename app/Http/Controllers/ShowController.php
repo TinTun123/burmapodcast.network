@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
+use App\Models\Audience;
 use App\Models\Episode;
 use App\Models\Seasons;
 use App\Models\Show;
 use App\Models\User;
+use App\Services\Statistic;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,11 +17,19 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Mockery\Undefined;
 use Symfony\Component\Console\Input\Input;
 
 class ShowController extends Controller
 {
     //
+    protected $StaticService;
+
+    public function __construct(Statistic $myStatistic)
+    {
+        $this->StaticService = $myStatistic;
+    }
+
     public function createShow(Request $request) {
 
 
@@ -281,11 +291,16 @@ class ShowController extends Controller
         }
     }
 
-    public function likeEpisode(Request $request, $epiId) {
+    public function likeEpisode(Request $request, $epiId, Audience $audience) {
 
-        $episode = Episode::findOrFail($epiId);
+        $episode = Episode::with('season')->findOrFail($epiId);
 
         $episode->increment('number_of_likes');
+
+        if(isset($audience)) {
+            $this->StaticService->recordStatistic($request->ip(), $episode->season->show_id, $episode->id, 'like', $audience->id);
+        }
+
 
         return response()->json(['epiId' => $episode->id]);
 
@@ -562,10 +577,34 @@ class ShowController extends Controller
         return $publicURL;
     }
 
-    public function listen(Episode $episode) {
+    public function listen(Request $request, Episode $episode) {
 
         if ($episode) {
             $episode->increment('listener_count');
+        }
+
+        if($request->query('audienceId')) {
+
+            $this->StaticService->recordStatistic($request->ip(), $episode->season->show_id, $episode->id, 'listen', $request->query('audienceId'));
+        }
+
+        return response()->json(['msg' => 'all fine'], 200);
+    }
+
+    public function recordDownload(Request $request, $episodeId, $showId, $audienceId) {
+    
+
+        if ($audienceId && $showId && $episodeId) {
+            $this->StaticService->recordStatistic($request->ip(), $showId, $episodeId, 'download', $audienceId);
+        }
+
+        return response()->json(['msg' => 'all fine'], 200);
+        
+    }
+
+    public function recordShare(Request $request, $episodeId, $showId, $audienceId) {
+        if ($audienceId && $showId && $episodeId) {
+            $this->StaticService->recordStatistic($request->ip(), $showId, $episodeId, 'share', $audienceId);
         }
 
         return response()->json(['msg' => 'all fine'], 200);

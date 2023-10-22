@@ -1,0 +1,16 @@
+
+
+
+two base variable time & Geographic
+
+01. Time -> week, month
+
+02. Geographic -> town, city
+
+### statistical data type ###
+01. user click download (download)
+02. user fetch episode (listen)
+03. user click like btn (like)
+04. user click share (share)
+05. user Epi comment (comment)
+06. user show forum answer (answer)

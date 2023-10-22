@@ -22,6 +22,7 @@ const AdminShowComponent = () => import('../components/AdminShowComponent.vue');
 const AdminForumComponent = () => import('../components/AdminForumComponent.vue');
 const AdminForumShowComponent = () => import('../components/AdminForumShowComponent.vue');
 const AboutUsComponent = () => import('../components/AbouteShowComponent.vue');
+const StaticComponent = () => import('../components/StaticComponent.vue');
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -192,6 +193,21 @@ const router = createRouter({
       },
       component : AdminDashboardComponent,
     },
+    {
+      path : '/adminDashboard/static',
+      name : 'showStatic',
+      beforeEnter : (to, from, next) => {
+        const userStore = useUserStore();
+        const notiStore = useNotificationStore();
+        if(userStore.hasValideToken) {
+          next();
+        } else {
+          notiStore.showNotification('Welcom', 'info');
+          next({name : 'home'});
+        }
+      },
+      component : StaticComponent,
+    }
   ],
   scrollBehavior (to, from, savedPosition) {
     if (to.hash && to.name === 'home') {

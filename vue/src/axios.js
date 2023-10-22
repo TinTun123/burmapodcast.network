@@ -19,7 +19,7 @@ axiosClient.interceptors.request.use((config) => {
 axiosClient.interceptors.response.use(
     (response) => {
         const notiStore = useNotificationStore();
-        console.log(response);
+      
         if(response.data.errors && typeof response.data.errors === 'object') {
             const errors = Object.values(response.data.errors)
             .map((errorArray) => errorArray.join(', '))

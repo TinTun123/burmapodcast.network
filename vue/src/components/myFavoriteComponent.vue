@@ -54,13 +54,14 @@
                 </div>
 
             </div>
+            <playListComponent />
         </div>    
     </transition>
 
 </template>
 
 <script setup>
-
+import playListComponent from './playListComponent.vue';
 import { useRouter } from 'vue-router';
 import { useShowsStore } from '../stores/ShowsStore';
 
