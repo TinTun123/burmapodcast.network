@@ -48,6 +48,7 @@ Route::get('/recordShare/{episodeId}/{showId}/{audienceId}', [ShowController::cl
 Route::get('/users', [AuthController::class, 'getUsers']);
 Route::get('/searchByHost', [ShowController::class, 'searchByHost']);
 Route::get('/getURLS', [ShowController::class, 'getURLS']);
+Route::get('/addPlatform', [ShowController::class, 'addPlatform']);
 
 Route::middleware('auth:sanctum')->group(function () {
 

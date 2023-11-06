@@ -421,6 +421,35 @@ class ShowController extends Controller
         return response()->json(['message' => 'all fine'], 200);
 
     }
+    
+    public function addPlatform(Request $request) {
+        Platform::create([
+            'name' => 'Apple Podcast',
+            'url' => 'https://chat.openai.com',
+            'thumb' => null
+        ]);
+
+        Platform::create([
+            'name' => 'YouTube',
+            'url' => 'https://chat.openai.com',
+            'thumb' => null
+        ]);
+
+        Platform::create([
+            'name' => 'Spotify',
+            'url' => 'https://chat.openai.com',
+            'thumb' => null
+        ]);
+
+        Platform::create([
+            'name' => 'InforMM',
+            'url' => 'https://chat.openai.com',
+            'thumb' => null
+        ]);
+
+        return response()->json(['msg' => 'all fine'], 200);
+        
+    }
 
     public function getURLS(Request $request) {
         $platforms = Platform::all();

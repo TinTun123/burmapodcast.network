@@ -69,7 +69,7 @@ onMounted(async () => {
 
 
 function openNewTag(url) {
-    console.log('url: ', url);
+    
     window.open(url, '_blank');
     return;
 }

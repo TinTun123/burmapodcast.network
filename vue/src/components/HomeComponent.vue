@@ -503,7 +503,7 @@ function saveURL() {
 }
 
 function copyToClipboard() {
-    const texttoCopy = `https://burmapodcast.network/links/`;
+    const texttoCopy = `https://burmapodcast.network/links`;
 
     navigator.clipboard.writeText(texttoCopy);
 
