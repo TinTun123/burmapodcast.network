@@ -7,6 +7,7 @@ use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\VerificationController;
 use App\Models\Episode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,10 +45,13 @@ Route::get('/search', [ShowController::class, 'search']);
 Route::get('/listen/{episode}', [ShowController::class, 'listen']);
 Route::get('/recordDownload/{episodeId}/{showId}/{audienceId}', [ShowController::class, 'recordDownload']);
 Route::get('/recordShare/{episodeId}/{showId}/{audienceId}', [ShowController::class, 'recordShare']);
+Route::get('/users', [AuthController::class, 'getUsers']);
+Route::get('/searchByHost', [ShowController::class, 'searchByHost']);
+Route::get('/getURLS', [ShowController::class, 'getURLS']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::get('/users', [AuthController::class, 'getUsers']);
+    Route::post('/saveURL', [ShowController::class, 'saveURL']);
     Route::put('/show/{id}', [ShowController::class, 'editShow']);
     Route::post('/signin', [AuthController::class, 'signin']);
     Route::post('/show/createShow', [ShowController::class, 'createShow']);    

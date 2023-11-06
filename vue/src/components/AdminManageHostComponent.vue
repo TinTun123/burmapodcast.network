@@ -7,17 +7,21 @@
         </div>
 
         <div class="grid grid-cols-1 laptop:grid-cols-3 mb-8 gap-4">
-          <div v-for="(user, i) in userStore.users" :key="i" class="bg-[#D9D9D9]/10 p-4 rounded-[10px] relative">
+          <div v-for="(user, i) in userStore.users" :key="i" class="bg-[#D9D9D9]/10 p-4 py-6 rounded-[10px] relative">
             <div class="flex gap-x-2">
-              <div  class="w-[15%] tablet:w-12 tablet:h-12 aspect-square">
+              <div v-if="!user.profile_url"  class="w-[15%] tablet:w-12 tablet:h-12 aspect-square">
                   <svg class="w-full h-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.4C10.3209 2.39969 8.67111 2.83978 7.21526 3.67635C5.75942 4.51292 4.54845 5.7167 3.70323 7.16754C2.85801 8.61838 2.4081 10.2655 2.39841 11.9446C2.38872 13.6236 2.81959 15.2759 3.64801 16.7364C4.20794 16.0087 4.92772 15.4195 5.75171 15.0144C6.5757 14.6092 7.48181 14.399 8.4 14.4H15.6C16.5182 14.399 17.4243 14.6092 18.2483 15.0144C19.0723 15.4195 19.7921 16.0087 20.352 16.7364C21.1804 15.2759 21.6113 13.6236 21.6016 11.9446C21.5919 10.2655 21.142 8.61838 20.2968 7.16754C19.4516 5.7167 18.2406 4.51292 16.7847 3.67635C15.3289 2.83978 13.6791 2.39969 12 2.4ZM21.5316 19.2912C23.136 17.1995 24.0039 14.6361 24 12C24 5.37239 18.6276 0 12 0C5.37241 0 1.35039e-05 5.37239 1.35039e-05 12C-0.00394822 14.6361 0.863899 17.1996 2.46841 19.2912L2.46241 19.3128L2.88841 19.8084C4.01387 21.1242 5.41127 22.1803 6.98428 22.9039C8.5573 23.6276 10.2685 24.0015 12 24C14.4328 24.0045 16.8089 23.2655 18.81 21.882C19.6631 21.2925 20.4367 20.5956 21.1116 19.8084L21.5376 19.3128L21.5316 19.2912ZM12 4.79999C11.0452 4.79999 10.1295 5.17928 9.45442 5.85441C8.77929 6.52954 8.4 7.44521 8.4 8.39999C8.4 9.35477 8.77929 10.2704 9.45442 10.9456C10.1295 11.6207 11.0452 12 12 12C12.9548 12 13.8705 11.6207 14.5456 10.9456C15.2207 10.2704 15.6 9.35477 15.6 8.39999C15.6 7.44521 15.2207 6.52954 14.5456 5.85441C13.8705 5.17928 12.9548 4.79999 12 4.79999Z" fill="#CCCCCC"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.4C10.3209 2.39969 8.67111 2.83978 7.21526 3.67635C5.75942 4.51292 4.54845 5.7167 3.70323 7.16754C2.85801 8.61838 2.4081 10.2655 2.39841 11.9446C2.38872 13.6236 2.81959 15.2759 3.64801 16.7364C4.20794 16.0087 4.92772 15.4195 5.75171 15.0144C6.5757 14.6092 7.48181 14.399 8.4 14.4H15.6C16.5182 14.399 17.4243 14.6092 18.2483 15.0144C19.0723 15.4195 19.7921 16.0087 20.352 16.7364C21.1804 15.2759 21.6113 13.6236 21.6016 11.9446C21.5919 10.2655 21.142 8.61838 20.2968 7.16754C19.4516 5.7167 18.2406 4.51292 16.7847 3.67635C15.3289 2.83978 13.6791 2.39969 12 2.4ZM21.5316 19.2912C23.136 17.1995 24.0039 14.6361 24 12C24 5.37239 18.6276 0 12 0C5.37241 0 1.35039e-05 5.37239 1.35039e-05 12C-0.00394822 14.6361 0.863899 17.1996 2.46841 19.2912L2.46241 19.3128L2.88841 19.8084C4.01387 21.1242 5.41127 22.1803 6.98428 22.9039C8.5573 23.6276 10.2685 24.0015 12 24C14.4328 24.0045 16.8089 23.2655 18.81 21.882C19.6631 21.2925 20.4367 20.5956 21.1116 19.8084L21.5376 19.3128L21.5316 19.2912ZM12 4.79999C11.0452 4.79999 10.1295 5.17928 9.45442 5.85441C8.77929 6.52954 8.4 7.44521 8.4 8.39999C8.4 9.35477 8.77929 10.2704 9.45442 10.9456C10.1295 11.6207 11.0452 12 12 12C12.9548 12 13.8705 11.6207 14.5456 10.9456C15.2207 10.2704 15.6 9.35477 15.6 8.39999C15.6 7.44521 15.2207 6.52954 14.5456 5.85441C13.8705 5.17928 12.9548 4.79999 12 4.79999Z" fill="#CCCCCC"/>
                   </svg>
+              </div>
+
+              <div v-else class="w-[15%] tablet:w-12 tablet:h-12 rounded-full overflow-hidden aspect-square">
+                <img :src="user.profile_url" class="w-full h-full" alt="">
               </div>
 
               <div class="flex flex-col">
                   <span class="text-white text-base font-medium">{{ user.name }}</span>
-                  <span class="text-white text-sm font-semibold">{{ user.email }}</span>
+                  <span v-if="user.user_level === 3" class="text-white text-sm font-semibold">{{ user.email }}</span>
               </div>
             </div>
 
@@ -27,7 +31,7 @@
               <span v-if="user.user_level === 1" class="text-white text-x-sm font-semibold">Co-host</span>
             </div>
 
-            <div @click.stop="openEditUser = true; name = user.name; email = user.email; level = user.user_level; userId = user.id" class="absolute bottom-2 right-2 group cursor-pointer" v-if="((user.user_level <= 2) && (userStore.user_level >= 2)) || user.id === userStore.user_id">
+            <div @click.stop="openEditUser = true; name = user.name; email = user.email; level = user.user_level; userId = user.id; coverImg = user.profile_url" class="absolute bottom-2 right-2 group cursor-pointer" v-if="((user.user_level <= 2) && (userStore.user_level >= 2)) || user.id === userStore.user_id">
                 <div class="w-3 h-3">
                 <svg class="w-full h-full" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path class="fill-[#CCCCCC] group-hover:fill-[#CCCCCC]/80 group-active:fill-[#CCCCCC]" d="M15.74 3.59283C16.0867 3.24622 16.0867 2.66852 15.74 2.33968L13.6603 0.259964C13.3315 -0.0866546 12.7538 -0.0866546 12.4072 0.259964L10.7718 1.8864L14.1047 5.21928M0 12.6671V16H3.33287L13.1626 6.16137L9.82975 2.8285L0 12.6671Z" />
@@ -81,7 +85,7 @@
         
             <div v-if="openEditUser" class="modal-mask">
                 <div class="modal-container rounded-[10px] relative">
-                    <button @click="openEditUser = false" class="absolute left-1 top-1 group" type="button">
+                    <button @click="openEditUser = false;" class="absolute left-1 top-1 group" type="button">
 
                       <div class="w-8 h-8">
 
@@ -101,54 +105,83 @@
 
                           <div class="flex flex-col justify-center gap-y-4 mb-4">
 
-                            <input type="text" id="name" name="name" v-model="name" 
-                            class="focus:outline-none
-                                    appearance-none 
-                                    border
-                                    border-white/40 
-                                    pl-2 py-1 
-                                    rounded-[10px] 
-                                    text-base 
-                                    text-white/80 focus:border-white/80
-                                    bg-transparent
-                                    placeholder:text-white/40"
-                                    placeholder="Username">
+                    <div  @click="openFile" 
+                      class="
+                      flex-none
+                      rounded-[15px] 
+                      cursor-pointer 
+                      hover:bg-white/30 
+                      transition aspect-square 
+                      overflow-hidden 
+                      group
+                      w-[50%]
+                      laptop:w-[50%]
+                      self-center
+                      laptop:aspect-square">
 
-                            <input type="mail" id="email" name="email" v-model="email" 
-                            class="focus:outline-none
-                                    appearance-none 
-                                    border
-                                    border-white/40 
-                                    pl-2 py-1 
-                                    rounded-[10px] 
-                                    text-base 
-                                    text-white/80 focus:border-white/80
-                                    bg-transparent
-                                    placeholder:text-white/40"
-                                    placeholder="Email">
+                      <div :style="{'background-image' : `URL(${coverImg})`}" class="aspect-square w-full img_block flex justify-center items-center">
+
+                          <svg v-if="!coverImg"  class="w-16 h-16" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path class="fill-[#CCCCCC] group-hover:fill-[#CCCCCC]/80 group-active:fill-[#CCCCCC]" d="M21.6 0H2.4C1.0764 0 0 1.0764 0 2.4V16.8C0 18.1236 1.0764 19.2 2.4 19.2H21.6C22.9236 19.2 24 18.1236 24 16.8V2.4C24 1.0764 22.9236 0 21.6 0ZM5.4 3.6C5.87739 3.6 6.33523 3.78964 6.67279 4.12721C7.01036 4.46477 7.2 4.92261 7.2 5.4C7.2 5.87739 7.01036 6.33523 6.67279 6.67279C6.33523 7.01036 5.87739 7.2 5.4 7.2C4.92261 7.2 4.46477 7.01036 4.12721 6.67279C3.78964 6.33523 3.6 5.87739 3.6 5.4C3.6 4.92261 3.78964 4.46477 4.12721 4.12721C4.46477 3.78964 4.92261 3.6 5.4 3.6ZM12 15.6H3.6L8.4 9.6L10.2 12L13.8 7.2L20.4 15.6H12Z"/>
+                          </svg>
+                      </div>
+                      <input hidden ref="imgInput" @change="onFileSelected" type="file" name="img" id="img">
                   
+                  </div>
 
-                            <input type="password" id="password" name="password" v-model="password" 
-                            class="focus:outline-none
-                                    appearance-none 
-                                    border
-                                    border-white/40 
-                                    pl-2 py-1 
-                                    rounded-[10px] 
-                                    text-base 
-                                    text-white/80 focus:border-white/80
-                                    bg-transparent
-                                    placeholder:text-white/40"
-                                    placeholder="password">
+                  <input type="text" id="name" name="name" v-model="name" 
+                    class="focus:outline-none
+                            appearance-none 
+                            border
+                            border-white/40 
+                            pl-2 py-1 
+                            rounded-[10px] 
+                            text-base 
+                            text-white/80 focus:border-white/80
+                            bg-transparent
+                            placeholder:text-white/40"
+                            placeholder="Username">   
 
-                            <select
+                  <Transition>
+
+                    <input v-if="level === 3" type="mail" id="email" name="email" v-model="email" 
+                      class="focus:outline-none
+                              appearance-none 
+                              border
+                              border-white/40 
+                              pl-2 py-1 
+                              rounded-[10px] 
+                              text-base 
+                              text-white/80 focus:border-white/80
+                              bg-transparent
+                              placeholder:text-white/40"
+                              placeholder="Email">
+                  </Transition>
+
+                  <Transition>
+                    <input v-if="level === 3" type="password" id="password" name="password" v-model="password" 
+                      class="focus:outline-none
+                              appearance-none 
+                              border
+                              border-white/40 
+                              pl-2 py-1 
+                              rounded-[10px] 
+                              text-base 
+                              text-white/80 focus:border-white/80
+                              bg-transparent
+                              placeholder:text-white/40"
+                              placeholder="password">
+                  </Transition>
+                            
+
+                            <!-- <select
                             class="rounded-full bg-[#2F2F2F] text-white text-sm px-2 py-1 font-semibold"
                             name="level" id="level" v-model="level">
                                 <option value="" disabled>user type</option>
                                 <option value="1">Co-Host</option>
                                 <option value="2">Host</option>
                                 <option value="3">Admin</option>
-                            </select>
+                            </select> -->
 
                             <div class="flex gap-x-4 justify-end">
                               <button
@@ -199,7 +232,30 @@ const userStore = useUserStore();
 const openAddUser = ref(false);
 const openEditUser = ref(false);
 const userId = ref(0);
+const coverImg = ref('');
+const img = ref();
+const imgInput = ref(null);
 const level = ref('');
+
+function openFile() {
+    imgInput.value.click();
+}
+
+function onFileSelected(e) {
+    const files = e.target.files;
+    if (files.length) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            
+            coverImg.value = e.target.result;
+            
+        }
+        reader.readAsDataURL(files[0]);
+        img.value = files[0];
+    }
+}
+
 
 function resetForm() {
   name.value = '';
@@ -216,7 +272,7 @@ onMounted(() => {
 })
 
 function EditUser() {
-  if (name.value || level.value || password.value || email.value) {
+  if (name.value || level.value || password.value || email.value || img.value) {
 
     const formData = new FormData();
 
@@ -234,6 +290,12 @@ function EditUser() {
 
     if(password.value) {
       formData.append('password', password.value);
+    }
+
+    if (img.value) {
+
+      formData.append('profile_img', img.value);
+      
     }
 
     userStore.updateUser(formData, userId.value).then(res => {

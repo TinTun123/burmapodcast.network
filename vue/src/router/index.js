@@ -12,6 +12,8 @@ import ForumShowComponent from '../components/ForumShowComponent.vue';
 import AudienceShowsComponent from '../components/AudienceShowsComponent.vue';
 import myFavoriteComponent from '../components/myFavoriteComponent.vue';
 import playListComponent from '../components/playListComponent.vue';
+import privacyComponent from '../components/PrivacyComponent.vue';
+import fanLinkComponent from '../components/fanLinkComponent.vue';
 
 const VerifyComponent = () => import('../components/VerifyComponent.vue');
 const ResetPwdComponent = () => import('../components/ResetPwdComponent.vue');
@@ -33,7 +35,11 @@ const router = createRouter({
       name: 'home',
       component: HomeComponent
     },
-
+    {
+      path : '/privacy',
+      name : 'privacy',
+      component : privacyComponent
+    },
     {
       path: '/about',
       name: 'about',
@@ -43,16 +49,17 @@ const router = createRouter({
       component : AboutUsComponent
       
     },
-
     {
-
       path : '/audienceShows',
       name : 'audienceShows',
       component : AudienceShowsComponent
     },
-
     {
-      
+      path : '/links',
+      name : 'fanlinks',
+      component : fanLinkComponent
+    },
+    { 
       path : '/show/:id',
       name : 'show',
       component : ShowComponent,

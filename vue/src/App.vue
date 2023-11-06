@@ -1,6 +1,6 @@
 
 <template>
-  <div class="laptop:bg-black/90 bg-gradient-to-t from-[#121212] to-[#292929] laptop:bg-none overflow-y-hidden laptop:h-[100vh] laptop:pt-4 relative">
+  <div class="laptop:bg-black/90 bg-gradient-to-t from-[#121212] to-[#292929] laptop:bg-none overflow-y-hidden laptop:h-[100vh] laptop:pt-4 relative" :class="[route.name === 'fanlinks' ? 'bg-white' : '']">
     
     <div class="absolute left-[-100px] bottom-[-250px]">
       <svg width="445" height="672" viewBox="0 0 445 672" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -10,16 +10,14 @@
     <div :class="[type === 'desktop' ? 'flex gap-x-6 justify-stretch overflow-y-hidden ' : '']" class="relative">
 
       <div v-if="notiStore.hasMessage" :class="[(notiStore.type === 'info' || notiStore.type === 'complete' || notiStore.type === 'progress') ? 'bg-white' : 'bg-[#FF0F00]/40']" class="fixed bottom-8 left-8 p-2 z-[9999] rounded-[15px] transition-all">
-        
-        <h2 class="text-[#35A519] font-medium text-sm">{{ notiStore.message }}</h2>
-      
+        <h2 :class="notiStore.type === 'error' ? 'text-white' : 'text-[#35A519]'" class="font-medium text-sm">{{ notiStore.message }}</h2>
       </div>
 
-    <SideBarComponent v-if="type === 'desktop' && route.name !== 'pwdreset' && route.name !== 'verify'"/>
+    <SideBarComponent v-if="type === 'desktop' && route.name !== 'pwdreset' && route.name !== 'verify' && route.name !== 'fanlinks'"/>
 
     <div class="flex-1">
 
-      <HeaderComponent v-if="route.name !== 'pwdreset' && route.name !== 'verify'"/>
+      <HeaderComponent v-if="route.name !== 'pwdreset' && route.name !== 'verify' && route.name !== 'fanlinks'" />
 
       <div 
       class="
@@ -32,13 +30,13 @@
       laptop:relative
       overflow-y-scroll"
 
-      :class="[route.name === 'pwdreset' || route.name === 'verify' ? 'bg-none' : '']">
+      :class="[route.name === 'pwdreset' || route.name === 'verify' || route.name == 'fanlinks' ? 'bg-none' : '']">
 
       <div class="min-h-[100vh]">
         <RouterView />
       </div>
 
-        <FooterComponent v-if="route.name !== 'pwdreset' && route.name !== 'verify'" />
+        <FooterComponent v-if="route.name !== 'pwdreset' && route.name !== 'verify' && route.name !== 'fanlinks'" />
         <transition appear>
           <SongComponent v-show="showStore.currentEpisode.title"/>      
         </transition>

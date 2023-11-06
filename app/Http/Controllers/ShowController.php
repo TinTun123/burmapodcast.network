@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ActivityLog;
 use App\Models\Audience;
 use App\Models\Episode;
+use App\Models\Platform;
 use App\Models\Seasons;
 use App\Models\Show;
 use App\Models\User;
@@ -385,6 +386,66 @@ class ShowController extends Controller
 
 
         return response()->json(['success' => 'No episode was found.'], 401);
+    }
+
+    public function saveURL(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'apple' => 'required|url',
+            'spotify' => 'required|url',
+            'youtube' => 'required|url',
+            'thumb' => 'required|image|mimes:jpeg,png,gif,svg|max:2048', // Add "svg" to the allowed file types.
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 402);
+        }
+
+        if ($request->input('apple')) {
+            Platform::where('name', 'Apple Podcast')->update(['url' => $request->input('apple')]);
+        }
+
+        if ($request->input('youtube')) {
+            Platform::where('name', 'YouTube')->update(['url' => $request->input('youtube')]);
+        }
+
+        if ($request->input('spotify')) {
+            Platform::where('name', 'Spotify')->update(['url' => $request->input('spotify')]);
+        }
+
+        if ($request->file('thumb')) {
+            Platform::where('name', 'Apple Podcast')->update(['thumb_url' => $this->storeImage($request->file('thumb'), '1', 'urlThumb')]);
+        }
+
+
+        return response()->json(['message' => 'all fine'], 200);
+
+    }
+
+    public function getURLS(Request $request) {
+        $platforms = Platform::all();
+
+        Log::info('platforms: ', [
+            $platforms
+        ]);
+
+
+        return response()->json(['urls' => $platforms], 200);
+    }
+
+    public function searchByHost(Request $request) {
+
+        $validatedData = $request->validate([
+            'id' => 'required|integer'
+        ]);
+
+        $id = $validatedData['id'];
+
+        $episodes = Episode::whereHas('users', function ($que) use ($id) {
+            $que->where('user_id', $id);
+        })->with(['season.show', 'users'])->withCount('comments')->get();
+
+        return response()->json(['episodes' => $episodes], 200);
     }
 
     public function editEpisode(Request $request, $showId, $episodeId) {

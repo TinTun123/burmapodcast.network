@@ -42,8 +42,8 @@ axiosClient.interceptors.response.use(
             notiStore.showNotification(error.response.data.msg, 'error');
         }
         if (error.response && error.response.data.errors && typeof error.response.data.errors === 'object') {
-
-            const errors = Object.values(errors.response.data.errors)
+            console.log(error);
+            const errors = Object.values(error.response.data.errors)
             .map((errorArray) => errorArray.join(', '))
             .join(', ');
 

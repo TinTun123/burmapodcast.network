@@ -1,19 +1,64 @@
 <template>
     <div class="w-full">
         <div class="flex flex-col gap-y-4">
-
             <!-- input field -->
             <div class="flex items-center flex-wrap gap-y-2 justify-end gap-x-4">
                 <input v-model="query" type="text" class="appearance-none flex-1 focus:outline-none focus:border-[#D9D9D9]/60 h-full bg-transparent rounded-full border border-[#D9D9D9] text-white/80 placeholder:text-white/40 px-2" placeholder="search">
-                <button @click.stop="find" class="bg-[#D9D9D9] laptop:cursor-pointer laptop:hover:bg-[#D9D9D9]/80 laptop:active:shadow-none laptop:active:bg-[#D9D9D9] text-[#2F2F2F] font-semibold rounded-full px-4">Search</button>
+                <button @click="find" class="bg-[#D9D9D9] laptop:cursor-pointer laptop:hover:bg-[#D9D9D9]/80 laptop:active:shadow-none laptop:active:bg-[#D9D9D9] text-[#2F2F2F] font-semibold rounded-full px-4">Search</button>
             </div>
 
             <!-- filter -->
             <div class="flex gap-x-4 flex-wrap gap-y-2 items-center">
                 <span class="text-base text-white font-medium">filter by:</span>
 
-                <div @click.stop="pickCat('hosts')" :class="[category === 'hosts' ? 'bg-[#808080]' : 'bg-[#404040]']" class="flex gap-x-1 items-center px-2 py-1 rounded-full laptop:cursor-pointer hover:bg-[#404040]/60 active:bg-[#404040]">
+                <!-- <div @click.stop="pickCat('hosts')" :class="[category === 'hosts' ? 'bg-[#808080]' : 'bg-[#404040]']" class="flex gap-x-1 items-center px-2 py-1 rounded-full laptop:cursor-pointer hover:bg-[#404040]/60 active:bg-[#404040]">
                     <span :class="[category === 'hosts' ? 'text-white' : 'text-white/80']" class="text-sm font-semibold">Hosts</span>
+                </div> -->
+
+                <div class="relative overflow-x-visible">
+                    <div @click.stop="dropHost = !dropHost" class="flex justify-between items-center gap-x-2 px-2 py-1 rounded-full laptop:cursor-pointer bg-[#404040] hover:bg-[#404040]/60 active:bg-[#404040]">
+                        <span class="text-sm font-semibold text-white/80">Hosts</span>
+
+                        <div>
+                            <svg width="17" height="11" viewBox="0 0 17 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16.4865 2.62163L8.37837 10.7297L0.270264 2.62163L2.16216 0.729737L8.37837 6.94595L14.5946 0.729737L16.4865 2.62163Z" fill="white" fill-opacity="0.8"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="absolute -left-16 overflow-x-visible">
+
+                        <transition name="slide-down">
+
+                            <div v-if="dropHost" class="bg-[#404040]  scroll-container overflow-x-visible overflow-y-scroll rounded-[15px]">
+
+                                <ul class="transition-all max-h-[161px] text-center overflow-x-visible">
+                                    <li @click.stop="searchByHost(user.id)" v-for="(user, i) in userStore.users" :key="i" class="p-2 text-white/80 font-medium laptop:hover:bg-white/20 transition-all laptop:cursor-pointer active:bg-white/30 overflow-hidden whitespace-nowrap border-t border-gray-400/20" style="text-overflow: ellipsis;">
+                                        <div class="flex gap-x-2">
+                                            <div class="">
+                                                <div v-if="!user.profile_url"  class="h-8 w-8 tablet:w-8 tablet:h-8 aspect-square">
+                                                    <svg class="w-full h-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.4C10.3209 2.39969 8.67111 2.83978 7.21526 3.67635C5.75942 4.51292 4.54845 5.7167 3.70323 7.16754C2.85801 8.61838 2.4081 10.2655 2.39841 11.9446C2.38872 13.6236 2.81959 15.2759 3.64801 16.7364C4.20794 16.0087 4.92772 15.4195 5.75171 15.0144C6.5757 14.6092 7.48181 14.399 8.4 14.4H15.6C16.5182 14.399 17.4243 14.6092 18.2483 15.0144C19.0723 15.4195 19.7921 16.0087 20.352 16.7364C21.1804 15.2759 21.6113 13.6236 21.6016 11.9446C21.5919 10.2655 21.142 8.61838 20.2968 7.16754C19.4516 5.7167 18.2406 4.51292 16.7847 3.67635C15.3289 2.83978 13.6791 2.39969 12 2.4ZM21.5316 19.2912C23.136 17.1995 24.0039 14.6361 24 12C24 5.37239 18.6276 0 12 0C5.37241 0 1.35039e-05 5.37239 1.35039e-05 12C-0.00394822 14.6361 0.863899 17.1996 2.46841 19.2912L2.46241 19.3128L2.88841 19.8084C4.01387 21.1242 5.41127 22.1803 6.98428 22.9039C8.5573 23.6276 10.2685 24.0015 12 24C14.4328 24.0045 16.8089 23.2655 18.81 21.882C19.6631 21.2925 20.4367 20.5956 21.1116 19.8084L21.5376 19.3128L21.5316 19.2912ZM12 4.79999C11.0452 4.79999 10.1295 5.17928 9.45442 5.85441C8.77929 6.52954 8.4 7.44521 8.4 8.39999C8.4 9.35477 8.77929 10.2704 9.45442 10.9456C10.1295 11.6207 11.0452 12 12 12C12.9548 12 13.8705 11.6207 14.5456 10.9456C15.2207 10.2704 15.6 9.35477 15.6 8.39999C15.6 7.44521 15.2207 6.52954 14.5456 5.85441C13.8705 5.17928 12.9548 4.79999 12 4.79999Z" fill="#CCCCCC"/>
+                                                    </svg>
+                                                </div>
+
+                                                <div v-else class="w-8 h-8 tablet:w-8 tablet:h-8 rounded-full overflow-hidden aspect-square">
+                                                    <img :src="user.profile_url" class="w-full h-full" alt="">
+                                                </div>
+                                            </div>
+
+                                            <span>
+                                                {{ user.name }}
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </transition>
+                    </div>
+
+
                 </div>
 
                 <div @click.stop="pickCat('shows')" :class="[category === 'shows' ? 'bg-[#808080]' : 'bg-[#404040]']" class="flex gap-x-1 items-center px-2 py-1 rounded-full  laptop:cursor-pointer hover:bg-[#404040]/60 active:bg-[#404040]">
@@ -78,7 +123,7 @@
                                 </span>
                             </div>
 
-                            <div class="flex gap-x-2 mt-1">
+                            <div class="flex flex-wrap gap-2 mt-1">
                                 <div v-for="(user, index) in epi.users" :key="index" class="flex gap-x-1 items-center px-2 rounded-full bg-[#404040]">
                                     <div>
                                         <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -132,17 +177,27 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useSearchStore } from '../stores/searchStore';
 import { useShowsStore } from '../stores/ShowsStore';
+import { useUserStore } from '../stores/userStore';
 import {useRouter} from 'vue-router';
+import { useNotificationStore } from '../stores/NotiStore';
 
 const category = ref('');
 const query = ref('');
 const msg = ref('');
 const searchStore = useSearchStore();
 const showStore = useShowsStore();
+const userStore = useUserStore();
+const notiStore = useNotificationStore();
 const router = useRouter();
+const dropHost = ref(false);
+
+
+onMounted(async () => {
+    await userStore.getUsers();
+})
 
 function pickCat(cat) {
     console.log(category.value === cat);
@@ -175,8 +230,24 @@ function find() {
         })
     } else {
         msg.value = 'Please fill query field and select filter type.'
+        notiStore.showNotification(msg.value, 'error');
     }
 }
+
+function searchByHost(id) {
+    dropHost.value = false;
+    msg.value = "";
+    searchStore.episodes = [];
+
+    console.log('userid: ', id);
+    searchStore.searchByHost(id).then(res => {
+        if (res.status === 200) {
+            msg.value = res.data.msg;
+            return res;
+        }
+    })
+}
+
 </script>
 
 <style>

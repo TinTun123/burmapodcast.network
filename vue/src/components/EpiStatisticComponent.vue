@@ -2,7 +2,7 @@
     <div>
         <div class="flex justify-between">
 
-            <div class="inline-block mt-4">
+            <div class="inline-block mt-4 relative">
                 <div @click.stop="dropEpi = !dropEpi" class="flex items-center bg-[#404040] w-[100px] rounded-full justify-between px-2 py-1 gap-x-2 transition-all" :class="[dropEpi ? 'rounded-b-[0px] rounded-t-[15px]' : 'rounded-full']">
                     <div class="flex gap-x-1 items-center justify-center overflow-hidden">
                         <span class="text-sm text-white overflow-hidden whitespace-nowrap leading-6" style="text-overflow: ellipsis;">{{ selectedEpi.title }}</span>
@@ -16,7 +16,7 @@
                 </div>
 
                 <transition name="slide-down">
-                    <div v-if="dropEpi" class="bg-[#404040] overflow-hidden w-[100px] rounded-b-[15px]">
+                    <div v-if="dropEpi" class="bg-[#404040] absolute overflow-hidden w-[100px] rounded-b-[15px]">
 
                         <ul class="transition-all text-center">
                             <li v-for="(epi, i) in episodes" :key="i" @click.stop="selectedEpi = epi; dropEpi = !dropEpi" class="p-2 text-white/80 font-medium laptop:hover:bg-white/20 transition-all laptop:cursor-pointer active:bg-white/30 overflow-hidden whitespace-nowrap border-t border-gray-400/20" style="text-overflow: ellipsis;">{{ epi.title }}</li>
@@ -30,7 +30,7 @@
 
             <div class="flex gap-x-4 items-center">
 
-                <div class="inline-block mt-4">
+                <div class="inline-block mt-4 relative">
                     <div @click.stop="droptime = !droptime" class="flex items-center bg-[#404040] w-[100px] rounded-full justify-between px-2 py-1 gap-x-2 transition-all" :class="[droptime ? 'rounded-b-[0px] rounded-t-[15px]' : 'rounded-full']">
                         <div class="flex gap-x-1 items-center justify-center overflow-hidden">
                             <span class="text-sm text-white overflow-hidden whitespace-nowrap leading-6" style="text-overflow: ellipsis;">{{ selectedTime }}</span>
@@ -45,7 +45,7 @@
                     </div>
 
                     <transition name="slide-down">
-                        <div v-if="droptime" class="bg-[#404040] overflow-hidden w-[100px] rounded-b-[15px]">
+                        <div v-if="droptime" class="bg-[#404040] absolute overflow-hidden w-[100px] rounded-b-[15px]">
 
                             <ul class="transition-all text-center">
                                 <li @click.stop="selectedTime = 'weeks'; droptime = !droptime; selectedEach = monthArr[0];" class="p-2 text-white/80 font-medium laptop:hover:bg-white/20 transition-all laptop:cursor-pointer active:bg-white/30 overflow-hidden whitespace-nowrap border-t border-gray-400/20" style="text-overflow: ellipsis;">weeks</li>

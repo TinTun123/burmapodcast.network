@@ -24,6 +24,20 @@ export const useSearchStore = defineStore('SearchStore', {
                 this.searching = false;
                 console.log(error);
             })
+        },
+        searchByHost(id) {
+            this.searching = true;
+
+            return axiosClient.get(`searchByHost?id=${id}`).then(res => {
+                if (res.status === 200) {
+                    this.episodes = res.data.episodes;
+                    this.searching = false;
+                    return res;
+                }
+            }).catch (error => {
+                this.searching = false;
+                console.log(error);
+            });
         }
     }
 })

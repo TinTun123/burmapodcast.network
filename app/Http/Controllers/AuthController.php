@@ -8,11 +8,13 @@ use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
 use App\Rules\AtLeastOneRequired;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -98,13 +100,26 @@ class AuthController extends Controller
     public function signin(Request $request)
     {
         //
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6',
-            'password_confirmation' => 'required| min:8',
-            'level' => 'required|integer|in:1,2,3'
-        ]);
+
+        if ($request->input('level') === '3') {
+            
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|string|min:6',
+                'password_confirmation' => 'required| min:8',
+                'profile_img' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'level' => 'required|integer|in:1,2,3'
+            ]);
+
+        } else {
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'profile_img' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'level' => 'required|integer|in:1,2,3'
+            ]);
+        }
 
         if($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -117,17 +132,30 @@ class AuthController extends Controller
         if ($currentUser->user_level !== 2 && $currentUser->user_level !== 3) {
             return response()->json(['error' => 'only admin and host can add new user.'], 301);
         }
+        $password = Hash::make('Q#8Zv$4sW@Kt$5Lx&1YQ#8Zv$4sW@Kt$5Lx&1Y');
+        $email = $request->input('name') . Carbon::now()->timestamp . '@gmail.com';
 
-    
+        if ($request->input('level') === '3') {
+            $password = $request->input('password');
+            $email = $request->input('email');
+        }
+
+        $img_url = null;
+        if ($request->file('profile_img')) {
+            $img_url = $this->storeImage($request->file('profile_img'), $request->input('name'), 'profile');
+        }
 
         $admin = User::create([
             'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'user_level' => $request->input('level')
+            'email' => $email,
+            'password' => $password,
+            'user_level' => (int)$request->input('level'),
+            'profile_url' => $img_url
         ]);
 
-        $admin->sendEmailVerificationNotification();
+        if ($admin->user_level === 3) {
+            $admin->sendEmailVerificationNotification();
+        }
 
         if ($admin->user_level === 3) {
             $role = 'admin';
@@ -225,8 +253,10 @@ class AuthController extends Controller
         return response()->json( [ 
             'users' => $users,
             'success' => ''
-    ], 200);
+        ], 200);
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -240,6 +270,7 @@ class AuthController extends Controller
             'password' => ['nullable', 'string'],
             'email' => ['nullable', 'email'],
             'level' => 'integer|in:1,2,3',
+            'profile_img' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             new AtLeastOneRequired(),
         ]);
 
@@ -271,6 +302,10 @@ class AuthController extends Controller
 
         if ($request->input('level')) {
             $user->user_level = $request->input('level');
+        }
+
+        if ($request->file('profile_img')) {
+            $user->profile_url = $this->storeImage($request->file('profile_img'), $user->name, 'profile');
         }
 
         $user->save();
@@ -322,6 +357,28 @@ class AuthController extends Controller
     
 
         return response()->json(['log' => $logs], 200);
+    }
+
+    private function storeImage($file, $hostName, $type) {
+        $hostName = str_replace(' ', '', $hostName);
+
+        $directory = 'public/' . $type . '/' . $hostName;
+
+        if (Storage::exists($directory)) {
+            Storage::deleteDirectory($directory);
+        }
+
+        $filename = $hostName . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+        $path = $file->storeAs('public/' . $type . '/' . $hostName, $filename);
+
+        $storagePath = storage_path('app/' . $path);
+        
+        chmod(dirname($storagePath), 0755);
+
+        $publicURL = asset('storage/' . $type . '/' . $hostName . '/' . $filename);
+
+        return $publicURL;
     }
 
     /**

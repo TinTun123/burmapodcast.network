@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full laptop:px-2 z-[9999]" @click="reset_icon">
+    <div class="w-full laptop:px-2 z-[9999] relative" @click="reset_icon">
 
         <h3 class="modal-header mb-4 text-white/80 text-lg font-semibold text-center">New Episode</h3>
 
@@ -249,15 +249,18 @@
                         name="desc" id="desc" rows="5"></textarea>
                     </div>
                     
-
-                    <div class="flex gap-2 flex-wrap mt-4">
+                    <Transition appear>
+                        <div @click.stop="openSelectHost = !openSelectHost" class="bg-[#2F2F2F] text-white laptop:hover:bg-[#2f2f2f]/80 transition text-sm font-semibold px-2 py-4 rounded-[8px]">
+                            Select host
+                        </div>
+                    </Transition>
+                    
+                    <!-- <div class="flex gap-2 flex-wrap mt-4">
                         <div v-for="(user, i) in userStore.users" :key="i" :class="[host.indexOf(user.id) !== -1 ? 'bg-white/30' : 'bg-[#2F2F2F]/60']" class="active:bg-white/30 cursor-pointer px-2 flex items-center rounded-full" @click="pickHost(user.id)">
-                            <!-- <label :for="user.id">{{ user.name }}</label>
-                            <input class="bg-[#2F2F2F]" type="checkbox" :id="user.id" :value="user.id" :name="user.id" v-model="host"> -->
                             <span class="text-white/80 text-sm font-semibold">{{ user.name }}</span>
                         </div>
                         <button class="text-white/80 text-sm font-semibold px-2 bg-white/20 hover:bg-white/10 rounded-full" @click="$emit('scrollToAddUser')">Add new</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -476,6 +479,49 @@
               px-4  py-1
               font-medium"  @click="addEpisode">{{ progressStore.progress ? progressStore.progress + ' uploading' : 'Add episode' }}</button>
         </div>
+
+        <div v-if="openSelectHost"  class="bg-[#2F2F2F] text-white p-4 absolute top-[50%] left-[50%] w-full laptop:w-[70%] -translate-x-[50%] -translate-y-[50%] rounded-[8px] z-[10000]">
+            <h1 class="text-center text-white/80 font-semibold mb-2">Select Hosts</h1>
+
+            <div @click.stop="openSelectHost = false" class="absolute group laptop:cursor-pointer top-2 left-2">
+                <svg width="12" height="20" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="fill-white/80 group-hover:fill-white/40 group-active:fill-white/60" d="M9.72973 19.4595L0 9.72973L9.72973 0L12 2.27027L4.54054 9.72973L12 17.1892L9.72973 19.4595Z"/>
+                </svg>
+            </div>
+
+            <div class="grid grid-cols-1 tablet:grid-cols-2 gap-2 h-[275px] overflow-y-scroll scroll-container">
+                <div @click.stop="pickHost(user.id)" v-for="(user, i) in userStore.users" :key="i" class="relative p-2 py-6 laptop:cursor-pointer shadow-card-shadow laptop:hover:bg-[#1d1d1d]/80 active:bg-[#1d1d1d]/80 transition-all flex items-center gap-x-2 overflow-hidden rounded-[8px] bg-[#1D1D1D]">
+                    <div v-if="!user.profile_url"  class="w-8 h-8 tablet:w-8 tablet:h-8 aspect-square flex-none">
+                        <svg class="w-full h-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.4C10.3209 2.39969 8.67111 2.83978 7.21526 3.67635C5.75942 4.51292 4.54845 5.7167 3.70323 7.16754C2.85801 8.61838 2.4081 10.2655 2.39841 11.9446C2.38872 13.6236 2.81959 15.2759 3.64801 16.7364C4.20794 16.0087 4.92772 15.4195 5.75171 15.0144C6.5757 14.6092 7.48181 14.399 8.4 14.4H15.6C16.5182 14.399 17.4243 14.6092 18.2483 15.0144C19.0723 15.4195 19.7921 16.0087 20.352 16.7364C21.1804 15.2759 21.6113 13.6236 21.6016 11.9446C21.5919 10.2655 21.142 8.61838 20.2968 7.16754C19.4516 5.7167 18.2406 4.51292 16.7847 3.67635C15.3289 2.83978 13.6791 2.39969 12 2.4ZM21.5316 19.2912C23.136 17.1995 24.0039 14.6361 24 12C24 5.37239 18.6276 0 12 0C5.37241 0 1.35039e-05 5.37239 1.35039e-05 12C-0.00394822 14.6361 0.863899 17.1996 2.46841 19.2912L2.46241 19.3128L2.88841 19.8084C4.01387 21.1242 5.41127 22.1803 6.98428 22.9039C8.5573 23.6276 10.2685 24.0015 12 24C14.4328 24.0045 16.8089 23.2655 18.81 21.882C19.6631 21.2925 20.4367 20.5956 21.1116 19.8084L21.5376 19.3128L21.5316 19.2912ZM12 4.79999C11.0452 4.79999 10.1295 5.17928 9.45442 5.85441C8.77929 6.52954 8.4 7.44521 8.4 8.39999C8.4 9.35477 8.77929 10.2704 9.45442 10.9456C10.1295 11.6207 11.0452 12 12 12C12.9548 12 13.8705 11.6207 14.5456 10.9456C15.2207 10.2704 15.6 9.35477 15.6 8.39999C15.6 7.44521 15.2207 6.52954 14.5456 5.85441C13.8705 5.17928 12.9548 4.79999 12 4.79999Z" fill="#CCCCCC"/>
+                        </svg>
+                    </div>
+
+                    <div v-else class="w-8 h-8 tablet:w-8 tablet:h-8 rounded-full overflow-hidden aspect-square flex-none">
+                        <img :src="user.profile_url" class="w-full h-full" alt="">
+                    </div>
+                    
+                    <div class="w-full">
+                        <span  style="text-overflow: ellipsis; white-space: wrap;" class="w-full">
+                            {{ user.name }}
+                        </span>
+                    </div>
+
+                    <div class="absolute top-2 right-2">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path :class="[host.indexOf(user.id) !== -1 ? 'fill-[#52FF26]' : 'bg-[#1d1d1d]/40']" d="M6.72229 11.1375L3.63647 8.05091L4.66484 7.02254L6.72229 9.07927L10.8357 4.96509L11.8648 5.99418L6.72229 11.136V11.1375Z" />
+                            <path :class="[host.indexOf(user.id) !== -1 ? 'fill-[#52FF26]' : 'bg-[#1d1d1d]/40']" fill-rule="evenodd" clip-rule="evenodd" d="M0 8C0 3.58182 3.58182 0 8 0C12.4182 0 16 3.58182 16 8C16 12.4182 12.4182 16 8 16C3.58182 16 0 12.4182 0 8ZM8 14.5455C7.14044 14.5455 6.28929 14.3762 5.49516 14.0472C4.70103 13.7183 3.97947 13.2361 3.37166 12.6283C2.76386 12.0205 2.28173 11.299 1.95279 10.5048C1.62385 9.71071 1.45455 8.85956 1.45455 8C1.45455 7.14044 1.62385 6.28929 1.95279 5.49516C2.28173 4.70103 2.76386 3.97947 3.37166 3.37166C3.97947 2.76386 4.70103 2.28173 5.49516 1.95279C6.28929 1.62385 7.14044 1.45455 8 1.45455C9.73596 1.45455 11.4008 2.14415 12.6283 3.37166C13.8558 4.59918 14.5455 6.26404 14.5455 8C14.5455 9.73596 13.8558 11.4008 12.6283 12.6283C11.4008 13.8558 9.73596 14.5455 8 14.5455Z" />
+                        </svg>
+                    </div>
+                   
+                </div>
+
+                <div @click="$emit('scrollToAddUser')" class="bg-[#1D1D1D] laptop:cursor-pointer laptop:hover:bg-[#1d1d1d]/80 transition-all flex-1 p-2 rounded-[8px]">
+                    Add new
+                </div>
+            </div>
+            
+        </div>
         
 
     </div>
@@ -518,6 +564,8 @@ const sound_cloud = ref(null);
 const google_podcast = ref(null);
 const apple_podcast = ref(null);
 const pod_beam = ref(null);
+
+const openSelectHost = ref(false);
 
 const spotify_active = ref(false);
 const sound_cloud_active = ref(false);
@@ -804,13 +852,5 @@ onMounted(() => {
 </script>
 <style>
 
-.img_block {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
 
-}
 </style>

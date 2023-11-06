@@ -79,7 +79,6 @@
         <!-- show list end ----------------- -->
 
         <div class="relative mb-8 bg-[#E84344]/80 inline-block py-1 px-4 rounded-bl-[20px] rounded-tr-[20px] shadow-card-shadow" id="lets-talk">
-
             <!-- <hr class="w-[65%] ml-auto h-px bg-white/30 rounded-full"> -->
             <span class="text-[#ffffff] font-semibold text-lg top-[50%] -translate-y-[50%]">Let's talk</span>
         </div>
@@ -155,9 +154,14 @@
 
         <!-- Listen on ---------------  -->
 
-        <div class="relative mb-8">
+        <div class="relative flex gap-x-2 items-center justify-between mb-8">
             <!-- <hr class="w-[65%] ml-auto h-px bg-white/30 rounded-full"> -->
             <span class=" bg-[#E84344]/80 inline-block py-1 px-4 rounded-bl-[20px] rounded-tr-[20px] shadow-card-shadow text-white/80 font-semibold text-lg">Listen on</span>
+            <div @click.stop="open = true" class="group laptop:cursor-pointer">
+                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="group-hover:fill-[#D9D9D9]/60 fill-[#D9D9D9] group-active:fill-[#D9D9D9] transition" d="M10.8827 1.84719C11.1608 1.5691 11.491 1.3485 11.8543 1.198C12.2176 1.0475 12.6071 0.970039 13.0003 0.970039C13.3936 0.970039 13.7831 1.0475 14.1464 1.198C14.5097 1.3485 14.8399 1.5691 15.118 1.84719C15.3961 2.12528 15.6167 2.45542 15.7672 2.81876C15.9177 3.1821 15.9951 3.57153 15.9951 3.96481C15.9951 4.35809 15.9177 4.74752 15.7672 5.11086C15.6167 5.4742 15.3961 5.80435 15.118 6.08244L14.228 6.97244L9.99271 2.7372L10.8827 1.84719ZM9.18497 3.54494L1.88896 10.8409C1.46181 11.2684 1.15721 11.8026 1.00695 12.3879L0.0129748 16.2564C-0.0116743 16.3527 -0.0107918 16.4537 0.0155353 16.5495C0.0418623 16.6453 0.0927234 16.7326 0.163096 16.8027C0.233469 16.8729 0.32092 16.9234 0.416814 16.9494C0.512708 16.9755 0.613728 16.976 0.7099 16.951L4.57726 15.9582C5.16266 15.8082 5.69696 15.5036 6.12421 15.0762L13.4202 7.78019L9.18497 3.54494Z"/>
+                </svg>
+            </div>
         </div>
 
         <div class="grid grid-cols-2 lg-tablet:grid-cols-3 gap-4 mb-8">
@@ -209,21 +213,212 @@
                 <span class="text-sm text-white group-hover:text-white/80 font-bold">Google Podcasts</span>
             </div>
         </div>
+
+        <Teleport to="body">
+            <transition name="modal">
+            
+                <div v-if="open" class="modal-mask">
+
+                    <div class="modal-container laptop:w-[20%] rounded-[15px] relative">
+
+                        <button @click="open = false;" class="absolute left-[-16px] top-[-16px] group" type="button">
+                            <div class="w-8 h-8">
+                                <svg class="w-full h-full" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.2376 11.2624L8.5008 9ZM10.7632 6.7376L8.5008 9ZM8.5008 9L6.2376 6.7376ZM8.5008 9L10.7632 11.2624ZM8.5 17C12.9184 17 16.5 13.4184 16.5 9C16.5 4.5816 12.9184 1 8.5 1C4.0816 1 0.5 4.5816 0.5 9C0.5 13.4184 4.0816 17 8.5 17Z" class="fill-white/80 group-hover:fill-white/40 group-active:fill-white/60"/>
+                                    <path d="M6.2376 11.2624L8.5008 9M8.5008 9L10.7632 6.7376M8.5008 9L6.2376 6.7376M8.5008 9L10.7632 11.2624M8.5 17C12.9184 17 16.5 13.4184 16.5 9C16.5 4.5816 12.9184 1 8.5 1C4.0816 1 0.5 4.5816 0.5 9C0.5 13.4184 4.0816 17 8.5 17Z" class="stroke-black/40" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </button>
+
+                        <div class="flex gap-x-2 overflow-x-hidden">
+                            <div class="login flex-none w-full" ref="loginref">
+                                <h1 class="modal-header mb-4 text-white/80 text-lg font-semibold text-center">Manage platforms</h1>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+
+                            <div  @click="openFile" 
+                            class="
+                            flex-none
+                            rounded-[15px] 
+                            cursor-pointer 
+                            hover:bg-white/30 
+                            transition aspect-square 
+                            overflow-hidden 
+                            group
+                            w-[50%]
+                            laptop:w-full
+                            laptop:aspect-square">
+                                <div :style="{'background-image' : `URL(${coverImg})`}" class="aspect-square w-full img_block flex justify-center items-center">
+                                    <svg v-if="!coverImg"  class="w-16 h-16" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path class="fill-[#CCCCCC] group-hover:fill-[#CCCCCC]/80 group-active:fill-[#CCCCCC]" d="M21.6 0H2.4C1.0764 0 0 1.0764 0 2.4V16.8C0 18.1236 1.0764 19.2 2.4 19.2H21.6C22.9236 19.2 24 18.1236 24 16.8V2.4C24 1.0764 22.9236 0 21.6 0ZM5.4 3.6C5.87739 3.6 6.33523 3.78964 6.67279 4.12721C7.01036 4.46477 7.2 4.92261 7.2 5.4C7.2 5.87739 7.01036 6.33523 6.67279 6.67279C6.33523 7.01036 5.87739 7.2 5.4 7.2C4.92261 7.2 4.46477 7.01036 4.12721 6.67279C3.78964 6.33523 3.6 5.87739 3.6 5.4C3.6 4.92261 3.78964 4.46477 4.12721 4.12721C4.46477 3.78964 4.92261 3.6 5.4 3.6ZM12 15.6H3.6L8.4 9.6L10.2 12L13.8 7.2L20.4 15.6H12Z"/>
+                                    </svg>
+                                </div>
+
+                                <input hidden ref="imgInput" @change="onFileSelected" type="file" name="img" id="img">
+                            </div>
+
+                            <div class="flex gap-x-2 items-center">
+                                <div class="">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M11.9951 0C5.36774 0 -0.00488281 5.37272 -0.00488281 12C-0.00488281 18.6277 5.36784 24 11.9951 24C18.623 24 23.9951 18.6277 23.9951 12C23.9951 5.37319 18.623 0.00065625 11.9949 0.00065625L11.995 9.375e-05L11.9951 0ZM17.4981 17.3076C17.2832 17.6601 16.8217 17.7718 16.4692 17.5554C13.6518 15.8345 10.105 15.4447 5.92799 16.399C5.73457 16.443 5.53158 16.4085 5.36365 16.3028C5.19573 16.1972 5.07661 16.0293 5.03249 15.8359C5.01051 15.7401 5.00762 15.641 5.02401 15.5441C5.04039 15.4473 5.07572 15.3546 5.12797 15.2714C5.18022 15.1882 5.24836 15.1161 5.3285 15.0593C5.40864 15.0025 5.4992 14.9621 5.59499 14.9403C10.1662 13.8959 14.0871 14.3455 17.2503 16.2787C17.6028 16.495 17.7145 16.9551 17.4981 17.3076ZM18.9669 14.0401C18.696 14.4803 18.12 14.6193 17.6801 14.3484C14.4546 12.3658 9.53765 11.7916 5.72249 12.9497C5.22768 13.0991 4.70512 12.8203 4.55493 12.3263C4.40587 11.8315 4.68487 11.3099 5.17884 11.1595C9.5368 9.83709 14.9546 10.4777 18.6589 12.7539C19.0987 13.0249 19.2378 13.6008 18.9669 14.0401ZM19.093 10.6376C15.2255 8.34038 8.84455 8.12906 5.15202 9.24994C4.55905 9.42975 3.93196 9.09497 3.75234 8.502C3.57262 7.90875 3.90702 7.28212 4.50046 7.10184C8.73918 5.81503 15.7858 6.06375 20.2385 8.70712C20.773 9.02362 20.9478 9.7125 20.6311 10.2451C20.3159 10.7785 19.6251 10.9543 19.0936 10.6376H19.093Z" fill="#1ED760"/>
+                                    </svg>
+                                </div>
+
+                                <div class="flex-1">
+                                    <input type="text" class="focus:outline-none
+                                    appearance-none 
+                                    border
+                                    top-[32px]
+                                    left-0
+                                    border-white/40 
+                                    pl-2 py-1
+                                    transition
+                                    rounded-[10px] 
+                                    text-base 
+                                    text-white/80 focus:border-white/80
+                                    bg-white/10
+                                    placeholder:text-white/40
+                                    w-full"
+                                    placeholder="Apple podcast"
+                                    v-model="showStore.urls.spotify">
+                                </div>
+                            </div>
+
+                            <div class="flex gap-x-2 items-center">
+                                <div>
+                                    <svg width="24" height="17" viewBox="0 0 24 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_1028_318)">
+                                            <path d="M23.4692 2.63195C23.3316 2.12324 23.0631 1.65946 22.6904 1.2868C22.3178 0.91414 21.854 0.6456 21.3453 0.507922C19.4829 0 11.9875 0 11.9875 0C11.9875 0 4.49163 0.0153745 2.62925 0.523297C2.12053 0.660983 1.65676 0.929536 1.28411 1.30221C0.911469 1.67489 0.642957 2.13869 0.505315 2.64742C-0.0580115 5.95651 -0.276536 10.9988 0.520783 14.1755C0.658439 14.6842 0.926958 15.148 1.2996 15.5207C1.67225 15.8933 2.13601 16.1619 2.64472 16.2995C4.5071 16.8075 12.0027 16.8075 12.0027 16.8075C12.0027 16.8075 19.4983 16.8075 21.3606 16.2995C21.8693 16.1619 22.3331 15.8933 22.7058 15.5207C23.0784 15.148 23.3469 14.6842 23.4846 14.1755C24.0788 10.8617 24.2619 5.82254 23.4692 2.63195Z" fill="#FF0000"/>
+                                            <path d="M9.60156 12.0053L15.8196 8.40368L9.60156 4.8021V12.0053Z" fill="white"/>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_1028_318">
+                                                <rect width="24" height="16.8745" fill="white"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+
+                                <div class="flex-1">
+                                    <input type="text" class="focus:outline-none
+                                    appearance-none 
+                                    border
+                                    top-[32px]
+                                    left-0
+                                    border-white/40 
+                                    pl-2 py-1
+                                    transition
+                                    rounded-[10px] 
+                                    text-base 
+                                    text-white/80 focus:border-white/80
+                                    bg-white/10
+                                    placeholder:text-white/40
+                                    w-full"
+                                    placeholder="YouTube channel"
+                                    v-model="showStore.urls.youtube">
+                                </div>
+                            </div>
+
+                            <div class="flex gap-x-2 items-center">
+                                <div class="">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_1028_323)">
+                                            <path d="M18.6683 0H5.21739C2.33591 0 0 2.33591 0 5.21739V18.6683C0 21.5498 2.33591 23.8857 5.21739 23.8857H18.6683C21.5498 23.8857 23.8857 21.5498 23.8857 18.6683V5.21739C23.8857 2.33591 21.5498 0 18.6683 0Z" fill="url(#paint0_linear_1028_323)"/>
+                                            <path d="M13.3596 13.9963C13.3364 13.7868 13.2666 13.6356 13.1272 13.496C12.8656 13.2225 12.4065 13.0422 11.8659 13.0422C11.3254 13.0422 10.8662 13.2167 10.6047 13.496C10.471 13.6414 10.3954 13.7868 10.3722 13.9963C10.3257 14.4035 10.3547 14.7525 10.4013 15.3168C10.4477 15.852 10.5349 16.5675 10.6454 17.2889C10.7267 17.8066 10.7907 18.0859 10.8488 18.2836C10.9476 18.6094 11.3021 18.8887 11.8659 18.8887C12.4297 18.8887 12.7901 18.6036 12.883 18.2836C12.9412 18.0859 13.0051 17.8066 13.0865 17.2889C13.1969 16.5617 13.2841 15.852 13.3306 15.3168C13.3829 14.7525 13.4061 14.4035 13.3596 13.9963Z" fill="white"/>
+                                            <path d="M13.2951 11.0292C13.2951 11.8204 12.6558 12.4603 11.8653 12.4603C11.0749 12.4603 10.4355 11.8204 10.4355 11.0292C10.4355 10.2381 11.0749 9.59818 11.8653 9.59818C12.6558 9.59818 13.2951 10.2439 13.2951 11.0292Z" fill="white"/>
+                                            <path d="M11.8483 5.39218C8.51213 5.40381 5.7804 8.11469 5.73392 11.4538C5.69904 14.1589 7.42524 16.4742 9.83732 17.3235C9.89544 17.3468 9.95356 17.2945 9.94774 17.2363C9.91868 17.0269 9.88381 16.8174 9.86056 16.608C9.84893 16.5324 9.80244 16.4742 9.7385 16.4393C7.83209 15.6074 6.50111 13.6935 6.52435 11.4771C6.55341 8.56844 8.9248 6.20077 11.8251 6.1775C14.7951 6.15423 17.2188 8.56263 17.2188 11.5295C17.2188 13.7226 15.8936 15.6074 14.0047 16.4393C13.9349 16.4684 13.8884 16.5324 13.8826 16.608C13.8535 16.8174 13.8245 17.0269 13.7954 17.2363C13.7838 17.3003 13.8477 17.3468 13.9058 17.3235C16.2946 16.4859 18.0092 14.2054 18.0092 11.5295C17.9976 8.14378 15.2368 5.38636 11.8483 5.39218Z" fill="white"/>
+                                            <path d="M11.7085 7.42816C9.53474 7.5096 7.79109 9.30718 7.76203 11.4829C7.7446 12.9139 8.45949 14.1821 9.55799 14.9325C9.61029 14.9674 9.68587 14.9267 9.68587 14.8627C9.66841 14.6126 9.66841 14.3915 9.68005 14.1588C9.68587 14.0832 9.6568 14.0134 9.59868 13.961C8.93028 13.3328 8.52343 12.4369 8.54667 11.4479C8.59316 9.70276 9.9939 8.28331 11.7376 8.21351C13.6323 8.13788 15.19 9.66204 15.19 11.5352C15.19 12.4893 14.7832 13.3502 14.138 13.961C14.0857 14.0134 14.0566 14.0832 14.0566 14.1588C14.0682 14.3857 14.0624 14.6068 14.0508 14.8569C14.045 14.9209 14.1206 14.9674 14.1787 14.9267C15.2597 14.1879 15.9746 12.9372 15.9746 11.5294C15.9805 9.2141 14.045 7.33508 11.7085 7.42816Z" fill="white"/>
+                                        </g>
+                                        <defs>
+                                            <linearGradient id="paint0_linear_1028_323" x1="11.9428" y1="0" x2="11.9428" y2="23.8857" gradientUnits="userSpaceOnUse">
+                                                <stop stop-color="#F452FF"/>
+                                                <stop offset="1" stop-color="#832BC1"/>
+                                            </linearGradient>
+                                            <clipPath id="clip0_1028_323">
+                                                <rect width="24" height="24" fill="white"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+
+                                <div class="flex-1">
+                                    <input type="text" class="focus:outline-none
+                                    appearance-none 
+                                    border
+                                    top-[32px]
+                                    left-0
+                                    border-white/40 
+                                    pl-2 py-1
+                                    transition
+                                    rounded-[10px] 
+                                    text-base 
+                                    text-white/80 focus:border-white/80
+                                    bg-white/10
+                                    placeholder:text-white/40
+                                    w-full"
+                                    placeholder="Apple podcast"
+                                    v-model="showStore.urls.apple">
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between items-center">
+                                <div class="rounded-full bg-white/10 group laptop:cursor-pointer hover:bg-white/5 active:bg-white/10 transition inline-block px-2 py-1">
+                                    <div @click.stop="copyToClipboard" class="flex gap-x-1 items-center">
+                                        <span class="text-white font-medium text-sm">Copy url</span>
+                                        <div>
+                                            <svg width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path class="group-hover:fill-[#DDDDDD]/80 fill-[#DDDDDD] group-active:fill-[#DDDDDD] transition" d="M1.6 3.336V13.6C1.59984 14.6155 1.98597 15.5931 2.68006 16.3345C3.37416 17.0758 4.32424 17.5254 5.3376 17.592L5.6 17.6H12.6624C12.497 18.0679 12.1906 18.473 11.7854 18.7595C11.3803 19.046 10.8962 19.1999 10.4 19.2H4.8C3.52696 19.2 2.30606 18.6943 1.40589 17.7941C0.505713 16.8939 3.29979e-07 15.673 3.29979e-07 14.4V5.6C-0.000259968 5.10348 0.153484 4.6191 0.440045 4.21361C0.726606 3.80813 1.13188 3.50151 1.6 3.336ZM13.6 0C14.2365 0 14.847 0.252856 15.2971 0.702944C15.7471 1.15303 16 1.76348 16 2.4V13.6C16 14.2365 15.7471 14.847 15.2971 15.2971C14.847 15.7471 14.2365 16 13.6 16H5.6C4.96348 16 4.35303 15.7471 3.90294 15.2971C3.45286 14.847 3.2 14.2365 3.2 13.6V2.4C3.2 1.76348 3.45286 1.15303 3.90294 0.702944C4.35303 0.252856 4.96348 0 5.6 0H13.6Z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <span @click.stop="preview" class="text-[#8583FF] border-b border-[#8583FF] laptop:cursor-pointer hover:text-[#8583FF]/80 transition text-sm">preview</span>
+                            </div>
+
+                            <div class="text-right">
+                                <button @click.stop="saveURL" class=" 
+                                    text-black/80
+                                    bg-white/80
+                                    hover:bg-white/60
+                                    active:bg-white/80
+                                    rounded-full
+                                    px-4  py-1
+                                    font-medium" 
+                                    >
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                </div>                
+            </transition>
+        </Teleport>	
+
     </div>
 
 </template>
 
 <script setup>
-
 import popupEpiComponent from './popupEpiComponent.vue';
-import { onMounted } from 'vue';
-import {useShowsStore} from '../stores/ShowsStore.js';
-import {useForumStore} from '../stores/forumStore.js';
+import { onMounted, ref } from 'vue';
+import { useShowsStore } from '../stores/ShowsStore.js';
+import { useForumStore } from '../stores/forumStore.js';
 import { useRouter } from 'vue-router';
+import { useNotificationStore } from '../stores/NotiStore';
+
+const notificationStore = useNotificationStore();
 
 const forumStore = useForumStore();
 const showStore = useShowsStore();
 const router = useRouter();
+const open = ref(false);
+const coverImg = ref('');
+// const img = ref();
+const imgInput = ref(null);
 
 
 onMounted(async () => {
@@ -248,6 +443,8 @@ onMounted(async () => {
     {
         await forumStore.getForums();
     }
+
+    // await showStore.getURLS();
 })
 
 
@@ -260,6 +457,11 @@ function getDate(date) {
     });
 }
 
+function preview() {
+    window.open('https://burmapodcast.network/links', '_blank');
+    return;
+}
+
 function routeToshow(showid) {
     router.push({
         name : 'show',
@@ -267,6 +469,46 @@ function routeToshow(showid) {
             id : showid
         }
     })
+}
+
+function openFile() {
+    imgInput.value.click();
+}
+
+function onFileSelected(e) {
+    const files = e.target.files;
+    if (files.length) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            
+            coverImg.value = e.target.result;
+        
+        }
+        reader.readAsDataURL(files[0]);
+        showStore.thumb = files[0];
+    }
+}
+
+function saveURL() {
+
+    if (showStore.urls.apple || showStore.urls.youtube || showStore.urls.spotify || showStore.thumb) {
+        showStore.saveURL().then(res => {
+            if (res.status === 200) {
+                open.value = false;
+            }
+        });
+    }
+
+}
+
+function copyToClipboard() {
+    const texttoCopy = `https://burmapodcast.network/links/`;
+
+    navigator.clipboard.writeText(texttoCopy);
+
+    notificationStore.showNotification('link has been copied.')
+
 }
 
 function routeToForum(showId, forumId) {

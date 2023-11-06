@@ -20,7 +20,14 @@ export const useShowsStore = defineStore('Shows', {
             latestEpi : {},
             mostWatchEpi : {},
             likeEpiId : JSON.parse(localStorage.getItem('likeEpiId')) ? JSON.parse(localStorage.getItem('likeEpiId')) : [],
-            scrollState : false
+            scrollState : false,
+            urls : {
+                apple : '',
+                spotify : '',
+                youtube : ''
+            },
+            thumb : '',
+            resURLs : {}
         }
     },
 
@@ -52,6 +59,45 @@ export const useShowsStore = defineStore('Shows', {
 
     },
     actions : {
+        saveURL () {
+            if (this.urls.apple || this.urls.spotify || this.urls.youtube) {
+
+                const formData = new FormData();
+
+                formData.append('apple', this.urls.apple);
+                formData.append('spotify', this.urls.spotify);
+                formData.append('youtube', this.urls.youtube);
+                formData.append('thumb', this.thumb);
+
+                return axiosClient.post('/saveURL', formData).then(res => {
+
+                    return res;
+
+                })
+            }
+        },
+        getURLS () {
+            return axiosClient.get('/getURLS').then(res => {
+                
+                this.resURLs = res.data.urls;
+
+                this.resURLs.forEach(url => {
+               
+                    if (url.name === 'Apple Podcast') {
+                        
+                        this.urls.apple = url.url;
+                        this.thumb = url.thumb_url;
+                    } else if (url.name === 'YouTube') {
+                        this.urls.youtube = url.url;
+                    } else if (url.name === 'Spotify') {
+                        this.urls.spotify = url.url;
+                    }
+
+                    
+                })
+                return res;
+            })
+        },
         createShow (payload) {
             return axiosClient.post('/show/createShow', payload).then(res => {
                 if (res.data.success) {

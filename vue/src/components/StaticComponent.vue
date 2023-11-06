@@ -1,12 +1,11 @@
 <template>
     <div class="mx-4 tablet:mx-8">
-        <div class="inline-block mt-4">
+        <div class="inline-block mt-4 relative z-[9999]">
             <div @click.stop="drop = !drop" class="flex items-center bg-[#404040] w-[210px] rounded-full justify-between px-2 py-1 gap-x-2 transition-all" :class="[drop ? 'rounded-b-[0px] rounded-t-[15px]' : 'rounded-full']">
                 <div class="flex gap-x-1 items-center justify-center overflow-hidden">
                     <span class="text-x-sm text-white/40 font-bold">show</span>
                     <span class="text-sm text-white overflow-hidden whitespace-nowrap leading-6" style="text-overflow: ellipsis;">{{ selectedShow.title }}</span>
                 </div>
-
 
                 <div>
                     <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,7 +15,7 @@
             </div>
 
             <transition name="slide-down">
-                <div v-if="drop" class="bg-[#404040] overflow-hidden w-[210px] rounded-b-[15px]">
+                <div v-if="drop" class="bg-[#404040] absolute overflow-hidden w-[210px] rounded-b-[15px]">
                     <ul class="transition-all">
                         <li v-for="(show, i) in showStore.shows" :key="i" @click.stop="selectedShow.title = show.title; selectedShow.id = show.id; drop = !drop; updateData()" class="p-2 text-white/80 font-medium laptop:hover:bg-white/20 transition-all laptop:cursor-pointer active:bg-white/30 overflow-hidden whitespace-nowrap border-t border-gray-400/20" style="text-overflow: ellipsis;">{{show.title}}</li>
                     
@@ -25,8 +24,8 @@
             </transition>
 
         </div>
-        <div class="mt-4 flex flex-col gap-y-4 tablet:flex-row gap-x-4">
 
+        <div class="mt-4 flex flex-col gap-y-4 tablet:flex-row gap-x-4">
             <div class="bg-[#212121] rounded-[12px] shadow-card-shadow p-4 flex-1">
 
                 <div class="text-right">
@@ -163,7 +162,7 @@
         </h1>
 
         <div class="flex justify-between">
-            <div class="inline-block mt-4">
+            <div class="inline-block mt-4 relative">
                 <div @click.stop="droptime = !droptime" class="flex items-center bg-[#404040] w-[100px] rounded-full justify-between px-2 py-1 gap-x-2 transition-all" :class="[droptime ? 'rounded-b-[0px] rounded-t-[15px]' : 'rounded-full']">
                     <div class="flex gap-x-1 items-center justify-center overflow-hidden">
                         <span class="text-sm text-white overflow-hidden whitespace-nowrap leading-6" style="text-overflow: ellipsis;">{{ selectedTime }}</span>
@@ -178,7 +177,7 @@
                 </div>
 
                 <transition name="slide-down">
-                    <div v-if="droptime" class="bg-[#404040] overflow-hidden w-[100px] rounded-b-[15px]">
+                    <div v-if="droptime" class="bg-[#404040] overflow-hidden w-[100px] absolute rounded-b-[15px]">
 
                         <ul class="transition-all text-center">
                             <li @click.stop="selectedTime = 'weeks'; droptime = !droptime; selectedEach = monthArr[0];" class="p-2 text-white/80 font-medium laptop:hover:bg-white/20 transition-all laptop:cursor-pointer active:bg-white/30 overflow-hidden whitespace-nowrap border-t border-gray-400/20" style="text-overflow: ellipsis;">weeks</li>

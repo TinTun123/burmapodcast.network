@@ -25,6 +25,7 @@ module.exports = {
       },
       boxShadow : {
         'card-shadow' : '2px 2px 20px 0px rgba(0, 0, 0, 0.40)',
+        'icon-shadow' : '0px 4px 10px 0px rgba(0, 56, 255, 1)',
         'img-shadow' : '0px 6px 20px 0px rgba(0, 0, 0, 0.80)'
       }
     },

@@ -34,8 +34,29 @@ html, body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
     width: auto;
+    min-height: 50%;
     background-color: rgb(75, 75, 75);
   }
+
+  .img_block {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 
 @media only screen and (max-width : 1000px) {
   .modal-container {
@@ -46,3 +67,4 @@ html, body {
     width: 80%;
   }
 }
+

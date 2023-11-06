@@ -244,7 +244,7 @@
                 <router-link v-if="userStore.isAdmin || userStore.isHost || userStore.iscoHost" :to="{name : 'showStatic'}">
 
                     <div :class="[route.name === 'showStatic' ? 'bg-white/20' : '']" class="text-white text-center p-2 border-b border-[#FFFFFF]/10 active:bg-white/10">
-                        Shows Static
+                        Shows Statistic
                     </div>   
 
                 </router-link>

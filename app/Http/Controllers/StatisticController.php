@@ -191,7 +191,11 @@ class StatisticController extends Controller
             return $season->episodes->flatMap(function ($episode) {
                 return $episode->users;
             });
-        })->unique();
+        })->unique('id');
+
+        Log::info('users: ', [
+            $users
+        ]);
 
         $episodes = $show->seasons->flatMap(function ($season) {
             return $season->episodes;

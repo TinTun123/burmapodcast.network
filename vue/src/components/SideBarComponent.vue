@@ -102,7 +102,7 @@
                 </span>
 
                 <span :class="[route.name === 'showStatic' || route.name === 'showStatic' ? 'bg-white/5' : '']" @click.stop="routeToAdminStatic" class="p-2 pt-3 text-white/80 font-semibold text-base hover:text-white active:text-white/40 active:bg-[#282828]/20 cursor-pointer transition">
-                    Shows statics
+                    Shows Statistic
                 </span>
                 
             </div>
