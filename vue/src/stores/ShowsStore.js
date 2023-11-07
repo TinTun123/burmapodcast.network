@@ -60,26 +60,21 @@ export const useShowsStore = defineStore('Shows', {
 
     },
     actions : {
-
         saveURL () {
+            const formData = new FormData();
 
             if (this.urls.apple || this.urls.spotify || this.urls.youtube) {
-
-                const formData = new FormData();
 
                 formData.append('apple', this.urls.apple);
                 formData.append('spotify', this.urls.spotify);
                 formData.append('youtube', this.urls.youtube);
                 formData.append('informm', this.urls.informm);
-                formData.append('thumb', this.thumb);
-
-                return axiosClient.post('/saveURL', formData).then(res => {
-                    return res;
-                });
+                formData.append('thumb', this.thumb);       
 
             }
-
-            return;
+            return axiosClient.post('/saveURL', formData).then(res => {
+                return res;
+            });
 
         },
         getURLS () {
