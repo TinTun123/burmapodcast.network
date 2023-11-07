@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'v2';
+const CACHE_NAME = 'v10';
 
 const GETSHOW_URL = 'https://burmapodcast.network/api/show';
 // const GETSHOW_URL = 'http://localhost:8000/api/show';
