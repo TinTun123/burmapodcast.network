@@ -9,7 +9,7 @@ import router from './router'
 
 if ('serviceWorker' in navigator) {
 
-    navigator.serviceWorker.register('https://burmapodcast.network/service-worker.js')
+    navigator.serviceWorker.register('https://burmapodcast.network/service-worker1.js')
     .then(registeration => {
         if(registeration.installing) {
 
