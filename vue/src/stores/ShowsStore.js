@@ -24,7 +24,8 @@ export const useShowsStore = defineStore('Shows', {
             urls : {
                 apple : '',
                 spotify : '',
-                youtube : ''
+                youtube : '',
+                informm : ''
             },
             thumb : '',
             resURLs : {}
@@ -59,7 +60,9 @@ export const useShowsStore = defineStore('Shows', {
 
     },
     actions : {
+
         saveURL () {
+
             if (this.urls.apple || this.urls.spotify || this.urls.youtube) {
 
                 const formData = new FormData();
@@ -67,14 +70,17 @@ export const useShowsStore = defineStore('Shows', {
                 formData.append('apple', this.urls.apple);
                 formData.append('spotify', this.urls.spotify);
                 formData.append('youtube', this.urls.youtube);
+                formData.append('informm', this.urls.informm);
                 formData.append('thumb', this.thumb);
 
                 return axiosClient.post('/saveURL', formData).then(res => {
-
                     return res;
+                });
 
-                })
             }
+
+            return;
+
         },
         getURLS () {
             return axiosClient.get('/getURLS').then(res => {
@@ -91,9 +97,10 @@ export const useShowsStore = defineStore('Shows', {
                         this.urls.youtube = url.url;
                     } else if (url.name === 'Spotify') {
                         this.urls.spotify = url.url;
+                    } else if (url.name === 'InforMM') {
+                        this.urls.informm = url.url;
+                        console.log('informmURL: ', this.urls.informm);
                     }
-
-                    
                 })
                 return res;
             })

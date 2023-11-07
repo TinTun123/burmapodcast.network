@@ -21,7 +21,8 @@ module.exports = {
         'tablet' : '600px',
         'lg-tablet' : '905px',
         'laptop' : '1000px',
-        'desktop' : '1440'
+        'desktop' : '1440',
+        'lg-desktop' : '1500'
       },
       boxShadow : {
         'card-shadow' : '2px 2px 20px 0px rgba(0, 0, 0, 0.40)',

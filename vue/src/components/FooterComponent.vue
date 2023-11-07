@@ -48,7 +48,7 @@
               </router-link>
               
 
-              <div class="flex gap-x-2">
+              <div @click.stop="openNewTag('https://www.facebook.com/profile.php?id=61551073315038&mibextid=ZbWKwL')" class="flex gap-x-2">
                 <div class="cursor-pointer">
                   <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M8.04986 0C3.64986 0 0.0498657 3.60643 0.0498657 8.04819C0.0498657 12.0643 2.97786 15.3976 6.80186 16V10.3775H4.76986V8.04819H6.80186V6.27309C6.80186 4.25703 7.99386 3.14859 9.82585 3.14859C10.6979 3.14859 11.6099 3.30121 11.6099 3.30121V5.28514H10.6019C9.60985 5.28514 9.29785 5.90362 9.29785 6.53815V8.04819H11.5219L11.1619 10.3775H9.29785V16C11.183 15.7011 12.8996 14.7354 14.1378 13.2772C15.376 11.819 16.0541 9.96437 16.0498 8.04819C16.0498 3.60643 12.4499 0 8.04986 0Z" fill="white"/>
@@ -258,6 +258,10 @@ function login() {
         notiStore.showNotification(error.value, 'error');
     }
 
+}
+
+function openNewTag(url) {
+  window.open(url, '_blank');
 }
 
 function resetPwd() {

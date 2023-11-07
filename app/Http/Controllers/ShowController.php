@@ -392,7 +392,7 @@ class ShowController extends Controller
 
         $validator = Validator::make($request->all(), [
             'apple' => 'required|url',
-            'spotify' => 'required|url',
+            'informm' => 'required|url',
             'youtube' => 'required|url',
             'thumb' => 'required|image|mimes:jpeg,png,gif,svg|max:2048', // Add "svg" to the allowed file types.
         ]);
@@ -413,6 +413,10 @@ class ShowController extends Controller
             Platform::where('name', 'Spotify')->update(['url' => $request->input('spotify')]);
         }
 
+        if ($request->input('informm')) {
+            Platform::where('name', 'InforMM')->update(['url' => $request->input('informm')]);
+        }
+
         if ($request->file('thumb')) {
             Platform::where('name', 'Apple Podcast')->update(['thumb_url' => $this->storeImage($request->file('thumb'), '1', 'urlThumb')]);
         }
@@ -422,36 +426,38 @@ class ShowController extends Controller
 
     }
     
-    public function addPlatform(Request $request) {
-        Platform::create([
-            'name' => 'Apple Podcast',
-            'url' => 'https://chat.openai.com',
-            'thumb' => null
-        ]);
+    // public function addPlatform(Request $request) {
 
-        Platform::create([
-            'name' => 'YouTube',
-            'url' => 'https://chat.openai.com',
-            'thumb' => null
-        ]);
+    //     Platform::create([
+    //         'name' => 'Apple Podcast',
+    //         'url' => 'https://chat.openai.com',
+    //         'thumb' => null
+    //     ]);
 
-        Platform::create([
-            'name' => 'Spotify',
-            'url' => 'https://chat.openai.com',
-            'thumb' => null
-        ]);
+    //     Platform::create([
+    //         'name' => 'YouTube',
+    //         'url' => 'https://chat.openai.com',
+    //         'thumb' => null
+    //     ]);
 
-        Platform::create([
-            'name' => 'InforMM',
-            'url' => 'https://chat.openai.com',
-            'thumb' => null
-        ]);
+    //     Platform::create([
+    //         'name' => 'Spotify',
+    //         'url' => 'https://chat.openai.com',
+    //         'thumb' => null
+    //     ]);
 
-        return response()->json(['msg' => 'all fine'], 200);
-        
-    }
+    //     Platform::create([
+    //         'name' => 'InforMM',
+    //         'url' => 'https://chat.openai.com',
+    //         'thumb' => null
+    //     ]);
+
+    //     return response()->json(['msg' => 'all fine'], 200);
+
+    // }
 
     public function getURLS(Request $request) {
+        
         $platforms = Platform::all();
 
         Log::info('platforms: ', [

@@ -25,7 +25,7 @@
 
                 <!-- image input -->
 
-                <div class="flex laptop:w-[60%] gap-x-2">
+                <div class="flex laptop:w-[60%] lg-desktop:w-[40%] gap-x-2">
                     <div  @click="openFile" 
                         class="
                         flex-none
@@ -33,7 +33,7 @@
                         cursor-pointer 
                         hover:bg-white/30 
                         transition aspect-square 
-                        overflow-hidden 
+                         overflow-hidden 
                         group
                         w-[50%]
                         laptop:w-full

@@ -31,6 +31,7 @@ if ('serviceWorker' in navigator) {
     })
 }
 
+
 const app = createApp(App)
 
 app.use(createPinia())
