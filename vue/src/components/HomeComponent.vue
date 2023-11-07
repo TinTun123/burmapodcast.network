@@ -516,7 +516,7 @@ function getDate(date) {
 }
 
 function preview() {
-    window.open('http://localhost:5173/links', '_blank');
+    window.open('https://burmapodcast.network/links', '_blank');
     return;
 }
 
