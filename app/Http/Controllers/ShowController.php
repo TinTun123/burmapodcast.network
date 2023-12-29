@@ -475,8 +475,12 @@ class ShowController extends Controller
         if($request->input('showTitle')) {
             $platform->showTitle = $request->input('showTitle');
         }
+        
+        Log::info("url", [
+            $request->input('showUrl')
+        ]);
 
-        if(!isEmpty($request->input('showUrl'))) {
+        if ($request->input('showUrl')) {
             $platform->url = $request->input('showUrl');
         }
 
@@ -491,9 +495,7 @@ class ShowController extends Controller
     public function deleteSpotify(Request $request, Platform $platform) {
 
         $platform->delete();
-        Log::info('platform', [
-            $platform
-        ]);
+
         return response()->json(['message' => 'url deleted', 'id' => $platform->id], 200);
 
     }

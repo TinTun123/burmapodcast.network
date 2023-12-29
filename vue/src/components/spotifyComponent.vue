@@ -63,7 +63,7 @@
                         bg-white/10
                         placeholder:text-white/40
                         w-full"
-                        placeholder="Show Title"
+                        placeholder="Enter url"
                         v-model="buffer.url">
                     </div>
                     
