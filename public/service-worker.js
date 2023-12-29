@@ -14,11 +14,12 @@ const addResourcesToCache = async (resource) => {
 self.addEventListener('install', event => {
 
   self.skipWaiting();
+  
     event.waitUntil(
       addResourcesToCache([
 
           '/',
-          '/assets/index-000e0edd.js',
+          '/assets/index-8da8b9bd.js',
           '/assets/index-1160d400.css',
           '/index.html',
           '/rwpodcast-logo.svg'

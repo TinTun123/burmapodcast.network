@@ -33,7 +33,7 @@
                             <ul class="transition-all">
                                 <li v-for="(spot, i) in showStore.spotiUrls" :key="i" @click.stop="openNewTag(spot.url)" class="p-2 text-white/80 font-medium laptop:hover:bg-white/20 transition-all laptop:cursor-pointer active:bg-white/30 overflow-hidden whitespace-nowrap border-t border-gray-400/20" style="text-overflow: ellipsis;">
                                     <div class="flex gap-x-4 justify-start items-center">
-                                        <div class="w-[20%] rounded-[4px] overflow-hidden">
+                                        <div class="w-[20%] rounded-[4px] flex-none overflow-hidden">
                                             <img :src="spot.showThumb" class="aspect-square" alt="">
                                         </div>
                                         <span class="text-white font-semibold text-base">{{ spot.showTitle }}</span>
