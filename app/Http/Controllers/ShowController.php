@@ -21,6 +21,8 @@ use Illuminate\Validation\Rule;
 use Mockery\Undefined;
 use Symfony\Component\Console\Input\Input;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ShowController extends Controller
 {
     //
@@ -394,7 +396,7 @@ class ShowController extends Controller
             'apple' => 'required|url',
             'informm' => 'required|url',
             'youtube' => 'required|url',
-            'thumb' => 'required|image|mimes:jpeg,png,gif,svg|max:2048', // Add "svg" to the allowed file types.
+             // Add "svg" to the allowed file types.
         ]);
 
         if ($validator->fails()) {
@@ -423,6 +425,76 @@ class ShowController extends Controller
 
 
         return response()->json(['message' => 'all fine'], 200);
+
+    }
+
+    public function saveSpotify(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'showTitle' => 'required|string',
+            'showUrl' => 'required|url',
+            'showThumb' => 'required|image|mimes:jpeg,png,gif,svg,webp|max:2048', // Add "svg" to the allowed file types.
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 402);
+        }
+
+        $thumbUrl = $this->storeImage($request->file('showThumb'), 'spotify', 'spotify');
+
+        $spotifylink = Platform::create([
+            'name' => 'Spotify',
+            'url' => $request->input('showUrl'),
+            'showTitle' => $request->input('showTitle'),
+            'showThumb' => $thumbUrl
+        ]);
+
+        return response()->json(['message' => 'all find', 'spotifyShow' => $spotifylink], 200);
+    }
+
+    public function editSpotify(Request $request, Platform $platform) {
+
+        $validator = Validator::make($request->all(), [
+            'showTitle' => 'string',
+            'showUrl' => 'url',
+            'showThumb' => 'image|mimes:jpeg,png,gif,svg,webp|max:2048', // Add "svg" to the allowed file types.
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 402);
+        }
+
+
+        if($request->file('showThumb')) {
+            $thumbUrl = $this->storeImage($request->file('showThumb'), 'spotify', 'spotify');
+            $platform->showThumb = $thumbUrl;
+           
+        }
+
+        if($request->input('showTitle')) {
+            $platform->showTitle = $request->input('showTitle');
+        }
+
+        if(!isEmpty($request->input('showUrl'))) {
+            $platform->url = $request->input('showUrl');
+        }
+
+        $platform->save();
+
+        
+
+        return response()->json(['message' => 'all fine', 'spotifyShow' => $platform], 200);
+
+    }
+
+    public function deleteSpotify(Request $request, Platform $platform) {
+
+        $platform->delete();
+        Log::info('platform', [
+            $platform
+        ]);
+        return response()->json(['message' => 'url deleted', 'id' => $platform->id], 200);
 
     }
     
@@ -653,7 +725,7 @@ class ShowController extends Controller
 
         $directory = 'public/' . $type . '/' . $id;
 
-        if (Storage::exists($directory)) {
+        if (Storage::exists($directory) && $id !== 'spotify') {
             Storage::deleteDirectory($directory);
         }
 

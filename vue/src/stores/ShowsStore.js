@@ -28,7 +28,8 @@ export const useShowsStore = defineStore('Shows', {
                 informm : ''
             },
             thumb : '',
-            resURLs : {}
+            resURLs : {},
+            spotiUrls : []
         }
     },
 
@@ -88,18 +89,46 @@ export const useShowsStore = defineStore('Shows', {
                         
                         this.urls.apple = url.url;
                         this.thumb = url.thumb_url;
+
                     } else if (url.name === 'YouTube') {
+
                         this.urls.youtube = url.url;
+
                     } else if (url.name === 'Spotify') {
+                        
+                        this.spotiUrls.push(url);
                         this.urls.spotify = url.url;
+
                     } else if (url.name === 'InforMM') {
+
                         this.urls.informm = url.url;
-                        console.log('informmURL: ', this.urls.informm);
+                        
                     }
                 })
+
+                return res;
+
+            })
+        },
+        deleteSpotify(id) {
+            return axiosClient.delete(`/deleteSpotify/${id}`).then(res  => {
                 return res;
             })
         },
+        saveSpotifyUrl(payload) {
+            return axiosClient.post('/saveSpotifyUrl', payload).then(res => {
+
+                return res;
+            })
+        },
+        editSpotify(payload, id) {
+            
+            return axiosClient.post(`/editSpotify/${id}`, payload).then(res => {
+
+                return res;
+
+            })
+        },  
         createShow (payload) {
             return axiosClient.post('/show/createShow', payload).then(res => {
                 if (res.data.success) {

@@ -31,16 +31,16 @@
                     <transition name="slide-down">
                         <div v-if="dropSpotify" class="bg-[#1D1D1D] absolute w-full top-[96px] left-0 overflow-hidden rounded-b-[15px]">
                             <ul class="transition-all">
-                                <li @click.stop="openNewTag('https://open.spotify.com/show/0Ml7VnFRnoM4lsD99LyUgk')" class="p-2 text-white/80 font-medium laptop:hover:bg-white/20 transition-all laptop:cursor-pointer active:bg-white/30 overflow-hidden whitespace-nowrap border-t border-gray-400/20" style="text-overflow: ellipsis;">
+                                <li v-for="(spot, i) in showStore.spotiUrls" :key="i" @click.stop="openNewTag(spot.url)" class="p-2 text-white/80 font-medium laptop:hover:bg-white/20 transition-all laptop:cursor-pointer active:bg-white/30 overflow-hidden whitespace-nowrap border-t border-gray-400/20" style="text-overflow: ellipsis;">
                                     <div class="flex gap-x-4 justify-start items-center">
                                         <div class="w-[20%] rounded-[4px] overflow-hidden">
-                                            <img src="../assets/memory-of-a-poet.jpeg" class="aspect-square" alt="">
+                                            <img :src="spot.showThumb" class="aspect-square" alt="">
                                         </div>
-                                        <span class="text-white font-semibold text-base">Memories of a poet</span>
+                                        <span class="text-white font-semibold text-base">{{ spot.showTitle }}</span>
                                     </div>
                                 </li>
 
-                                <li @click.stop="openNewTag('https://open.spotify.com/show/6PaSqXTelBeSKwjdE5jrYG')" class="p-2 text-white/80 font-medium laptop:hover:bg-white/20 transition-all laptop:cursor-pointer active:bg-white/30 overflow-hidden whitespace-nowrap border-t border-gray-400/20" style="text-overflow: ellipsis;">
+                                <!-- <li @click.stop="openNewTag('https://open.spotify.com/show/6PaSqXTelBeSKwjdE5jrYG')" class="p-2 text-white/80 font-medium laptop:hover:bg-white/20 transition-all laptop:cursor-pointer active:bg-white/30 overflow-hidden whitespace-nowrap border-t border-gray-400/20" style="text-overflow: ellipsis;">
                                     
                                     <div class="flex gap-x-4 justify-start items-center">
                                         <div class="w-[20%] rounded-[4px] overflow-hidden">
@@ -72,7 +72,7 @@
                                         <span class="text-white font-semibold text-base">Rebel Wisdom</span>
                                     </div>
                                 </li>
-                            
+                             -->
                             </ul>
                         </div>
                     </transition>
@@ -137,8 +137,8 @@ const dropSpotify = ref(false);
 
 // console.log(showStore);
 onMounted(async () => {
-
     await showStore.getURLS();
+    console.log(showStore.spotiUrls);
 })
 
 

@@ -6,9 +6,11 @@ use App\Http\Controllers\ShowController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\VerificationController;
 use App\Models\Episode;
+use App\Models\Platform;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -77,7 +79,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/getStatisticByMonth/{episodeId}/{showId}', [StatisticController::class, 'getDataByMonth']);
     Route::get('/getStatisticByYear/{episodeId}/{showId}', [StatisticController::class, 'getDataByYear']);
     Route::get('/getStatisticByGeo/{episodeId}/{showId}', [StatisticController::class, 'getDataByGeo']);
-
+    Route::post('/saveSpotifyUrl', [ShowController::class, 'saveSpotify']);
+    Route::post('/editSpotify/{platform}', [ShowController::class, 'editSpotify']);
+    Route::delete('deleteSpotify/{platform}', [ShowController::class, 'deleteSpotify']);
     Route::get('/getShowData/{show}', [StatisticController::class, 'getShowData']);
     
 });

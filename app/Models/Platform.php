@@ -13,6 +13,8 @@ class Platform extends Model
         'name',
         'url',
         'thumb_url',
+        'showTitle',
+        'showThumb'
     ];
     
 }
