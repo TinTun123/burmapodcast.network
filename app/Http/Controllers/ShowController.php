@@ -476,7 +476,7 @@ class ShowController extends Controller
             $platform->showTitle = $request->input('showTitle');
         }
         
-        Log::info("url", [
+        Log::info("newurl", [
             $request->input('showUrl')
         ]);
 
