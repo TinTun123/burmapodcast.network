@@ -393,7 +393,6 @@ class ShowController extends Controller
     public function saveURL(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'apple' => 'required|url',
             'informm' => 'required|url',
             'youtube' => 'required|url',
              // Add "svg" to the allowed file types.
