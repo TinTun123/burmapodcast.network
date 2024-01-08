@@ -7,7 +7,7 @@
 
             <div class="grid grid-cols-1 items-stretch tablet:grid-cols-2 gap-4 w-full">
 
-                <div @click.stop="dropSpotify = !dropSpotify" class="p-4 group flex gap-x-12 laptop:cursor-pointer bg-[#1D1D1D] h-[64px] justify-between items-center rounded-[4px] shadow-card-shadow relative">
+                <div @click.stop="dropSpotify = !dropSpotify; dropApple = false" class="p-4 group flex gap-x-12 laptop:cursor-pointer bg-[#1D1D1D] h-[64px] justify-between items-center rounded-[4px] shadow-card-shadow relative">
                     <div class="h-[48px]">
                         <svg class="h-full" viewBox="0 0 31 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             
@@ -29,7 +29,7 @@
                     </div>
 
                     <transition name="slide-down">
-                        <div v-if="dropSpotify"  class="bg-[#1D1D1D] absolute w-full top-[96px] max-h-[234px] overflow-y-scroll left-0 overflow-hidden rounded-b-[15px]">
+                        <div v-if="dropSpotify"  class="bg-[#1D1D1D] absolute w-full top-[64px] max-h-[234px] overflow-y-scroll left-0 overflow-hidden rounded-b-[15px]">
                             <ul class="transition-all">
                                 <li v-for="(spot, i) in showStore.spotiUrls" :key="i" @click.stop="openNewTag(spot.url)" class="p-2 text-white/80 font-medium laptop:hover:bg-white/20 transition-all laptop:cursor-pointer active:bg-white/30 overflow-hidden whitespace-nowrap border-t border-gray-400/20" style="text-overflow: ellipsis;">
                                     <div class="flex gap-x-4 justify-start items-center">
@@ -45,7 +45,7 @@
                     </transition>
                 </div>
 
-                <div @click.stop="dropApple = !dropApple" class="p-4 group flex gap-x-12 laptop:cursor-pointer bg-[#1D1D1D] h-[64px] justify-between items-center rounded-[4px] shadow-card-shadow relative">
+                <div @click.stop="dropApple = !dropApple; dropSpotify = false" class="p-4 group flex gap-x-12 laptop:cursor-pointer bg-[#1D1D1D] h-[64px] justify-between items-center rounded-[4px] shadow-card-shadow relative">
                     <div class="h-[48px]">
                         <div class="flex items-center gap-x-2">
                             <img src="../assets/apple_logo.svg"  alt="">
@@ -67,7 +67,7 @@
                     </div>
 
                     <transition name="slide-down">
-                        <div v-if="dropApple"  class="bg-[#1D1D1D] absolute w-full top-[96px] max-h-[234px] overflow-y-scroll left-0 overflow-hidden rounded-b-[15px]">
+                        <div v-if="dropApple"  class="bg-[#1D1D1D] absolute w-full top-[64px] max-h-[234px] overflow-y-scroll left-0 overflow-hidden rounded-b-[15px]">
                             <ul class="transition-all">
                                 <li v-for="(spot, i) in showStore.appleUrls" :key="i" @click.stop="openNewTag(spot.url)" class="p-2 text-white/80 font-medium laptop:hover:bg-white/20 transition-all laptop:cursor-pointer active:bg-white/30 overflow-hidden whitespace-nowrap border-t border-gray-400/20" style="text-overflow: ellipsis;">
                                     <div class="flex gap-x-4 justify-start items-center">
