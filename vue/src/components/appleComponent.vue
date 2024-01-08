@@ -139,7 +139,7 @@
             active:bg-[#D9D9D9]/10
             laptop:cursor-pointer
             shadow-card-shadow"
-            v-for="(spo, i) in spotiUrls" :key="i">
+            v-for="(spo, i) in appleUrls" :key="i">
                 <div class="aspect-square">
 
                     <div class="w-[64px] aspect-square">
@@ -174,7 +174,6 @@ import { onMounted, ref } from 'vue';
 import { useShowsStore } from '../stores/ShowsStore.js';
 import { useNotificationStore } from '../stores/NotiStore';
 
-
 const buffer = ref({
     showThumb : '',
     showTitle : '',
@@ -185,13 +184,13 @@ const buffer = ref({
 const imgInput = ref(null);
 const mode = ref(0);
 const showStore = useShowsStore();
-const spotiUrls = ref([]);
+const appleUrls = ref([]);
 const notificationStore = useNotificationStore();
 
 
 onMounted(async () => {
 
-    spotiUrls.value = showStore.spotiUrls;
+    appleUrls.value = showStore.appleUrls;
 })
 
 function selectThumb() {
@@ -234,7 +233,7 @@ function cancleEdit() {
 //     // sent edit request
 
 //     // adjust local array
-//     spotiUrls.value.forEach(spot => {
+//     appleUrls.value.forEach(spot => {
 //         if (spot.id === buffer.value.id) {
 //             spot.title = buffer.value.title;
 //             spot.url = buffer.value.url;
@@ -257,13 +256,13 @@ function cancleEdit() {
 function insert() {
 
     if (buffer.value.showThumb && buffer.value.showTitle && buffer.value.url) {
+
         
         if(!buffer.value.url.includes('apple') && !buffer.value.url.includes('spotify')) {
             console.log('inside if');
             notificationStore.showNotification('URL should be Apple podcast or Spotify related', 'error');
             return;
         }
-
         const formData = new FormData();
         formData.append('showTitle', buffer.value.showTitle);
         formData.append('showUrl', buffer.value.url);
@@ -291,7 +290,7 @@ function insert() {
                     'showTitle' : res.data.spotifyShow.showTitle,
                     'url' : res.data.spotifyShow.url
                 }
-                    spotiUrls.value.unshift(temp);
+                    appleUrls.value.unshift(temp);
 
                     mode.value = 0;
 
@@ -305,7 +304,7 @@ function insert() {
             showStore.editSpotify(formData, buffer.value.id).then(res => {
                 if (res.status === 200) {
 
-                    spotiUrls.value.forEach(spot => {
+                    appleUrls.value.forEach(spot => {
                         if (spot.id === buffer.value.id) {
                             spot.showTitle = buffer.value.showTitle;
                             spot.url = buffer.value.url;
@@ -321,7 +320,7 @@ function insert() {
                         id : ''
                     }
 
-                    let index = spotiUrls.value.findIndex(spot => spot.id === res.data.spotifyShow.id);
+                    let index = appleUrls.value.findIndex(spot => spot.id === res.data.spotifyShow.id);
 
                     let temp = {
                         'id' : res.data.spotifyShow.id,
@@ -330,7 +329,7 @@ function insert() {
                         'url' : res.data.spotifyShow.url
                     }
 
-                    spotiUrls.value.splice(index, 1, temp);
+                    appleUrls.value.splice(index, 1, temp);
                   
                     mode.value = 0;
                     return;
@@ -346,9 +345,9 @@ function insert() {
 function deleteSpotify(id) {
     showStore.deleteSpotify(id).then(res => {
         if (res.status === 200) {
-            let index = spotiUrls.value.findIndex(spot => spot.id === res.data.id);
+            let index = appleUrls.value.findIndex(spot => spot.id === res.data.id);
 
-            spotiUrls.value.splice(index, 1);
+            appleUrls.value.splice(index, 1);
             console.log(index);
             mode.value = 0;
             buffer.value = {
@@ -367,7 +366,7 @@ function deleteSpotify(id) {
 
 function editPopulate(id) {
     mode.value = 1;
-    spotiUrls.value.forEach(spot => {
+    appleUrls.value.forEach(spot => {
         if (spot.id === id) {
             buffer.value = JSON.parse(JSON.stringify(spot));
             buffer.value.imgFile = '';

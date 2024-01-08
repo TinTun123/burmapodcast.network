@@ -29,7 +29,8 @@ export const useShowsStore = defineStore('Shows', {
             },
             thumb : '',
             resURLs : {},
-            spotiUrls : []
+            spotiUrls : [],
+            appleUrls : []
         }
     },
 
@@ -64,9 +65,9 @@ export const useShowsStore = defineStore('Shows', {
         saveURL () {
             const formData = new FormData();
 
-            if (this.urls.apple || this.urls.spotify || this.urls.youtube) {
+            if (this.urls.spotify || this.urls.youtube) {
 
-                formData.append('apple', this.urls.apple);
+                // formData.append('apple', this.urls.apple);
                 formData.append('spotify', this.urls.spotify);
                 formData.append('youtube', this.urls.youtube);
                 formData.append('informm', this.urls.informm);
@@ -86,9 +87,9 @@ export const useShowsStore = defineStore('Shows', {
                 this.resURLs.forEach(url => {
                
                     if (url.name === 'Apple Podcast') {
-                        
-                        this.urls.apple = url.url;
-                        this.thumb = url.thumb_url;
+                       
+                        this.appleUrls.push(url);
+
 
                     } else if (url.name === 'YouTube') {
 
@@ -102,7 +103,7 @@ export const useShowsStore = defineStore('Shows', {
                     } else if (url.name === 'InforMM') {
 
                         this.urls.informm = url.url;
-                        
+                        this.thumb = url.thumb_url;
                     }
                 })
 

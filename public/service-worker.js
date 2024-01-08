@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'v1.11';
+const CACHE_NAME = 'v1.12';
 
 const GETSHOW_URL = 'https://burmapodcast.network/api/show';
 // const GETSHOW_URL = 'http://localhost:8000/api/show';
@@ -11,6 +11,9 @@ const addResourcesToCache = async (resource) => {
 
 }
 
+
+// test comment
+
 self.addEventListener('install', event => {
 
   self.skipWaiting();
@@ -19,8 +22,8 @@ self.addEventListener('install', event => {
       addResourcesToCache([
 
           '/',
-          '/assets/index-8da8b9bd.js',
-          '/assets/index-1160d400.css',
+          '/assets/index-35e3fe31.js',
+          '/assets/index-80ca2e03.css',
           '/index.html',
           '/rwpodcast-logo.svg'
           // Add other files to cache

@@ -420,7 +420,7 @@ class ShowController extends Controller
         }
 
         if ($request->file('thumb')) {
-            Platform::where('name', 'Apple Podcast')->update(['thumb_url' => $this->storeImage($request->file('thumb'), '1', 'urlThumb')]);
+            Platform::where('name', 'InforMM')->update(['thumb_url' => $this->storeImage($request->file('thumb'), '1', 'urlThumb')]);
         }
 
 
@@ -440,14 +440,32 @@ class ShowController extends Controller
             return response()->json(['error' => $validator->errors()], 402);
         }
 
-        $thumbUrl = $this->storeImage($request->file('showThumb'), 'spotify', 'spotify');
+        if (strpos($request->input('showUrl'), 'spotify')) {
 
-        $spotifylink = Platform::create([
-            'name' => 'Spotify',
-            'url' => $request->input('showUrl'),
-            'showTitle' => $request->input('showTitle'),
-            'showThumb' => $thumbUrl
-        ]);
+            $thumbUrl = $this->storeImage($request->file('showThumb'), 'spotify', 'spotify');
+
+
+            $spotifylink = Platform::create([
+                'name' => 'Spotify',
+                'url' => $request->input('showUrl'),
+                'showTitle' => $request->input('showTitle'),
+                'showThumb' => $thumbUrl
+            ]);
+        } else if (strpos($request->input('showUrl'), 'apple')) {
+
+            $thumbUrl = $this->storeImage($request->file('showThumb'), 'apple', 'apple');
+
+
+            $spotifylink = Platform::create([
+                'name' => 'Apple Podcast',
+                'url' => $request->input('showUrl'),
+                'showTitle' => $request->input('showTitle'),
+                'showThumb' => $thumbUrl
+            ]);
+        } else {
+            return response()->json(['errpr' => 'URL has to be related to Spotify or Apple podcast'], 402);
+        }
+
 
         return response()->json(['message' => 'all find', 'spotifyShow' => $spotifylink], 200);
     }
@@ -467,26 +485,27 @@ class ShowController extends Controller
 
 
         if($request->file('showThumb')) {
-            $thumbUrl = $this->storeImage($request->file('showThumb'), 'spotify', 'spotify');
-            $platform->showThumb = $thumbUrl;
+            if ($platform->name === 'Spotify') {
+                $thumbUrl = $this->storeImage($request->file('showThumb'), 'spotify', 'spotify');
+                $platform->showThumb = $thumbUrl;
+            } else if ($platform->name === 'Apple Podcast') {
+                $thumbUrl = $this->storeImage($request->file('showThumb'), 'apple', 'apple');
+                $platform->showThumb = $thumbUrl;
+            }
+
+
            
         }
 
         if($request->input('showTitle')) {
             $platform->showTitle = $request->input('showTitle');
         }
-        
-        Log::info("newurl", [
-            $request->input('showUrl')
-        ]);
 
         if ($request->input('showUrl')) {
             $platform->url = $request->input('showUrl');
         }
 
         $platform->save();
-
-        
 
         return response()->json(['message' => 'all fine', 'spotifyShow' => $platform], 200);
 
@@ -727,7 +746,7 @@ class ShowController extends Controller
 
         $directory = 'public/' . $type . '/' . $id;
 
-        if (Storage::exists($directory) && $id !== 'spotify') {
+        if (Storage::exists($directory) && $id !== 'spotify' && $id !== 'apple') {
             Storage::deleteDirectory($directory);
         }
 
